@@ -3,42 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio Académico - Acceso</title>
+    <title>Portafolio Académico - UPLA</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- 1. PANTALLA INICIAL: MODAL / LOGIN OBLIGATORIO -->
+    <!-- PANTALLA INICIAL: LOGIN / REGISTRO -->
     <div id="loginOverlay" class="login-overlay">
         <div class="login-box">
-            <h2>👋 Bienvenido al Portafolio</h2>
-            <p>Por favor, inicia sesión para acceder al contenido del portafolio.</p>
+            <div class="logo-upla-login">
+                <img src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
+            </div>
+            <h2>Portafolio Académico UPLA</h2>
             
-            <form id="formAcceso" onsubmit="procesarAcceso(event)">
-                <div class="form-group">
-                    <label>Nombre de Usuario / Estudiante:</label>
-                    <input type="text" id="inputUsuario" placeholder="Ej: Jhon Benitrez o Tu Nombre" required>
-                </div>
+            <!-- Pestañas de Login / Registro -->
+            <div class="auth-tabs">
+                <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTab('login')">Iniciar Sesión</button>
+                <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTab('register')">Registrarse</button>
+            </div>
 
+            <!-- Formulario de Inicio de Sesión -->
+            <form id="formLogin" onsubmit="procesarLogin(event)">
+                <div class="form-group">
+                    <label>Usuario / Estudiante:</label>
+                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez o tu usuario" required>
+                </div>
                 <div class="form-group">
                     <label>Contraseña:</label>
-                    <input type="password" id="inputPass" placeholder="Propietario usa clave / Visitante déjalo vacío">
-                    <small class="help-text">Si eres visitante, puedes dejar la contraseña en blanco.</small>
+                    <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacio">
                 </div>
-
                 <button type="submit" class="btn-primary btn-block">Ingresar al Portafolio</button>
+            </form>
+
+            <!-- Formulario de Registro para Visitantes -->
+            <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
+                <div class="form-group">
+                    <label>Tu Nombre Completo:</label>
+                    <input type="text" id="regNombre" placeholder="Ej: María López" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico:</label>
+                    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" required>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Crear Cuenta de Visitante</button>
             </form>
         </div>
     </div>
 
-    <!-- 2. CONTENIDO DE LA PÁGINA (Se muestra tras iniciar sesión) -->
+    <!-- CONTENIDO PRINCIPAL DEL PORTAFOLIO -->
     <div id="contenidoPrincipal" class="contenido-oculto">
         
-        <!-- Header / Perfil del usuario autenticado -->
+        <!-- Header con Logo UPLA -->
         <header class="navbar">
-            <div class="logo">
-                <h1>📚 Portafolio Académico</h1>
-                <p>Cursos y gestión de tareas entregadas</p>
+            <div class="logo-container">
+                <img src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
+                <div>
+                    <h1>Portafolio Académico</h1>
+                    <p>Universidad Peruana Los Andes</p>
+                </div>
             </div>
             
             <div class="user-info">
@@ -50,8 +72,8 @@
 
         <!-- Mensaje de Bienvenida -->
         <section class="hero-welcome">
-            <h2 id="saludoBienvenida">👋 ¡Hola! Te doy la bienvenida</h2>
-            <p>Explora el avance de los cursos por unidades y semanas, revisa tareas entregadas o descarga los archivos.</p>
+            <h2 id="saludoBienvenida">👋 ¡Hola! Bienvenid@ al Portafolio</h2>
+            <p>Explora la entrega de tareas organizadas por cursos, unidades y semanas académicas.</p>
         </section>
 
         <div class="layout">
@@ -62,11 +84,10 @@
                 <button class="course-btn" onclick="cambiarCurso('curso2')">🗄️ Curso 2: Bases de Datos</button>
             </aside>
 
-            <!-- Contenido del Curso -->
+            <!-- Área de Unidades y Semanas -->
             <main class="main-content">
                 <h2 id="tituloCurso">Curso 1: Programación Web</h2>
 
-                <!-- Selector de 4 Unidades -->
                 <div class="unidades-tabs">
                     <button class="tab-btn active" onclick="mostrarUnidad(1)">Unidad 1</button>
                     <button class="tab-btn" onclick="mostrarUnidad(2)">Unidad 2</button>
@@ -74,9 +95,8 @@
                     <button class="tab-btn" onclick="mostrarUnidad(4)">Unidad 4</button>
                 </div>
 
-                <!-- Tarjetas de Semanas -->
                 <div id="semanasContainer" class="semanas-container">
-                    <!-- Se genera dinámicamente con JS -->
+                    <!-- Tarjetas cargadas vía JavaScript -->
                 </div>
             </main>
         </div>
@@ -84,17 +104,12 @@
     </div>
 
     <script>
-        // DATOS DEL PROPIETARIO
-        const ADMIN_USER = "jhon benitrez";
-        const ADMIN_PASS = "123456789";
-
-        // BASE DE DATOS DE TAREAS INICIALES (Rutas locales en tu GitHub)
+        // BASE DE TAREAS INICIALES EN GITHUB
         const TAREAS_OFICIALES = {
             "curso1_U1_S1": { nombre: "Tarea 1: Estructura HTML Base", url: "tareas/tarea1.pdf" },
             "curso2_U1_S1": { nombre: "Tarea 1: Diseños de BD", url: "tareas/bd1.pdf" }
         };
 
-        // Estado global de sesión
         let usuarioActual = null;
         let esPropietario = false;
         let cursoActual = 'curso1';
@@ -109,32 +124,53 @@
             verificarSesionGuardada();
         });
 
-        // --- SISTEMA DE LOGIN Y ROLES ---
-        function procesarAcceso(e) {
+        function mostrarTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('formLogin').classList.remove('contenido-oculto');
+                document.getElementById('formRegister').classList.add('contenido-oculto');
+                document.getElementById('tabLoginBtn').classList.add('active');
+                document.getElementById('tabRegisterBtn').classList.remove('active');
+            } else {
+                document.getElementById('formLogin').classList.add('contenido-oculto');
+                document.getElementById('formRegister').classList.remove('contenido-oculto');
+                document.getElementById('tabRegisterBtn').classList.add('active');
+                document.getElementById('tabLoginBtn').classList.remove('active');
+            }
+        }
+
+        // VALIDACIÓN DE INICIO DE SESIÓN
+        function procesarLogin(e) {
             e.preventDefault();
-            const usuarioInput = document.getElementById("inputUsuario").value.trim();
-            const passInput = document.getElementById("inputPass").value.trim();
+            const inputUser = document.getElementById("loginUsuario").value.trim().toLowerCase();
+            const inputPass = document.getElementById("loginPass").value.trim();
 
-            if (!usuarioInput) return;
-
-            // Comparación de propietario
-            if (usuarioInput.toLowerCase() === ADMIN_USER && passInput === ADMIN_PASS) {
+            // Permite tanto "jhon benitrez" como "jhon benitres" con la clave 123456789
+            if ((inputUser === "jhon benitrez" || inputUser === "jhon benitres") && inputPass === "123456789") {
                 esPropietario = true;
                 usuarioActual = "Jhon Benitrez";
             } else {
                 esPropietario = false;
-                usuarioActual = usuarioInput;
+                usuarioActual = document.getElementById("loginUsuario").value.trim();
             }
 
-            // Guardar datos en sesión local
-            const datosSesion = { nombre: usuarioActual, esAdmin: esPropietario };
-            localStorage.setItem("sesion_portafolio", JSON.stringify(datosSesion));
+            const sesion = { nombre: usuarioActual, esAdmin: esPropietario };
+            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
+            iniciarInterfaz();
+        }
 
+        function procesarRegistro(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("regNombre").value.trim();
+            esPropietario = false;
+            usuarioActual = nombre;
+
+            const sesion = { nombre: usuarioActual, esAdmin: false };
+            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
             iniciarInterfaz();
         }
 
         function verificarSesionGuardada() {
-            const sesion = JSON.parse(localStorage.getItem("sesion_portafolio"));
+            const sesion = JSON.parse(localStorage.getItem("sesion_portafolio_upla"));
             if (sesion) {
                 usuarioActual = sesion.nombre;
                 esPropietario = sesion.esAdmin;
@@ -150,7 +186,7 @@
             document.getElementById("contenidoPrincipal").classList.remove("contenido-oculto");
 
             document.getElementById("userNameDisplay").innerText = usuarioActual;
-            document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ al Portafolio`;
+            document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ al Portafolio Académico`;
 
             const badge = document.getElementById("userRoleBadge");
             if (esPropietario) {
@@ -165,11 +201,10 @@
         }
 
         function cerrarSesion() {
-            localStorage.removeItem("sesion_portafolio");
+            localStorage.removeItem("sesion_portafolio_upla");
             location.reload();
         }
 
-        // --- NAVEGACIÓN Y RENDERIZADO DE CURSOS ---
         function cambiarCurso(idCurso) {
             cursoActual = idCurso;
             document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
@@ -218,25 +253,32 @@
 
                 if (tareaAMostrar) {
                     htmlContent += `
-                        <p class="status-ok">✔ Tarea asignada:</p>
+                        <p class="status-ok">✔ Tarea disponible:</p>
                         <p class="tarea-nombre"><strong>${tareaAMostrar.nombreArchivo}</strong></p>
                         <a href="${tareaAMostrar.contenido}" target="_blank" class="btn-download">📄 Abrir / Ver Tarea</a>
                     `;
 
+                    // Si eres Propietario, se activan los botones de edición y borrado
                     if (esPropietario) {
                         htmlContent += `
-                            <button class="btn-delete" onclick="borrarTarea('${keyTarea}')">🗑️ Borrar Tarea Mal Hecha</button>
+                            <div class="admin-actions">
+                                <label class="btn-edit">
+                                    ✏️ Editar Tarea
+                                    <input type="file" onchange="subirTareaPropietario(event, '${keyTarea}')" style="display:none;">
+                                </label>
+                                <button class="btn-delete" onclick="borrarTarea('${keyTarea}')">🗑️ Borrar Tarea</button>
+                            </div>
                         `;
                     }
                 } else {
                     htmlContent += `
-                        <p class="status-empty">Sin tarea subida en esta semana</p>
+                        <p class="status-empty">Sin tarea asignada en esta semana</p>
                     `;
 
                     if (esPropietario) {
                         htmlContent += `
                             <label class="btn-upload">
-                                📤 Subir Tarea
+                                📤 Subir Tarea Nueva
                                 <input type="file" onchange="subirTareaPropietario(event, '${keyTarea}')" style="display:none;">
                             </label>
                         `;
@@ -249,7 +291,6 @@
             }
         }
 
-        // --- FUNCIONES EXCLUSIVAS DEL PROPIETARIO ---
         function subirTareaPropietario(event, keyTarea) {
             const archivo = event.target.files[0];
             if (!archivo) return;
@@ -268,7 +309,7 @@
         }
 
         function borrarTarea(keyTarea) {
-            if (confirm("¿Deseas eliminar la tarea de esta semana?")) {
+            if (confirm("¿Estás seguro de borrar esta tarea de esta semana?")) {
                 localStorage.removeItem("local_" + keyTarea);
                 localStorage.setItem("borrada_" + keyTarea, "true");
                 renderizarUnidad();

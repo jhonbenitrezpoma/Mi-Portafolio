@@ -12,7 +12,7 @@
     <div id="loginOverlay" class="login-overlay">
         <div class="login-box">
             <div class="logo-upla-login">
-                <img src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
+                <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
             </div>
             <h2>Portafolio Académico UPLA</h2>
             
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label>Contraseña:</label>
-                    <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacio">
+                    <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
                 </div>
                 <button type="submit" class="btn-primary btn-block">Ingresar al Portafolio</button>
             </form>
@@ -53,10 +53,16 @@
     <!-- CONTENIDO PRINCIPAL DEL PORTAFOLIO -->
     <div id="contenidoPrincipal" class="contenido-oculto">
         
-        <!-- Header con Logo UPLA -->
+        <!-- Header con Logo UPLA y Opción de Cambiar Logo -->
         <header class="navbar">
             <div class="logo-container">
-                <img src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
+                <div class="logo-wrapper">
+                    <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
+                    <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo Institucional">
+                        📷
+                        <input type="file" accept="image/*" onchange="subirNuevoLogo(event)" style="display:none;">
+                    </label>
+                </div>
                 <div>
                     <h1>Portafolio Académico</h1>
                     <p>Universidad Peruana Los Andes</p>
@@ -73,20 +79,20 @@
         <!-- Mensaje de Bienvenida -->
         <section class="hero-welcome">
             <h2 id="saludoBienvenida">👋 ¡Hola! Bienvenid@ al Portafolio</h2>
-            <p>Explora la entrega de tareas organizadas por cursos, unidades y semanas académicas.</p>
+            <p>Explora la entrega de tareas y temas de clase organizados por cursos, unidades y semanas académicas.</p>
         </section>
 
         <div class="layout">
-            <!-- Barra lateral de Cursos -->
+            <!-- Barra lateral de Cursos Actualizados -->
             <aside class="sidebar">
                 <h3>Mis Cursos</h3>
-                <button class="course-btn active" onclick="cambiarCurso('curso1')">💻 Curso 1: Programación Web</button>
-                <button class="course-btn" onclick="cambiarCurso('curso2')">🗄️ Curso 2: Bases de Datos</button>
+                <button class="course-btn active" onclick="cambiarCurso('curso1')">📱 Desarrollo de Aplicaciones 1</button>
+                <button class="course-btn" onclick="cambiarCurso('curso2')">🧮 Algoritmos y Estructuras de Datos</button>
             </aside>
 
             <!-- Área de Unidades y Semanas -->
             <main class="main-content">
-                <h2 id="tituloCurso">Curso 1: Programación Web</h2>
+                <h2 id="tituloCurso">📱 Desarrollo de Aplicaciones 1</h2>
 
                 <div class="unidades-tabs">
                     <button class="tab-btn active" onclick="mostrarUnidad(1)">Unidad 1</button>
@@ -106,8 +112,8 @@
     <script>
         // BASE DE TAREAS INICIALES EN GITHUB
         const TAREAS_OFICIALES = {
-            "curso1_U1_S1": { nombre: "Tarea 1: Estructura HTML Base", url: "tareas/tarea1.pdf" },
-            "curso2_U1_S1": { nombre: "Tarea 1: Diseños de BD", url: "tareas/bd1.pdf" }
+            "curso1_U1_S1": { nombre: "Tarea 1: Maquetación de Interfaces", url: "tareas/tarea1.pdf" },
+            "curso2_U1_S1": { nombre: "Tarea 1: Pseudocódigo y Diagramas", url: "tareas/bd1.pdf" }
         };
 
         let usuarioActual = null;
@@ -116,11 +122,12 @@
         let unidadActual = 1;
 
         const nombresCursos = {
-            curso1: "💻 Curso 1: Programación Web",
-            curso2: "🗄️ Curso 2: Bases de Datos"
+            curso1: "📱 Desarrollo de Aplicaciones 1",
+            curso2: "🧮 Algoritmos y Estructuras de Datos"
         };
 
         document.addEventListener("DOMContentLoaded", () => {
+            cargarLogoGuardado();
             verificarSesionGuardada();
         });
 
@@ -144,7 +151,6 @@
             const inputUser = document.getElementById("loginUsuario").value.trim().toLowerCase();
             const inputPass = document.getElementById("loginPass").value.trim();
 
-            // Permite tanto "jhon benitrez" como "jhon benitres" con la clave 123456789
             if ((inputUser === "jhon benitrez" || inputUser === "jhon benitres") && inputPass === "123456789") {
                 esPropietario = true;
                 usuarioActual = "Jhon Benitrez";
@@ -189,12 +195,16 @@
             document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ al Portafolio Académico`;
 
             const badge = document.getElementById("userRoleBadge");
+            const btnLogo = document.getElementById("btnCambiarLogo");
+
             if (esPropietario) {
                 badge.innerText = "👑 Propietario";
                 badge.className = "badge badge-admin";
+                btnLogo.classList.remove("contenido-oculto");
             } else {
                 badge.innerText = "👁️ Visitante";
                 badge.className = "badge badge-visitor";
+                btnLogo.classList.add("contenido-oculto");
             }
 
             renderizarUnidad();
@@ -234,6 +244,7 @@
                 const tareaOficial = TAREAS_OFICIALES[keyTarea];
                 const tareaBorrada = localStorage.getItem("borrada_" + keyTarea);
                 const tareaLocal = JSON.parse(localStorage.getItem("local_" + keyTarea));
+                const tituloClase = localStorage.getItem("titulo_clase_" + keyTarea) || "";
 
                 let tareaAMostrar = null;
 
@@ -247,9 +258,23 @@
                 semanaCard.className = "semana-card";
 
                 let htmlContent = `
-                    <h4>Semana ${numSemana}</h4>
-                    <div class="tarea-info">
+                    <div class="semana-header">
+                        <h4>Semana ${numSemana}</h4>
                 `;
+
+                if (tituloClase) {
+                    htmlContent += `<p class="clase-titulo">📘 ${tituloClase}</p>`;
+                } else {
+                    htmlContent += `<p class="clase-titulo-vacio">Sin tema asignado</p>`;
+                }
+
+                if (esPropietario) {
+                    htmlContent += `
+                        <button class="btn-sm-title" onclick="editarTituloClase('${keyTarea}')">✏️ ${tituloClase ? 'Cambiar Tema' : 'Poner Tema'}</button>
+                    `;
+                }
+
+                htmlContent += `</div><div class="tarea-info">`;
 
                 if (tareaAMostrar) {
                     htmlContent += `
@@ -258,7 +283,6 @@
                         <a href="${tareaAMostrar.contenido}" target="_blank" class="btn-download">📄 Abrir / Ver Tarea</a>
                     `;
 
-                    // Si eres Propietario, se activan los botones de edición y borrado
                     if (esPropietario) {
                         htmlContent += `
                             <div class="admin-actions">
@@ -291,6 +315,44 @@
             }
         }
 
+        // GESTIÓN DE TÍTULO DE CLASE
+        function editarTituloClase(keyTarea) {
+            const tituloActual = localStorage.getItem("titulo_clase_" + keyTarea) || "";
+            const nuevoTitulo = prompt("Ingresa el título o tema de esta clase:", tituloActual);
+            
+            if (nuevoTitulo !== null) {
+                localStorage.setItem("titulo_clase_" + keyTarea, nuevoTitulo.trim());
+                renderizarUnidad();
+            }
+        }
+
+        // GESTIÓN DE LOGO DE LA PÁGINA
+        function subirNuevoLogo(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const logoData = e.target.result;
+                localStorage.setItem("custom_upla_logo", logoData);
+                aplicarLogo(logoData);
+            };
+            reader.readAsDataURL(archivo);
+        }
+
+        function cargarLogoGuardado() {
+            const logoGuardado = localStorage.getItem("custom_upla_logo");
+            if (logoGuardado) {
+                aplicarLogo(logoGuardado);
+            }
+        }
+
+        function aplicarLogo(src) {
+            document.getElementById("logoHeaderImg").src = src;
+            document.getElementById("logoLoginImg").src = src;
+        }
+
+        // ACCIONES DE TAREAS
         function subirTareaPropietario(event, keyTarea) {
             const archivo = event.target.files[0];
             if (!archivo) return;

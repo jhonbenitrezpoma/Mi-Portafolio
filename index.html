@@ -3,43 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Portafolio de Tareas</title>
+    <title>Portafolio Académico - Cursos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <header>
-        <h1>Mi Portafolio Académico</h1>
-        <p>Colección de proyectos, tareas y archivos entregados.</p>
+    <!-- Header / Perfil del Usuario -->
+    <header class="navbar">
+        <div class="logo">Mi Portafolio Web</div>
+        
+        <!-- Bloque de Login / Perfil -->
+        <div class="user-profile" id="userProfileSection">
+            <!-- Se llena dinámicamente con JavaScript -->
+        </div>
     </header>
 
-    <main class="contenedor">
-        <h2>Mis Tareas Realizadas</h2>
-        
-        <div class="grid-tareas">
+    <div class="layout">
+        <!-- Barra lateral para cambiar de curso -->
+        <aside class="sidebar">
+            <h3>Mis Cursos</h3>
+            <button class="course-btn active" onclick="cambiarCurso('curso1')">💻 Curso 1: Programación Web</button>
+            <button class="course-btn" onclick="cambiarCurso('curso2')">🗄️ Curso 2: Bases de Datos</button>
+        </aside>
 
-            <!-- Tarea 1 de Ejemplo -->
-            <div class="card">
-                <h3>Tarea 1: Informe sobre Programación</h3>
-                <p class="categoria">Programación | PDF</p>
-                <p>Introducción a algoritmos y estructuras de datos.</p>
-                <a href="tareas/tarea1.pdf" target="_blank" class="btn">Ver Documento (PDF)</a>
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <h2 id="tituloCurso">Curso 1: Programación Web</h2>
+
+            <!-- Selector de Unidades (4 Unidades) -->
+            <div class="unidades-tabs">
+                <button class="tab-btn active" onclick="mostrarUnidad(1)">Unidad 1</button>
+                <button class="tab-btn" onclick="mostrarUnidad(2)">Unidad 2</button>
+                <button class="tab-btn" onclick="mostrarUnidad(3)">Unidad 3</button>
+                <button class="tab-btn" onclick="mostrarUnidad(4)">Unidad 4</button>
             </div>
 
-            <!-- Tarea 2 de Ejemplo -->
-            <div class="card">
-                <h3>Proyecto: Tienda Web ClanFiber</h3>
-                <p class="categoria">PHP - MySQL | Enlace</p>
-                <p>Desarrollo de una tienda web para productos de fibra óptica e internet.</p>
-                <a href="#" class="btn">Ver Proyecto</a>
+            <!-- Contenedor de Semanas por Unidad -->
+            <div id="semanasContainer" class="semanas-container">
+                <!-- Se genera dinámicamente con JavaScript -->
             </div>
+        </main>
+    </div>
 
+    <!-- Modal para Iniciar Sesión / Registro -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <h3>Iniciar Sesión / Registro</h3>
+            <form id="authForm" onsubmit="guardarPerfil(event)">
+                <label>Nombre Completo:</label>
+                <input type="text" id="inputNombre" placeholder="Ej: Jhon Poma" required>
+
+                <label>Foto de Perfil (Subir imagen):</label>
+                <input type="file" id="inputFoto" accept="image/*" required>
+
+                <button type="submit" class="btn-primary">Guardar Perfil</button>
+            </form>
         </div>
-    </main>
+    </div>
 
-    <footer>
-        <p>&copy; 2026 - Portafolio de Tareas</p>
-    </footer>
+    <script>
+        // --- ESTRUCTURA DE DATOS ---
+        let cursoActual = 'curso1';
+        let unidadActual = 1;
 
+        const nombresCursos = {
+            curso1: "💻 Curso 1: Programación Web",
+            curso2: "🗄️ Curso 2: Bases de Datos"
+        };
+
+        // --- MANEJO DE PERFIL DE USUARIO ---
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarPerfil();
+            renderizarUnidad();
+        });
+
+        function cargarPerfil() {
+            const perfil = JSON.parse(localStorage.getItem("usuario_portafolio"));
+            const profileSection = document.getElementById("userProfileSection");
+
+            if (perfil) {
+                profileSection.innerHTML = `
+                    <img src="${perfil.foto}" alt="Foto de Perfil" class="avatar">
+                    <span class="user-name">${perfil.nombre}</span>
+                    <button class="btn-secundary" onclick="abrirModal()">Cambiar</button>
+                `;
+            } else {
+                profileSection.innerHTML = `
+                    <button class="btn-primary" onclick="abrirModal()">Registrarse / Iniciar Sesión</button>
+                `;
+            }
+        }
+
+        function abrirModal() {
+            document.getElementById("authModal").style.display = "flex";
+        }
+
+        function guardarPerfil(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("inputNombre").value;
+            const fileInput = document.getElementById("inputFoto");
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const fotoBase64 = e.target.result;
+                    const datosUsuario = { nombre: nombre, foto: fotoBase64 };
+                    localStorage.setItem("usuario_portafolio", JSON.stringify(datosUsuario));
+                    document.getElementById("authModal").style.display = "none";
+                    cargarPerfil();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        // --- MANEJO DE CURSOS Y UNIDADES ---
+        function cambiarCurso(idCurso) {
+            cursoActual = idCurso;
+            document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
+            document.querySelectorAll(".course-btn").forEach(btn => btn.classList.remove("active"));
+            event.target.classList.add("active");
+            mostrarUnidad(1);
+        }
+
+        function mostrarUnidad(numUnidad) {
+            unidadActual = numUnidad;
+            document.querySelectorAll(".tab-btn").forEach((btn, index) => {
+                btn.classList.toggle("active", index + 1 === numUnidad);
+            });
+            renderizarUnidad();
+        }
+
+        function renderizarUnidad() {
+            const container = document.getElementById("semanasContainer");
+            container.innerHTML = "";
+
+            // Calcular las 4 semanas según la unidad (Unidad 1: S1-S4, Unidad 2: S5-S8, etc.)
+            const semanaInicio = (unidadActual - 1) * 4 + 1;
+
+            for (let i = 0; i < 4; i++) {
+                const numSemana = semanaInicio + i;
+                const keyTarea = `${cursoActual}_U${unidadActual}_S${numSemana}`;
+                const tareaGuardada = JSON.parse(localStorage.getItem(keyTarea));
+
+                const semanaCard = document.createElement("div");
+                semanaCard.className = "semana-card";
+
+                semanaCard.innerHTML = `
+                    <h4>Semana ${numSemana}</h4>
+                    <div id="infoTarea_${keyTarea}">
+                        ${tareaGuardada ? `
+                            <p class="status-ok">✔ Tarea subida:</p>
+                            <p><strong>${tareaGuardada.nombreArchivo}</strong></p>
+                            <a href="${tareaGuardada.contenido}" download="${tareaGuardada.nombreArchivo}" class="btn-download">Abrir / Descargar</a>
+                        ` : `
+                            <p class="status-empty">Sin tarea subida</p>
+                        `}
+                    </div>
+                    <hr>
+                    <label class="btn-upload">
+                        Subir Tarea
+                        <input type="file" onchange="subirTarea(event, '${keyTarea}')" style="display:none;">
+                    </label>
+                `;
+                container.appendChild(semanaCard);
+            }
+        }
+
+        // --- SUBIDA Y LECTURA DE ARCHIVOS DE TAREAS ---
+        function subirTarea(event, keyTarea) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const datosTarea = {
+                    nombreArchivo: archivo.name,
+                    contenido: e.target.result
+                };
+                localStorage.setItem(keyTarea, JSON.stringify(datosTarea));
+                renderizarUnidad();
+            };
+            reader.readAsDataURL(archivo);
+        }
+    </script>
 </body>
 </html>

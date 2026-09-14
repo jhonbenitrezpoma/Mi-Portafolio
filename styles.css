@@ -10,7 +10,7 @@ body {
     color: #1e293b;
 }
 
-/* OVERLAY DE AUTENTICACIÓN CON LOGO UPLA */
+/* OVERLAY DE AUTENTICACIÓN CON LOGO */
 .login-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -41,11 +41,34 @@ body {
     object-fit: contain;
 }
 
+.logo-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
 .img-upla-header {
-    height: 45px;
+    height: 48px;
     background: white;
-    padding: 3px;
-    border-radius: 4px;
+    padding: 4px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.btn-change-logo {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .login-box h2 {
@@ -104,7 +127,7 @@ body {
 }
 
 .contenido-oculto {
-    display: none;
+    display: none !important;
 }
 
 /* HEADER CON ESTILO UPLA */
@@ -173,7 +196,7 @@ body {
 }
 
 .sidebar {
-    width: 260px;
+    width: 280px;
     background-color: #1e293b;
     color: white;
     padding: 1.5rem 1rem;
@@ -196,6 +219,7 @@ body {
     text-align: left;
     border-radius: 6px;
     cursor: pointer;
+    font-size: 0.9rem;
 }
 
 .course-btn.active, .course-btn:hover { background-color: #2563eb; }
@@ -227,7 +251,7 @@ body {
 
 .semanas-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
 }
 
@@ -240,10 +264,41 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 220px;
+    min-height: 240px;
 }
 
-.semana-card h4 { color: #2563eb; margin-bottom: 1rem; }
+.semana-header {
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.semana-card h4 { color: #2563eb; margin-bottom: 0.3rem; }
+
+.clase-titulo {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #334155;
+    margin-top: 0.3rem;
+}
+
+.clase-titulo-vacio {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.btn-sm-title {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
 .status-ok { color: #16a34a; font-weight: bold; font-size: 0.85rem; }
 .status-empty { color: #94a3b8; font-style: italic; font-size: 0.9rem; }
 .tarea-nombre { margin: 0.5rem 0; font-size: 0.95rem; }

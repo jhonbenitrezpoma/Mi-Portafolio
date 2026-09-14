@@ -3,84 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio Académico - Mis Cursos</title>
+    <title>Portafolio Académico - Acceso</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Header / Bienvenida y Estado -->
-    <header class="navbar">
-        <div class="logo">
-            <h1>📚 Portafolio Académico</h1>
-            <p>Bienvenido/a a mi colección oficial de cursos y tareas</p>
+    <!-- 1. PANTALLA INICIAL: MODAL / LOGIN OBLIGATORIO -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>👋 Bienvenido al Portafolio</h2>
+            <p>Por favor, inicia sesión para acceder al contenido del portafolio.</p>
+            
+            <form id="formAcceso" onsubmit="procesarAcceso(event)">
+                <div class="form-group">
+                    <label>Nombre de Usuario / Estudiante:</label>
+                    <input type="text" id="inputUsuario" placeholder="Ej: Jhon Benitrez o Tu Nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="inputPass" placeholder="Propietario usa clave / Visitante déjalo vacío">
+                    <small class="help-text">Si eres visitante, puedes dejar la contraseña en blanco.</small>
+                </div>
+
+                <button type="submit" class="btn-primary btn-block">Ingresar al Portafolio</button>
+            </form>
         </div>
-        
-        <!-- Estado de Modo Propietario / Visitante -->
-        <div class="user-status">
-            <span id="modotag" class="badge badge-visitor">👁️ Modo Visitante</span>
-            <button id="btnAdmin" class="btn-secundary" onclick="toggleModoAdmin()">Soy el Propietario</button>
-        </div>
-    </header>
-
-    <!-- Mensaje de Bienvenida Banner -->
-    <section class="hero-welcome">
-        <h2>👋 ¡Hola! Te doy la bienvenida a mi Portafolio Web</h2>
-        <p>Aquí podrás explorar mis avances académicos, materiales de clase y las tareas entregadas semana a semana en cada unidad de mis cursos.</p>
-    </section>
-
-    <div class="layout">
-        <!-- Barra lateral de Cursos -->
-        <aside class="sidebar">
-            <h3>mis Cursos</h3>
-            <button class="course-btn active" onclick="cambiarCurso('curso1')">💻 Curso 1: Programación Web</button>
-            <button class="course-btn" onclick="cambiarCurso('curso2')">🗄️ Curso 2: Bases de Datos</button>
-        </aside>
-
-        <!-- Contenido Principal -->
-        <main class="main-content">
-            <h2 id="tituloCurso">Curso 1: Programación Web</h2>
-
-            <!-- Selector de 4 Unidades -->
-            <div class="unidades-tabs">
-                <button class="tab-btn active" onclick="mostrarUnidad(1)">Unidad 1</button>
-                <button class="tab-btn" onclick="mostrarUnidad(2)">Unidad 2</button>
-                <button class="tab-btn" onclick="mostrarUnidad(3)">Unidad 3</button>
-                <button class="tab-btn" onclick="mostrarUnidad(4)">Unidad 4</button>
-            </div>
-
-            <!-- Contenedor de las 4 Semanas de la Unidad -->
-            <div id="semanasContainer" class="semanas-container">
-                <!-- Se genera dinámicamente -->
-            </div>
-        </main>
     </div>
 
-    <!-- Modal de Contraseña para el Propietario -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <h3>Acceso de Propietario</h3>
-            <p>Ingresa la clave para activar la edición de tareas:</p>
-            <input type="password" id="adminPass" placeholder="Contraseña">
-            <div class="modal-actions">
-                <button onclick="verificarAdmin()" class="btn-primary">Entrar</button>
-                <button onclick="cerrarModal()" class="btn-secundary">Cancelar</button>
+    <!-- 2. CONTENIDO DE LA PÁGINA (Se muestra tras iniciar sesión) -->
+    <div id="contenidoPrincipal" class="contenido-oculto">
+        
+        <!-- Header / Perfil del usuario autenticado -->
+        <header class="navbar">
+            <div class="logo">
+                <h1>📚 Portafolio Académico</h1>
+                <p>Cursos y gestión de tareas entregadas</p>
             </div>
+            
+            <div class="user-info">
+                <span id="userNameDisplay" class="user-name">Usuario</span>
+                <span id="userRoleBadge" class="badge">Rol</span>
+                <button onclick="cerrarSesion()" class="btn-secundary">Salir / Cambiar</button>
+            </div>
+        </header>
+
+        <!-- Mensaje de Bienvenida -->
+        <section class="hero-welcome">
+            <h2 id="saludoBienvenida">👋 ¡Hola! Te doy la bienvenida</h2>
+            <p>Explora el avance de los cursos por unidades y semanas, revisa tareas entregadas o descarga los archivos.</p>
+        </section>
+
+        <div class="layout">
+            <!-- Barra lateral de Cursos -->
+            <aside class="sidebar">
+                <h3>Mis Cursos</h3>
+                <button class="course-btn active" onclick="cambiarCurso('curso1')">💻 Curso 1: Programación Web</button>
+                <button class="course-btn" onclick="cambiarCurso('curso2')">🗄️ Curso 2: Bases de Datos</button>
+            </aside>
+
+            <!-- Contenido del Curso -->
+            <main class="main-content">
+                <h2 id="tituloCurso">Curso 1: Programación Web</h2>
+
+                <!-- Selector de 4 Unidades -->
+                <div class="unidades-tabs">
+                    <button class="tab-btn active" onclick="mostrarUnidad(1)">Unidad 1</button>
+                    <button class="tab-btn" onclick="mostrarUnidad(2)">Unidad 2</button>
+                    <button class="tab-btn" onclick="mostrarUnidad(3)">Unidad 3</button>
+                    <button class="tab-btn" onclick="mostrarUnidad(4)">Unidad 4</button>
+                </div>
+
+                <!-- Tarjetas de Semanas -->
+                <div id="semanasContainer" class="semanas-container">
+                    <!-- Se genera dinámicamente con JS -->
+                </div>
+            </main>
         </div>
+
     </div>
 
     <script>
-        // === REGISTRO OFICIAL DE TUS TAREAS ===
-        // Aquí colocas las rutas de tus tareas que están dentro de la carpeta "tareas/" en tu GitHub
-        const BASE_DE_DATOS_TAREAS = {
-            // Ejemplo para Curso 1 (Programación Web)
-            "curso1_U1_S1": { nombre: "Tarea 1: Estructura HTML", url: "tareas/tarea-semana1.pdf" },
-            "curso1_U1_S2": { nombre: "Tarea 2: Estilos CSS", url: "tareas/tarea-semana2.pdf" },
-            
-            // Ejemplo para Curso 2 (Bases de Datos)
-            "curso2_U1_S1": { nombre: "Tarea 1: Modelo Entidad-Relación", url: "tareas/bd-semana1.pdf" }
+        // DATOS DEL PROPIETARIO
+        const ADMIN_USER = "jhon benitrez";
+        const ADMIN_PASS = "123456789";
+
+        // BASE DE DATOS DE TAREAS INICIALES (Rutas locales en tu GitHub)
+        const TAREAS_OFICIALES = {
+            "curso1_U1_S1": { nombre: "Tarea 1: Estructura HTML Base", url: "tareas/tarea1.pdf" },
+            "curso2_U1_S1": { nombre: "Tarea 1: Diseños de BD", url: "tareas/bd1.pdf" }
         };
 
-        // Estado global
+        // Estado global de sesión
+        let usuarioActual = null;
         let esPropietario = false;
         let cursoActual = 'curso1';
         let unidadActual = 1;
@@ -91,53 +106,70 @@
         };
 
         document.addEventListener("DOMContentLoaded", () => {
-            renderizarUnidad();
+            verificarSesionGuardada();
         });
 
-        // --- MANEJO DE MODO PROPIETARIO ---
-        function toggleModoAdmin() {
-            if (esPropietario) {
-                esPropietario = false;
-                actualizarBadge();
-                renderizarUnidad();
-            } else {
-                document.getElementById("adminModal").style.display = "flex";
-            }
-        }
+        // --- SISTEMA DE LOGIN Y ROLES ---
+        function procesarAcceso(e) {
+            e.preventDefault();
+            const usuarioInput = document.getElementById("inputUsuario").value.trim();
+            const passInput = document.getElementById("inputPass").value.trim();
 
-        function cerrarModal() {
-            document.getElementById("adminModal").style.display = "none";
-        }
+            if (!usuarioInput) return;
 
-        function verificarAdmin() {
-            const pass = document.getElementById("adminPass").value;
-            // CONTRASEÑA POR DEFECTO: 1234 (Puedes cambiarla aquí)
-            if (pass === "1234") {
+            // Comparación de propietario
+            if (usuarioInput.toLowerCase() === ADMIN_USER && passInput === ADMIN_PASS) {
                 esPropietario = true;
-                actualizarBadge();
-                cerrarModal();
-                renderizarUnidad();
-                document.getElementById("adminPass").value = "";
+                usuarioActual = "Jhon Benitrez";
             } else {
-                alert("Contraseña incorrecta");
+                esPropietario = false;
+                usuarioActual = usuarioInput;
+            }
+
+            // Guardar datos en sesión local
+            const datosSesion = { nombre: usuarioActual, esAdmin: esPropietario };
+            localStorage.setItem("sesion_portafolio", JSON.stringify(datosSesion));
+
+            iniciarInterfaz();
+        }
+
+        function verificarSesionGuardada() {
+            const sesion = JSON.parse(localStorage.getItem("sesion_portafolio"));
+            if (sesion) {
+                usuarioActual = sesion.nombre;
+                esPropietario = sesion.esAdmin;
+                iniciarInterfaz();
+            } else {
+                document.getElementById("loginOverlay").style.display = "flex";
+                document.getElementById("contenidoPrincipal").classList.add("contenido-oculto");
             }
         }
 
-        function actualizarBadge() {
-            const tag = document.getElementById("modotag");
-            const btn = document.getElementById("btnAdmin");
+        function iniciarInterfaz() {
+            document.getElementById("loginOverlay").style.display = "none";
+            document.getElementById("contenidoPrincipal").classList.remove("contenido-oculto");
+
+            document.getElementById("userNameDisplay").innerText = usuarioActual;
+            document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ al Portafolio`;
+
+            const badge = document.getElementById("userRoleBadge");
             if (esPropietario) {
-                tag.className = "badge badge-admin";
-                tag.innerText = "✏️ Modo Propietario (Edición Activa)";
-                btn.innerText = "Cerrar Modo Edición";
+                badge.innerText = "👑 Propietario";
+                badge.className = "badge badge-admin";
             } else {
-                tag.className = "badge badge-visitor";
-                tag.innerText = "👁️ Modo Visitante";
-                btn.innerText = "Soy el Propietario";
+                badge.innerText = "👁️ Visitante";
+                badge.className = "badge badge-visitor";
             }
+
+            renderizarUnidad();
         }
 
-        // --- MANEJO DE CURSOS Y UNIDADES ---
+        function cerrarSesion() {
+            localStorage.removeItem("sesion_portafolio");
+            location.reload();
+        }
+
+        // --- NAVEGACIÓN Y RENDERIZADO DE CURSOS ---
         function cambiarCurso(idCurso) {
             cursoActual = idCurso;
             document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
@@ -154,7 +186,6 @@
             renderizarUnidad();
         }
 
-        // --- RENDERIZADO DE SEMANAS Y TAREAS ---
         function renderizarUnidad() {
             const container = document.getElementById("semanasContainer");
             container.innerHTML = "";
@@ -164,9 +195,8 @@
             for (let i = 0; i < 4; i++) {
                 const numSemana = semanaInicio + i;
                 const keyTarea = `${cursoActual}_U${unidadActual}_S${numSemana}`;
-                
-                // Comprobar si hay tarea en la base oficial o cargada temporalmente
-                const tareaOficial = BASE_DE_DATOS_TAREAS[keyTarea];
+
+                const tareaOficial = TAREAS_OFICIALES[keyTarea];
                 const tareaBorrada = localStorage.getItem("borrada_" + keyTarea);
                 const tareaLocal = JSON.parse(localStorage.getItem("local_" + keyTarea));
 
@@ -181,47 +211,45 @@
                 const semanaCard = document.createElement("div");
                 semanaCard.className = "semana-card";
 
-                let htmlContenido = `
+                let htmlContent = `
                     <h4>Semana ${numSemana}</h4>
                     <div class="tarea-info">
                 `;
 
                 if (tareaAMostrar) {
-                    htmlContenido += `
-                        <p class="status-ok">✔ Tarea disponible:</p>
+                    htmlContent += `
+                        <p class="status-ok">✔ Tarea asignada:</p>
                         <p class="tarea-nombre"><strong>${tareaAMostrar.nombreArchivo}</strong></p>
-                        <a href="${tareaAMostrar.contenido}" target="_blank" class="btn-download">📄 Abrir / Descargar Tarea</a>
+                        <a href="${tareaAMostrar.contenido}" target="_blank" class="btn-download">📄 Abrir / Ver Tarea</a>
                     `;
 
-                    // Si es Propietario, se muestra la opción de BORRAR la tarea mal hecha
                     if (esPropietario) {
-                        htmlContenido += `
-                            <button class="btn-delete" onclick="borrarTarea('${keyTarea}')">🗑️ Borrar / Eliminar Tarea</button>
+                        htmlContent += `
+                            <button class="btn-delete" onclick="borrarTarea('${keyTarea}')">🗑️ Borrar Tarea Mal Hecha</button>
                         `;
                     }
                 } else {
-                    htmlContenido += `
-                        <p class="status-empty">Sin tarea asignada en esta semana</p>
+                    htmlContent += `
+                        <p class="status-empty">Sin tarea subida en esta semana</p>
                     `;
 
-                    // Si es Propietario, se muestra la opción de subir una nueva tarea
                     if (esPropietario) {
-                        htmlContenido += `
+                        htmlContent += `
                             <label class="btn-upload">
-                                📤 Subir Tarea Nueva
+                                📤 Subir Tarea
                                 <input type="file" onchange="subirTareaPropietario(event, '${keyTarea}')" style="display:none;">
                             </label>
                         `;
                     }
                 }
 
-                htmlContenido += `</div>`;
-                semanaCard.innerHTML = htmlContenido;
+                htmlContent += `</div>`;
+                semanaCard.innerHTML = htmlContent;
                 container.appendChild(semanaCard);
             }
         }
 
-        // --- ACCIONES DE EDICIÓN ---
+        // --- FUNCIONES EXCLUSIVAS DEL PROPIETARIO ---
         function subirTareaPropietario(event, keyTarea) {
             const archivo = event.target.files[0];
             if (!archivo) return;
@@ -240,7 +268,7 @@
         }
 
         function borrarTarea(keyTarea) {
-            if (confirm("¿Estás seguro de que deseas eliminar esta tarea de esta semana?")) {
+            if (confirm("¿Deseas eliminar la tarea de esta semana?")) {
                 localStorage.removeItem("local_" + keyTarea);
                 localStorage.setItem("borrada_" + keyTarea, "true");
                 renderizarUnidad();

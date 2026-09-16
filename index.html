@@ -15,7 +15,6 @@
     <header class="navbar">
         <div class="logo-container">
             <div class="logo-wrapper">
-                <!-- AQUÍ PUEDES CAMBIAR EL LOGO DEL ENCABEZADO -->
                 <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
                 <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo desde tu PC">
                     📷
@@ -47,7 +46,6 @@
         <div class="auth-overlay-backdrop">
             <div class="vintage-login-card">
                 <div class="vintage-card-header">
-                    <!-- AQUÍ PUEDES CAMBIAR EL LOGO DEL LOGIN -->
                     <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
                     <h2 class="font-vintage-title">Acceso al Portafolio</h2>
                     <p class="auth-subtitle">Ingeniería de Sistemas y Cómputo - UPLA</p>
@@ -59,32 +57,43 @@
                 </div>
 
                 <!-- Formulario Login -->
-                <form id="formLogin" onsubmit="procesarLogin(event)">
+                <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
                     <div class="form-group-vintage">
                         <label>Usuario / Estudiante:</label>
-                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
+                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required autocomplete="off">
                     </div>
+                    
                     <div class="form-group-vintage">
                         <label>Contraseña:</label>
-                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
+                        <div class="password-input-wrapper">
+                            <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío" autocomplete="new-password">
+                            <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                        </div>
                     </div>
+                    
                     <button type="submit" class="btn-vintage-gold">Ingresar al Portafolio</button>
                 </form>
 
                 <!-- Formulario Registro -->
-                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
+                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
                     <div class="form-group-vintage">
                         <label>Nombre Completo:</label>
-                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
+                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required autocomplete="off">
                     </div>
+                    
                     <div class="form-group-vintage">
                         <label>Contraseña:</label>
-                        <input type="password" id="regPass" placeholder="Crea una contraseña" required>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="regPass" placeholder="Crea una contraseña" required autocomplete="new-password">
+                            <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                        </div>
                     </div>
+                    
                     <div class="form-group-vintage">
                         <label>Correo Electrónico (Opcional):</label>
-                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com">
+                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" autocomplete="off">
                     </div>
+                    
                     <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
                 </form>
             </div>
@@ -92,13 +101,12 @@
     </section>
 
 
-    <!-- PANTALLA 2: PRESENTACIÓN MI A (LUMINOSA Y VIBRANTE) -->
+    <!-- PANTALLA 2: PRESENTACIÓN -->
     <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg contenido-oculto">
         <div class="vintage-container">
             <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
 
             <div class="vintage-hero-grid">
-                <!-- Columna Foto de Perfil -->
                 <div class="vintage-profile-card">
                     <div class="vintage-frame">
                         <img id="fotoPerfilImg" src="https://via.placeholder.com/180?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-vintage">
@@ -112,7 +120,6 @@
                     <div class="author-location">🏛️ UPLA - Huancayo, Perú</div>
                 </div>
 
-                <!-- Columna Información y Propósito -->
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
@@ -139,11 +146,9 @@
     </section>
 
 
-    <!-- PANTALLA 3: CURSOS Y TAREAS (DISEÑO CLARO E INTUITIVO) -->
+    <!-- PANTALLA 3: CURSOS Y TAREAS -->
     <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
         <div class="cursos-main-container">
-            
-            <!-- Selector de Cursos Superior -->
             <div class="courses-selector-bar">
                 <button class="course-tab-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
                 <button class="course-tab-btn" onclick="cambiarCurso('curso2', event)">🧮 Algoritmos y Estructuras de Datos</button>
@@ -154,7 +159,6 @@
                 <p>Selecciona cualquiera de las 4 Unidades para revisar las tareas y actividades semanales.</p>
             </div>
 
-            <!-- Tabs de Unidades -->
             <div class="unidades-pills">
                 <button class="pill-btn active" onclick="mostrarUnidad(1, event)">Unidad I</button>
                 <button class="pill-btn" onclick="mostrarUnidad(2, event)">Unidad II</button>
@@ -162,7 +166,6 @@
                 <button class="pill-btn" onclick="mostrarUnidad(4, event)">Unidad IV</button>
             </div>
 
-            <!-- Grid de Semanas -->
             <div id="semanasContainer" class="semanas-grid">
                 <!-- Carga dinámica -->
             </div>
@@ -170,7 +173,7 @@
     </section>
 
 
-    <!-- PANTALLA 4: SUGERENCIAS Y RECOMENDACIONES -->
+    <!-- PANTALLA 4: SUGERENCIAS -->
     <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
         <div class="feedback-card-vintage">
             <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
@@ -257,7 +260,26 @@
             cargarFotoPerfil();
             verificarSesionGuardada();
             cargarComentarios();
+            limpiarFormulariosAuth();
         });
+
+        // VER Y OCULTAR CONTRASEÑA
+        function togglePasswordVisibility(inputId, btn) {
+            const passInput = document.getElementById(inputId);
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                btn.innerText = "🙈";
+            } else {
+                passInput.type = "password";
+                btn.innerText = "👁️";
+            }
+        }
+
+        // LIMPIAR CAMPOS DE TEXTO
+        function limpiarFormulariosAuth() {
+            document.getElementById("formLogin").reset();
+            document.getElementById("formRegister").reset();
+        }
 
         function navegarAPantalla(idPantalla) {
             document.querySelectorAll(".pantalla-seccion").forEach(sec => sec.classList.add("contenido-oculto"));
@@ -271,6 +293,7 @@
         }
 
         function mostrarTabAuth(tab) {
+            limpiarFormulariosAuth();
             if (tab === 'login') {
                 document.getElementById('formLogin').classList.remove('contenido-oculto');
                 document.getElementById('formRegister').classList.add('contenido-oculto');
@@ -299,6 +322,8 @@
 
             const sesion = { nombre: usuarioActual, esAdmin: esPropietario };
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
+            
+            limpiarFormulariosAuth();
             actualizarInterfazUsuario();
             navegarAPantalla('pantallaInicio');
         }
@@ -311,6 +336,8 @@
 
             const sesion = { nombre: usuarioActual, esAdmin: false };
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
+            
+            limpiarFormulariosAuth();
             actualizarInterfazUsuario();
             navegarAPantalla('pantallaInicio');
         }
@@ -360,6 +387,7 @@
             localStorage.removeItem("sesion_portafolio_upla");
             usuarioActual = "Invitado";
             esPropietario = false;
+            limpiarFormulariosAuth();
             document.getElementById("navScreens").classList.add("contenido-oculto");
             document.getElementById("btnSalirNav").classList.add("contenido-oculto");
             navegarAPantalla('pantallaAuth');

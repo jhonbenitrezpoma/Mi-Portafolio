@@ -8,12 +8,12 @@
 </head>
 <body>
 
-    <!-- NAVBAR PRINCIPAL -->
+    <!-- NAVBAR NAVEGACIÓN ENTRE PANTALLAS -->
     <header class="navbar">
         <div class="logo-container">
             <div class="logo-wrapper">
                 <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
-                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo Institucional">
+                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo">
                     📷
                     <input type="file" accept="image/*" onchange="subirNuevoLogo(event)" style="display:none;">
                 </label>
@@ -24,16 +24,26 @@
             </div>
         </div>
 
+        <!-- Menú para alternar entre Pantallas -->
+        <nav class="nav-screens">
+            <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏠 Inicio / Presentación</button>
+            <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
+            <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaFeedback')">💬 Sugerencias</button>
+        </nav>
+
         <div class="user-info">
             <span id="userNameDisplay" class="user-name">Invitado</span>
             <span id="userRoleBadge" class="badge badge-visitor">👁️ Visitante</span>
-            <button id="btnAuthNav" onclick="abrirModalAuth()" class="btn-primary-sm">🔑 Acceder / Registrarse</button>
+            <button id="btnAuthNav" onclick="navegarAPantalla('pantallaAuth')" class="btn-primary-sm">🔑 Acceder / Registrarse</button>
             <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-secundary-sm contenido-oculto">Salir</button>
         </div>
     </header>
 
-    <!-- 1. PRESENTACIÓN PRINCIPAL (SE VE PRIMERO) -->
-    <section class="hero-presentation">
+
+    <!-- ==========================================
+         PANTALLA 1: PRESENTACIÓN PRINCIPAL (INICIO)
+         ========================================== -->
+    <section id="pantallaInicio" class="pantalla-seccion">
         <div class="hero-card">
             <div class="profile-side">
                 <div class="avatar-box">
@@ -58,128 +68,143 @@
 
                 <div class="purpose-grid">
                     <div class="p-item">
-                        <h4>📘 ¿De qué trata?</h4>
+                        <h4>📘 ¿De qué trata este portafolio?</h4>
                         <p>Es una plataforma web donde archivo mis tareas semanales, código fuente, documentación en PDF y demostraciones de proyectos de la universidad.</p>
                     </div>
                     <div class="p-item">
-                        <h4>🎯 ¿Para qué sirve?</h4>
+                        <h4>🎯 ¿Para qué me sirve?</h4>
                         <p>Demuestra la aplicación práctica de mis conocimientos en desarrollo de software, permite el seguimiento transparente a docentes y respalda mi perfil profesional.</p>
                     </div>
                 </div>
 
                 <div class="hero-actions">
-                    <button class="btn-hero-primary" onclick="scrollHaciaCursos()">📂 Explorar Cursos y Tareas</button>
-                    <button class="btn-hero-outline" onclick="abrirModalAuth()">👤 Iniciar Sesión / Registrarse</button>
+                    <button class="btn-hero-primary" onclick="navegarAPantalla('pantallaCursos')">📂 Ir a Cursos y Tareas</button>
+                    <button class="btn-hero-outline" onclick="navegarAPantalla('pantallaAuth')">👤 Registrarse / Iniciar Sesión</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 2. NAVEGACIÓN Y CONTENIDO DE CURSOS Y TAREAS -->
-    <div id="seccionCursos" class="layout">
-        <!-- Sidebar de Cursos -->
-        <aside class="sidebar">
-            <h3>Mis Cursos</h3>
-            <button class="course-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
-            <button class="course-btn" onclick="cambiarCurso('curso2', event)">🧮 Algoritmos y Estructuras de Datos</button>
-        </aside>
 
-        <!-- Contenido de Unidades y Semanas -->
-        <main class="main-content">
-            <h2 id="tituloCurso">📱 Desarrollo de Aplicaciones 1</h2>
+    <!-- ==========================================
+         PANTALLA 2: REGISTRO / INICIO DE SESIÓN
+         ========================================== -->
+    <section id="pantallaAuth" class="pantalla-seccion contenido-oculto">
+        <div class="auth-box-container">
+            <div class="login-box">
+                <div class="logo-upla-login">
+                    <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
+                </div>
+                <h2>Registro y Acceso de Usuario</h2>
 
-            <!-- Selector de 4 Unidades -->
-            <div class="unidades-tabs">
-                <button class="tab-btn active" onclick="mostrarUnidad(1, event)">Unidad 1</button>
-                <button class="tab-btn" onclick="mostrarUnidad(2, event)">Unidad 2</button>
-                <button class="tab-btn" onclick="mostrarUnidad(3, event)">Unidad 3</button>
-                <button class="tab-btn" onclick="mostrarUnidad(4, event)">Unidad 4</button>
-            </div>
+                <!-- Tabs de Auth -->
+                <div class="auth-tabs">
+                    <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Iniciar Sesión</button>
+                    <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
+                </div>
 
-            <!-- Contenedor de las 4 Semanas -->
-            <div id="semanasContainer" class="semanas-container">
-                <!-- Se renderiza dinámicamente -->
-            </div>
-
-            <!-- SECCIÓN DE NOTAS Y SUGERENCIAS DE VISITANTES -->
-            <section class="feedback-section">
-                <h3>💬 Notas y Sugerencias de Visitantes</h3>
-                <p>Déjame un comentario, observación o sugerencia sobre los proyectos y tareas presentados:</p>
-
-                <form onsubmit="guardarComentario(event)" class="feedback-form">
-                    <div class="form-row">
-                        <input type="text" id="feedbackNombre" placeholder="Tu nombre o usuario..." required>
-                        <input type="text" id="feedbackMsg" placeholder="Escribe tu nota o sugerencia..." required>
-                        <button type="submit" class="btn-primary-sm">💬 Enviar Sugerencia</button>
+                <!-- Formulario Iniciar Sesión -->
+                <form id="formLogin" onsubmit="procesarLogin(event)">
+                    <div class="form-group">
+                        <label>Username / Nombre de Usuario:</label>
+                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
                     </div>
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
+                    </div>
+                    <button type="submit" class="btn-primary btn-block">Ingresar</button>
                 </form>
 
-                <div id="comentariosList" class="comentarios-list">
-                    <!-- Se cargan comentarios guardados -->
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- MODAL DE ACCESO / REGISTRO -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="cerrarModalAuth()">✕</button>
-            <div class="logo-upla-login">
-                <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
+                <!-- Formulario Registro -->
+                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
+                    <div class="form-group">
+                        <label>Username / Nombre Completo:</label>
+                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="regPass" placeholder="Crea tu contraseña" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico (Opcional):</label>
+                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com (opcional)">
+                    </div>
+                    <button type="submit" class="btn-primary btn-block">Crear Cuenta</button>
+                </form>
             </div>
-            <h2>Acceso / Registro de Usuario</h2>
-
-            <!-- Tabs de Auth -->
-            <div class="auth-tabs">
-                <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Iniciar Sesión</button>
-                <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
-            </div>
-
-            <!-- Formulario Iniciar Sesión -->
-            <form id="formLogin" onsubmit="procesarLogin(event)">
-                <div class="form-group">
-                    <label>Username / Nombre:</label>
-                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez o tu usuario" required>
-                </div>
-                <div class="form-group">
-                    <label>Contraseña:</label>
-                    <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacio">
-                </div>
-                <button type="submit" class="btn-primary btn-block">Ingresar</button>
-            </form>
-
-            <!-- Formulario Registro -->
-            <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
-                <div class="form-group">
-                    <label>Username / Nombre Completo:</label>
-                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
-                </div>
-                <div class="form-group">
-                    <label>Contraseña:</label>
-                    <input type="password" id="regPass" placeholder="Crea una contraseña" required>
-                </div>
-                <div class="form-group">
-                    <label>Correo Electrónico (Opcional):</label>
-                    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com (opcional)">
-                </div>
-                <button type="submit" class="btn-primary btn-block">Crear Cuenta</button>
-            </form>
         </div>
-    </div>
+    </section>
 
-    <!-- MODAL SUBIR TAREA MULTIPLE (PROPIETARIO) -->
+
+    <!-- ==========================================
+         PANTALLA 3: GESTIÓN DE CURSOS Y TAREAS
+         ========================================== -->
+    <section id="pantallaCursos" class="pantalla-seccion contenido-oculto">
+        <div class="layout">
+            <!-- Sidebar de Cursos -->
+            <aside class="sidebar">
+                <h3>Mis Cursos</h3>
+                <button class="course-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
+                <button class="course-btn" onclick="cambiarCurso('curso2', event)">🧮 Algoritmos y Estructuras de Datos</button>
+            </aside>
+
+            <!-- Área Principal de Unidades y Semanas -->
+            <main class="main-content">
+                <h2 id="tituloCurso">📱 Desarrollo de Aplicaciones 1</h2>
+
+                <!-- Selector de 4 Unidades -->
+                <div class="unidades-tabs">
+                    <button class="tab-btn active" onclick="mostrarUnidad(1, event)">Unidad 1</button>
+                    <button class="tab-btn" onclick="mostrarUnidad(2, event)">Unidad 2</button>
+                    <button class="tab-btn" onclick="mostrarUnidad(3, event)">Unidad 3</button>
+                    <button class="tab-btn" onclick="mostrarUnidad(4, event)">Unidad 4</button>
+                </div>
+
+                <!-- Tarjetas de las 4 Semanas -->
+                <div id="semanasContainer" class="semanas-container">
+                    <!-- Carga dinámica vía JavaScript -->
+                </div>
+            </main>
+        </div>
+    </section>
+
+
+    <!-- ==========================================
+         PANTALLA 4: SUGERENCIAS Y NOTAS DE VISITANTES
+         ========================================== -->
+    <section id="pantallaFeedback" class="pantalla-seccion contenido-oculto">
+        <div class="feedback-container">
+            <h3>💬 Notas y Sugerencias de Visitantes</h3>
+            <p>Deja una sugerencia, duda o comentario sobre los trabajos y temas presentados:</p>
+
+            <form onsubmit="guardarComentario(event)" class="feedback-form">
+                <div class="form-row">
+                    <input type="text" id="feedbackNombre" placeholder="Tu nombre o usuario..." required>
+                    <input type="text" id="feedbackMsg" placeholder="Escribe tu sugerencia o nota..." required>
+                    <button type="submit" class="btn-primary-sm">💬 Enviar Sugerencia</button>
+                </div>
+            </form>
+
+            <div id="comentariosList" class="comentarios-list">
+                <!-- Se cargan comentarios -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- MODAL PARA SUBIR TAREA MÚLTIPLE (PROPIETARIO) -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-lg">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
             <h3>📤 Agregar Nueva Tarea a la Semana</h3>
-            <p>Puedes agregar un archivo PDF/documento o un enlace a un proyecto externo.</p>
+            <p>Puedes adjuntar un archivo (PDF, DOCX, ZIP) o ingresar un enlace a un proyecto externo.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
 
                 <div class="form-group">
-                    <label>Título o Nombre de la Tarea:</label>
+                    <label>Título / Nombre de la Tarea:</label>
                     <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Informe de Modelado UML" required>
                 </div>
 
@@ -206,8 +231,10 @@
         </div>
     </div>
 
+
+    <!-- SCRIPT DE NAVEGACIÓN Y LÓGICA -->
     <script>
-        // ESTADO GLOBAL Y DATOS
+        // ESTADO GLOBAL
         let usuarioActual = "Invitado";
         let esPropietario = false;
         let cursoActual = 'curso1';
@@ -218,7 +245,6 @@
             curso2: "🧮 Algoritmos y Estructuras de Datos"
         };
 
-        // TAREAS DEMO OFICIALES (Múltiples tareas por semana)
         const TAREAS_OFICIALES = {
             "curso1_U1_S1": [
                 { id: "off1", nombre: "Tarea 1: Guía de Interfaces de Usuario (PDF)", url: "tareas/tarea1-guia.pdf", tipo: "archivo" },
@@ -236,17 +262,16 @@
             cargarComentarios();
         });
 
-        // NAVEGACIÓN Y MODALES
-        function scrollHaciaCursos() {
-            document.getElementById("seccionCursos").scrollIntoView({ behavior: "smooth" });
-        }
+        // CONTROLADOR DE PANTALLAS
+        function navegarAPantalla(idPantalla) {
+            document.querySelectorAll(".pantalla-seccion").forEach(sec => sec.classList.add("contenido-oculto"));
+            document.getElementById(idPantalla).classList.remove("contenido-oculto");
 
-        function abrirModalAuth() {
-            document.getElementById("authModal").style.display = "flex";
-        }
-
-        function cerrarModalAuth() {
-            document.getElementById("authModal").style.display = "none";
+            document.querySelectorAll(".nav-screen-btn").forEach(btn => btn.classList.remove("active"));
+            
+            if (idPantalla === 'pantallaInicio') document.querySelectorAll(".nav-screen-btn")[0].classList.add("active");
+            if (idPantalla === 'pantallaCursos') document.querySelectorAll(".nav-screen-btn")[1].classList.add("active");
+            if (idPantalla === 'pantallaFeedback') document.querySelectorAll(".nav-screen-btn")[2].classList.add("active");
         }
 
         function mostrarTabAuth(tab) {
@@ -263,7 +288,7 @@
             }
         }
 
-        // AUTENTICACIÓN
+        // ACCESO Y AUTENTICACIÓN
         function procesarLogin(e) {
             e.preventDefault();
             const inputUser = document.getElementById("loginUsuario").value.trim().toLowerCase();
@@ -279,8 +304,8 @@
 
             const sesion = { nombre: usuarioActual, esAdmin: esPropietario };
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
-            cerrarModalAuth();
             actualizarInterfazUsuario();
+            navegarAPantalla('pantallaCursos');
         }
 
         function procesarRegistro(e) {
@@ -291,8 +316,8 @@
 
             const sesion = { nombre: usuarioActual, esAdmin: false };
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
-            cerrarModalAuth();
             actualizarInterfazUsuario();
+            navegarAPantalla('pantallaCursos');
         }
 
         function verificarSesionGuardada() {
@@ -344,9 +369,10 @@
             usuarioActual = "Invitado";
             esPropietario = false;
             actualizarInterfazUsuario();
+            navegarAPantalla('pantallaInicio');
         }
 
-        // CURSOS Y UNIDADES
+        // NAVEGACIÓN CURSOS
         function cambiarCurso(idCurso, ev) {
             cursoActual = idCurso;
             document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
@@ -363,9 +389,10 @@
             renderizarUnidad();
         }
 
-        // RENDERIZADO DE SEMANAS Y MULTIPLES TAREAS
+        // RENDERIZADO TAREAS MÚLTIPLES
         function renderizarUnidad() {
             const container = document.getElementById("semanasContainer");
+            if (!container) return;
             container.innerHTML = "";
 
             const semanaInicio = (unidadActual - 1) * 4 + 1;
@@ -375,8 +402,6 @@
                 const keyTarea = `${cursoActual}_U${unidadActual}_S${numSemana}`;
 
                 const tituloClase = localStorage.getItem("titulo_clase_" + keyTarea) || "";
-                
-                // Obtener tareas guardadas
                 const tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
 
                 const semanaCard = document.createElement("div");
@@ -423,7 +448,7 @@
             }
         }
 
-        // GESTIÓN DE TAREAS MÚLTIPLES (PROPIETARIO)
+        // TAREAS PROPIETARIO
         function abrirModalSubirTarea(keyTarea) {
             document.getElementById("modalKeyTarea").value = keyTarea;
             document.getElementById("taskTitulo").value = "";
@@ -496,7 +521,7 @@
             }
         }
 
-        // GESTIÓN DE NOTAS Y SUGERENCIAS DE VISITANTES
+        // COMENTARIOS
         function guardarComentario(e) {
             e.preventDefault();
             const nombre = document.getElementById("feedbackNombre").value.trim();
@@ -514,6 +539,7 @@
 
         function cargarComentarios() {
             const list = document.getElementById("comentariosList");
+            if (!list) return;
             const comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [
                 { nombre: "Profesor UPLA", mensaje: "Excelente orden en las entregas de Desarrollo de Aplicaciones.", fecha: "15/9/2026" }
             ];
@@ -530,7 +556,7 @@
             });
         }
 
-        // FOTO Y LOGO
+        // LOGO Y FOTO
         function subirFotoPerfil(event) {
             const archivo = event.target.files[0];
             if (!archivo) return;

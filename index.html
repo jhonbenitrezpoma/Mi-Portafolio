@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR NAVEGACIÓN ENTRE PANTALLAS -->
+    <!-- NAVBAR PRINCIPAL -->
     <header class="navbar">
         <div class="logo-container">
             <div class="logo-wrapper">
@@ -24,9 +24,9 @@
             </div>
         </div>
 
-        <!-- Menú para alternar entre Pantallas -->
-        <nav class="nav-screens">
-            <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏠 Inicio / Presentación</button>
+        <!-- Menú de navegación (Se activa tras iniciar sesión) -->
+        <nav id="navScreens" class="nav-screens contenido-oculto">
+            <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">👤 Mi Presentación</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaFeedback')">💬 Sugerencias</button>
         </nav>
@@ -34,16 +34,67 @@
         <div class="user-info">
             <span id="userNameDisplay" class="user-name">Invitado</span>
             <span id="userRoleBadge" class="badge badge-visitor">👁️ Visitante</span>
-            <button id="btnAuthNav" onclick="navegarAPantalla('pantallaAuth')" class="btn-primary-sm">🔑 Acceder / Registrarse</button>
-            <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-secundary-sm contenido-oculto">Salir</button>
+            <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-secundary-sm contenido-oculto">Salir / Cambiar</button>
         </div>
     </header>
 
 
     <!-- ==========================================
-         PANTALLA 1: PRESENTACIÓN PRINCIPAL (INICIO)
+         PANTALLA 1: REGISTRO / LOGIN (SALTA PRIMERO)
          ========================================== -->
-    <section id="pantallaInicio" class="pantalla-seccion">
+    <section id="pantallaAuth" class="pantalla-seccion">
+        <div class="auth-box-container">
+            <div class="login-box">
+                <div class="logo-upla-login">
+                    <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
+                </div>
+                <h2>Acceso al Portafolio</h2>
+                <p class="auth-sub">Inicia sesión o regístrate para ingresar al sistema.</p>
+
+                <!-- Tabs Iniciar Sesión / Registro -->
+                <div class="auth-tabs">
+                    <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Iniciar Sesión</button>
+                    <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
+                </div>
+
+                <!-- Formulario Iniciar Sesión -->
+                <form id="formLogin" onsubmit="procesarLogin(event)">
+                    <div class="form-group">
+                        <label>Username / Nombre de Usuario:</label>
+                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
+                    </div>
+                    <button type="submit" class="btn-primary btn-block">Ingresar al Portafolio</button>
+                </form>
+
+                <!-- Formulario Registro -->
+                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
+                    <div class="form-group">
+                        <label>Username / Nombre Completo:</label>
+                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña:</label>
+                        <input type="password" id="regPass" placeholder="Crea tu contraseña" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico (Opcional):</label>
+                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com (opcional)">
+                    </div>
+                    <button type="submit" class="btn-primary btn-block">Crear Cuenta e Ingresar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ==========================================
+         PANTALLA 2: PRESENTACIÓN MI A (LUEGO DE ENTRAR)
+         ========================================== -->
+    <section id="pantallaInicio" class="pantalla-seccion contenido-oculto">
         <div class="hero-card">
             <div class="profile-side">
                 <div class="avatar-box">
@@ -59,7 +110,7 @@
             </div>
 
             <div class="info-side">
-                <h2>👋 ¡Bienvenido/a a mi Portafolio Académico!</h2>
+                <h2 id="saludoBienvenida">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                 <p class="desc">
                     Soy estudiante de <strong>Ingeniería de Sistemas y Cómputo</strong> en la Universidad Peruana Los Andes (UPLA). 
                     Este portafolio web ha sido diseñado como un espacio centralizado para documentar, organizar y compartir los módulos prácticos, 
@@ -79,7 +130,6 @@
 
                 <div class="hero-actions">
                     <button class="btn-hero-primary" onclick="navegarAPantalla('pantallaCursos')">📂 Ir a Cursos y Tareas</button>
-                    <button class="btn-hero-outline" onclick="navegarAPantalla('pantallaAuth')">👤 Registrarse / Iniciar Sesión</button>
                 </div>
             </div>
         </div>
@@ -87,58 +137,7 @@
 
 
     <!-- ==========================================
-         PANTALLA 2: REGISTRO / INICIO DE SESIÓN
-         ========================================== -->
-    <section id="pantallaAuth" class="pantalla-seccion contenido-oculto">
-        <div class="auth-box-container">
-            <div class="login-box">
-                <div class="logo-upla-login">
-                    <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
-                </div>
-                <h2>Registro y Acceso de Usuario</h2>
-
-                <!-- Tabs de Auth -->
-                <div class="auth-tabs">
-                    <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Iniciar Sesión</button>
-                    <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
-                </div>
-
-                <!-- Formulario Iniciar Sesión -->
-                <form id="formLogin" onsubmit="procesarLogin(event)">
-                    <div class="form-group">
-                        <label>Username / Nombre de Usuario:</label>
-                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña:</label>
-                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
-                    </div>
-                    <button type="submit" class="btn-primary btn-block">Ingresar</button>
-                </form>
-
-                <!-- Formulario Registro -->
-                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
-                    <div class="form-group">
-                        <label>Username / Nombre Completo:</label>
-                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña:</label>
-                        <input type="password" id="regPass" placeholder="Crea tu contraseña" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Correo Electrónico (Opcional):</label>
-                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com (opcional)">
-                    </div>
-                    <button type="submit" class="btn-primary btn-block">Crear Cuenta</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ==========================================
-         PANTALLA 3: GESTIÓN DE CURSOS Y TAREAS
+         PANTALLA 3: OPCIÓN DE CURSOS Y TAREAS
          ========================================== -->
     <section id="pantallaCursos" class="pantalla-seccion contenido-oculto">
         <div class="layout">
@@ -232,9 +231,7 @@
     </div>
 
 
-    <!-- SCRIPT DE NAVEGACIÓN Y LÓGICA -->
     <script>
-        // ESTADO GLOBAL
         let usuarioActual = "Invitado";
         let esPropietario = false;
         let cursoActual = 'curso1';
@@ -262,16 +259,15 @@
             cargarComentarios();
         });
 
-        // CONTROLADOR DE PANTALLAS
         function navegarAPantalla(idPantalla) {
             document.querySelectorAll(".pantalla-seccion").forEach(sec => sec.classList.add("contenido-oculto"));
             document.getElementById(idPantalla).classList.remove("contenido-oculto");
 
             document.querySelectorAll(".nav-screen-btn").forEach(btn => btn.classList.remove("active"));
             
-            if (idPantalla === 'pantallaInicio') document.querySelectorAll(".nav-screen-btn")[0].classList.add("active");
-            if (idPantalla === 'pantallaCursos') document.querySelectorAll(".nav-screen-btn")[1].classList.add("active");
-            if (idPantalla === 'pantallaFeedback') document.querySelectorAll(".nav-screen-btn")[2].classList.add("active");
+            if (idPantalla === 'pantallaInicio') document.querySelectorAll(".nav-screen-btn")[0]?.classList.add("active");
+            if (idPantalla === 'pantallaCursos') document.querySelectorAll(".nav-screen-btn")[1]?.classList.add("active");
+            if (idPantalla === 'pantallaFeedback') document.querySelectorAll(".nav-screen-btn")[2]?.classList.add("active");
         }
 
         function mostrarTabAuth(tab) {
@@ -288,7 +284,6 @@
             }
         }
 
-        // ACCESO Y AUTENTICACIÓN
         function procesarLogin(e) {
             e.preventDefault();
             const inputUser = document.getElementById("loginUsuario").value.trim().toLowerCase();
@@ -305,7 +300,7 @@
             const sesion = { nombre: usuarioActual, esAdmin: esPropietario };
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
             actualizarInterfazUsuario();
-            navegarAPantalla('pantallaCursos');
+            navegarAPantalla('pantallaInicio');
         }
 
         function procesarRegistro(e) {
@@ -317,7 +312,7 @@
             const sesion = { nombre: usuarioActual, esAdmin: false };
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
             actualizarInterfazUsuario();
-            navegarAPantalla('pantallaCursos');
+            navegarAPantalla('pantallaInicio');
         }
 
         function verificarSesionGuardada() {
@@ -325,38 +320,35 @@
             if (sesion) {
                 usuarioActual = sesion.nombre;
                 esPropietario = sesion.esAdmin;
+                actualizarInterfazUsuario();
+                navegarAPantalla('pantallaInicio');
+            } else {
+                navegarAPantalla('pantallaAuth');
             }
-            actualizarInterfazUsuario();
         }
 
         function actualizarInterfazUsuario() {
             document.getElementById("userNameDisplay").innerText = usuarioActual;
+            document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ a mi Portafolio`;
 
             const badge = document.getElementById("userRoleBadge");
-            const btnAuth = document.getElementById("btnAuthNav");
             const btnSalir = document.getElementById("btnSalirNav");
             const btnLogo = document.getElementById("btnCambiarLogo");
             const btnFoto = document.getElementById("btnCambiarFoto");
+            const navScreens = document.getElementById("navScreens");
+
+            navScreens.classList.remove("contenido-oculto");
 
             if (esPropietario) {
                 badge.innerText = "👑 Propietario";
                 badge.className = "badge badge-admin";
-                btnAuth.classList.add("contenido-oculto");
                 btnSalir.classList.remove("contenido-oculto");
                 btnLogo.classList.remove("contenido-oculto");
                 btnFoto.classList.remove("contenido-oculto");
-            } else if (usuarioActual !== "Invitado") {
+            } else {
                 badge.innerText = "👁️ Visitante (" + usuarioActual + ")";
                 badge.className = "badge badge-visitor";
-                btnAuth.classList.add("contenido-oculto");
                 btnSalir.classList.remove("contenido-oculto");
-                btnLogo.classList.add("contenido-oculto");
-                btnFoto.classList.add("contenido-oculto");
-            } else {
-                badge.innerText = "👁️ Invitado";
-                badge.className = "badge badge-visitor";
-                btnAuth.classList.remove("contenido-oculto");
-                btnSalir.classList.add("contenido-oculto");
                 btnLogo.classList.add("contenido-oculto");
                 btnFoto.classList.add("contenido-oculto");
             }
@@ -368,11 +360,11 @@
             localStorage.removeItem("sesion_portafolio_upla");
             usuarioActual = "Invitado";
             esPropietario = false;
-            actualizarInterfazUsuario();
-            navegarAPantalla('pantallaInicio');
+            document.getElementById("navScreens").classList.add("contenido-oculto");
+            document.getElementById("btnSalirNav").classList.add("contenido-oculto");
+            navegarAPantalla('pantallaAuth');
         }
 
-        // NAVEGACIÓN CURSOS
         function cambiarCurso(idCurso, ev) {
             cursoActual = idCurso;
             document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
@@ -389,7 +381,6 @@
             renderizarUnidad();
         }
 
-        // RENDERIZADO TAREAS MÚLTIPLES
         function renderizarUnidad() {
             const container = document.getElementById("semanasContainer");
             if (!container) return;
@@ -438,7 +429,7 @@
 
                 if (esPropietario) {
                     html += `
-                        <button class="btn-upload-more" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Subir Tarea Nueva (Varias Formas)</button>
+                        <button class="btn-upload-more" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Subir Tarea Nueva</button>
                     `;
                 }
 
@@ -448,7 +439,6 @@
             }
         }
 
-        // TAREAS PROPIETARIO
         function abrirModalSubirTarea(keyTarea) {
             document.getElementById("modalKeyTarea").value = keyTarea;
             document.getElementById("taskTitulo").value = "";
@@ -521,7 +511,6 @@
             }
         }
 
-        // COMENTARIOS
         function guardarComentario(e) {
             e.preventDefault();
             const nombre = document.getElementById("feedbackNombre").value.trim();
@@ -556,7 +545,6 @@
             });
         }
 
-        // LOGO Y FOTO
         function subirFotoPerfil(event) {
             const archivo = event.target.files[0];
             if (!archivo) return;

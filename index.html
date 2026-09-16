@@ -11,19 +11,20 @@
 </head>
 <body>
 
-    <!-- NAVBAR PRINCIPAL -->
+    <!-- NAVBAR PRINCIPAL LUMINOSO -->
     <header class="navbar">
         <div class="logo-container">
             <div class="logo-wrapper">
+                <!-- AQUÍ PUEDES CAMBIAR EL LOGO DEL ENCABEZADO -->
                 <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
-                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo">
+                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo desde tu PC">
                     📷
                     <input type="file" accept="image/*" onchange="subirNuevoLogo(event)" style="display:none;">
                 </label>
             </div>
             <div>
-                <h1 class="font-vintage-title">PORTAFOLIO UPLA</h1>
-                <p class="sub-logo">Ingeniería de Sistemas y Cómputo</p>
+                <h1 class="font-vintage-title">PORTAFOLIO ACADÉMICO</h1>
+                <p class="sub-logo">Universidad Peruana Los Andes • Sistemas y Cómputo</p>
             </div>
         </div>
 
@@ -41,14 +42,15 @@
     </header>
 
 
-    <!-- PANTALLA 1: LOGIN / REGISTRO CON DISEÑO INSTITUCIONAL UPLA -->
+    <!-- PANTALLA 1: LOGIN / REGISTRO ILUMINADO UPLA -->
     <section id="pantallaAuth" class="pantalla-seccion upla-auth-bg">
         <div class="auth-overlay-backdrop">
             <div class="vintage-login-card">
                 <div class="vintage-card-header">
+                    <!-- AQUÍ PUEDES CAMBIAR EL LOGO DEL LOGIN -->
                     <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
-                    <h2 class="font-vintage-title">Acceso Académico</h2>
-                    <p class="auth-subtitle">Universidad Peruana Los Andes</p>
+                    <h2 class="font-vintage-title">Acceso al Portafolio</h2>
+                    <p class="auth-subtitle">Ingeniería de Sistemas y Cómputo - UPLA</p>
                 </div>
 
                 <div class="auth-tabs">
@@ -66,21 +68,21 @@
                         <label>Contraseña:</label>
                         <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
                     </div>
-                    <button type="submit" class="btn-vintage-gold">Entrar al Portafolio</button>
+                    <button type="submit" class="btn-vintage-gold">Ingresar al Portafolio</button>
                 </form>
 
                 <!-- Formulario Registro -->
                 <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
                     <div class="form-group-vintage">
-                        <label>Nombre de Usuario / Estudiante:</label>
+                        <label>Nombre Completo:</label>
                         <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
                     </div>
                     <div class="form-group-vintage">
                         <label>Contraseña:</label>
-                        <input type="password" id="regPass" placeholder="Crea una clave" required>
+                        <input type="password" id="regPass" placeholder="Crea una contraseña" required>
                     </div>
                     <div class="form-group-vintage">
-                        <label>Correo Institucional / Personal (Opcional):</label>
+                        <label>Correo Electrónico (Opcional):</label>
                         <input type="email" id="regCorreo" placeholder="correo@ejemplo.com">
                     </div>
                     <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
@@ -90,7 +92,7 @@
     </section>
 
 
-    <!-- PANTALLA 2: PRESENTACIÓN MI A (ESTILO VINTAGE ACADÉMICO CON VIDA Y COLOR) -->
+    <!-- PANTALLA 2: PRESENTACIÓN MI A (LUMINOSA Y VIBRANTE) -->
     <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg contenido-oculto">
         <div class="vintage-container">
             <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
@@ -106,25 +108,25 @@
                         </label>
                     </div>
                     <h3 class="author-title">Jhon Benitrez Poma</h3>
-                    <p class="author-role">Ingeniería de Sistemas y Cómputo</p>
-                    <div class="author-location">📍 Huancayo, Perú</div>
+                    <p class="author-role">💻 Ingeniería de Sistemas y Cómputo</p>
+                    <div class="author-location">🏛️ UPLA - Huancayo, Perú</div>
                 </div>
 
                 <!-- Columna Información y Propósito -->
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
-                        Bienvenido a mi espacio digital en la <strong>Universidad Peruana Los Andes</strong>. Aquí centralizo mis evidencias de aprendizaje, código fuente, proyectos interactivos y tareas universitarias.
+                        Bienvenido a mi plataforma académica en la <strong>Universidad Peruana Los Andes</strong>. Aquí organizo, documento y comparto mis entregables, proyectos de código y guías prácticas desarrolladas durante el ciclo académico.
                     </p>
 
                     <div class="vintage-boxes-container">
                         <div class="v-box v-box-gold">
                             <h4>📘 ¿De qué trata este portafolio?</h4>
-                            <p>Es una plataforma web donde organizo por cursos, unidades y semanas todo el material académico, guías prácticas, algoritmos y desarrollos de software de la carrera.</p>
+                            <p>Es un espacio web centralizado donde archivo tareas semanales, documentación en PDF, enlaces a GitHub/Figma y guías de desarrollo software.</p>
                         </div>
                         <div class="v-box v-box-burgundy">
                             <h4>🎯 ¿Para qué me sirve?</h4>
-                            <p>Funciona como un escaparate técnico para validar mi avance académico ante docentes, dar trazabilidad a entregables universitarios y consolidar mi perfil profesional.</p>
+                            <p>Demuestra la aplicación práctica de mis competencias profesionales, facilita la revisión por parte de docentes y consolida mi perfil profesional.</p>
                         </div>
                     </div>
 
@@ -137,7 +139,7 @@
     </section>
 
 
-    <!-- PANTALLA 3: CURSOS Y TAREAS (ESTILO LIMPIO E INTUITIVO) -->
+    <!-- PANTALLA 3: CURSOS Y TAREAS (DISEÑO CLARO E INTUITIVO) -->
     <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
         <div class="cursos-main-container">
             
@@ -149,7 +151,7 @@
 
             <div class="course-header-banner">
                 <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
-                <p>Navega entre las 4 unidades académicas para revisar o gestionar las tareas entregadas.</p>
+                <p>Selecciona cualquiera de las 4 Unidades para revisar las tareas y actividades semanales.</p>
             </div>
 
             <!-- Tabs de Unidades -->
@@ -160,53 +162,53 @@
                 <button class="pill-btn" onclick="mostrarUnidad(4, event)">Unidad IV</button>
             </div>
 
-            <!-- Grid de Semanas (Tarjetas) -->
+            <!-- Grid de Semanas -->
             <div id="semanasContainer" class="semanas-grid">
-                <!-- Se cargan dinámicamente con JS -->
+                <!-- Carga dinámica -->
             </div>
         </div>
     </section>
 
 
-    <!-- PANTALLA 4: NOTAS Y SUGERENCIAS DE VISITANTES -->
+    <!-- PANTALLA 4: SUGERENCIAS Y RECOMENDACIONES -->
     <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
         <div class="feedback-card-vintage">
             <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
-            <p>Deja una sugerencia, duda o comentario sobre los trabajos y temas presentados:</p>
+            <p>Deja un mensaje, observación o recomendación sobre las tareas y proyectos presentados:</p>
 
             <form onsubmit="guardarComentario(event)" class="feedback-form">
                 <div class="form-row-vintage">
                     <input type="text" id="feedbackNombre" placeholder="Tu nombre o usuario..." required>
-                    <input type="text" id="feedbackMsg" placeholder="Escribe tu sugerencia o nota..." required>
+                    <input type="text" id="feedbackMsg" placeholder="Escribe tu mensaje o sugerencia..." required>
                     <button type="submit" class="btn-vintage-gold">💬 Enviar Sugerencia</button>
                 </div>
             </form>
 
             <div id="comentariosList" class="comentarios-list-vintage">
-                <!-- Comentarios guardados -->
+                <!-- Se cargan comentarios -->
             </div>
         </div>
     </section>
 
 
-    <!-- MODAL PARA SUBIR O EDITAR TAREAS (PROPIETARIO) -->
+    <!-- MODAL PARA SUBIR Y EDITAR TAREAS (PROPIETARIO) -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
             <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
-            <p>Sube un archivo (PDF, DOCX, ZIP) o ingresa un enlace a un repositorio o prototipo.</p>
+            <p>Adjunta un archivo o ingresa un enlace a tu proyecto en GitHub, Drive o Figma.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
                 <input type="hidden" id="modalEditIndex" value="-1">
 
                 <div class="form-group-vintage">
-                    <label>Título o Nombre de la Tarea:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Informe de Requisitos UML" required>
+                    <label>Título / Nombre de la Tarea:</label>
+                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Diagrama de Casos de Uso UML" required>
                 </div>
 
                 <div class="form-group-vintage">
-                    <label>Formato / Entrega:</label>
+                    <label>Tipo de Entrega:</label>
                     <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
                         <option value="archivo">📄 Subir Archivo (PDF, DOCX, ZIP, Imagen)</option>
                         <option value="enlace">🔗 Enlace Web (GitHub, Drive, Figma, Vercel)</option>
@@ -430,7 +432,7 @@
 
                 if (esPropietario) {
                     html += `
-                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Agregar Tarea (Archivo o Enlace)</button>
+                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Agregar Tarea Nueva</button>
                     `;
                 }
 

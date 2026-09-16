@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- NAVBAR PRINCIPAL -->
+    <!-- NAVBAR PRINCIPAL (ANCHO COMPLETO) -->
     <header class="navbar">
         <div class="logo-container">
             <div class="logo-wrapper">
@@ -24,7 +24,6 @@
             </div>
         </div>
 
-        <!-- Menú de navegación (Se activa tras iniciar sesión) -->
         <nav id="navScreens" class="nav-screens contenido-oculto">
             <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">👤 Mi Presentación</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
@@ -39,66 +38,57 @@
     </header>
 
 
-    <!-- ==========================================
-         PANTALLA 1: REGISTRO / LOGIN (SALTA PRIMERO)
-         ========================================== -->
-    <section id="pantallaAuth" class="pantalla-seccion">
-        <div class="auth-box-container">
-            <div class="login-box">
-                <div class="logo-upla-login">
-                    <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
-                </div>
-                <h2>Acceso al Portafolio</h2>
-                <p class="auth-sub">Inicia sesión o regístrate para ingresar al sistema.</p>
-
-                <!-- Tabs Iniciar Sesión / Registro -->
-                <div class="auth-tabs">
-                    <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Iniciar Sesión</button>
-                    <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
-                </div>
-
-                <!-- Formulario Iniciar Sesión -->
-                <form id="formLogin" onsubmit="procesarLogin(event)">
-                    <div class="form-group">
-                        <label>Username / Nombre de Usuario:</label>
-                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña:</label>
-                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
-                    </div>
-                    <button type="submit" class="btn-primary btn-block">Ingresar al Portafolio</button>
-                </form>
-
-                <!-- Formulario Registro -->
-                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
-                    <div class="form-group">
-                        <label>Username / Nombre Completo:</label>
-                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña:</label>
-                        <input type="password" id="regPass" placeholder="Crea tu contraseña" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Correo Electrónico (Opcional):</label>
-                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com (opcional)">
-                    </div>
-                    <button type="submit" class="btn-primary btn-block">Crear Cuenta e Ingresar</button>
-                </form>
+    <!-- PANTALLA 1: REGISTRO / LOGIN (FULLSCREEN) -->
+    <section id="pantallaAuth" class="pantalla-seccion pantalla-fullscreen">
+        <div class="login-box-full">
+            <div class="logo-upla-login">
+                <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
             </div>
+            <h2>Acceso al Portafolio</h2>
+            <p class="auth-sub">Inicia sesión o regístrate para ingresar al sistema.</p>
+
+            <div class="auth-tabs">
+                <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Iniciar Sesión</button>
+                <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
+            </div>
+
+            <form id="formLogin" onsubmit="procesarLogin(event)">
+                <div class="form-group">
+                    <label>Username / Nombre de Usuario:</label>
+                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
+                </div>
+                <button type="submit" class="btn-primary btn-block">Ingresar al Portafolio</button>
+            </form>
+
+            <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
+                <div class="form-group">
+                    <label>Username / Nombre Completo:</label>
+                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="password" id="regPass" placeholder="Crea tu contraseña" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico (Opcional):</label>
+                    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com (opcional)">
+                </div>
+                <button type="submit" class="btn-primary btn-block">Crear Cuenta e Ingresar</button>
+            </form>
         </div>
     </section>
 
 
-    <!-- ==========================================
-         PANTALLA 2: PRESENTACIÓN MI A (LUEGO DE ENTRAR)
-         ========================================== -->
-    <section id="pantallaInicio" class="pantalla-seccion contenido-oculto">
-        <div class="hero-card">
+    <!-- PANTALLA 2: PRESENTACIÓN MI A (FULLWIDTH) -->
+    <section id="pantallaInicio" class="pantalla-seccion pantalla-fullwidth contenido-oculto">
+        <div class="hero-card-full">
             <div class="profile-side">
                 <div class="avatar-box">
-                    <img id="fotoPerfilImg" src="https://via.placeholder.com/130?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-large">
+                    <img id="fotoPerfilImg" src="https://via.placeholder.com/160?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-large">
                     <label id="btnCambiarFoto" class="btn-sm-photo contenido-oculto">
                         📷 Cambiar Foto
                         <input type="file" accept="image/*" onchange="subirFotoPerfil(event)" style="display:none;">
@@ -136,23 +126,18 @@
     </section>
 
 
-    <!-- ==========================================
-         PANTALLA 3: OPCIÓN DE CURSOS Y TAREAS
-         ========================================== -->
-    <section id="pantallaCursos" class="pantalla-seccion contenido-oculto">
-        <div class="layout">
-            <!-- Sidebar de Cursos -->
-            <aside class="sidebar">
+    <!-- PANTALLA 3: CURSOS Y TAREAS (FULLWIDTH & GRID AMPLIO) -->
+    <section id="pantallaCursos" class="pantalla-seccion pantalla-fullwidth contenido-oculto">
+        <div class="layout-full">
+            <aside class="sidebar-full">
                 <h3>Mis Cursos</h3>
                 <button class="course-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
                 <button class="course-btn" onclick="cambiarCurso('curso2', event)">🧮 Algoritmos y Estructuras de Datos</button>
             </aside>
 
-            <!-- Área Principal de Unidades y Semanas -->
-            <main class="main-content">
+            <main class="main-content-full">
                 <h2 id="tituloCurso">📱 Desarrollo de Aplicaciones 1</h2>
 
-                <!-- Selector de 4 Unidades -->
                 <div class="unidades-tabs">
                     <button class="tab-btn active" onclick="mostrarUnidad(1, event)">Unidad 1</button>
                     <button class="tab-btn" onclick="mostrarUnidad(2, event)">Unidad 2</button>
@@ -160,20 +145,17 @@
                     <button class="tab-btn" onclick="mostrarUnidad(4, event)">Unidad 4</button>
                 </div>
 
-                <!-- Tarjetas de las 4 Semanas -->
-                <div id="semanasContainer" class="semanas-container">
-                    <!-- Carga dinámica vía JavaScript -->
+                <div id="semanasContainer" class="semanas-container-full">
+                    <!-- Carga dinámica -->
                 </div>
             </main>
         </div>
     </section>
 
 
-    <!-- ==========================================
-         PANTALLA 4: SUGERENCIAS Y NOTAS DE VISITANTES
-         ========================================== -->
-    <section id="pantallaFeedback" class="pantalla-seccion contenido-oculto">
-        <div class="feedback-container">
+    <!-- PANTALLA 4: SUGERENCIAS (FULLWIDTH) -->
+    <section id="pantallaFeedback" class="pantalla-seccion pantalla-fullwidth contenido-oculto">
+        <div class="feedback-container-full">
             <h3>💬 Notas y Sugerencias de Visitantes</h3>
             <p>Deja una sugerencia, duda o comentario sobre los trabajos y temas presentados:</p>
 
@@ -192,7 +174,7 @@
     </section>
 
 
-    <!-- MODAL PARA SUBIR TAREA MÚLTIPLE (PROPIETARIO) -->
+    <!-- MODAL SUBIR TAREA -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-lg">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>

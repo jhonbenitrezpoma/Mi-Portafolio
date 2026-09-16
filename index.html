@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio Académico | Jhon Benitrez - UPLA</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- NAVBAR PRINCIPAL (ANCHO COMPLETO) -->
+    <!-- NAVBAR PRINCIPAL -->
     <header class="navbar">
         <div class="logo-container">
             <div class="logo-wrapper">
@@ -19,13 +22,13 @@
                 </label>
             </div>
             <div>
-                <h1>Portafolio Académico UPLA</h1>
-                <p>Ingeniería de Sistemas y Cómputo</p>
+                <h1 class="font-vintage-title">PORTAFOLIO UPLA</h1>
+                <p class="sub-logo">Ingeniería de Sistemas y Cómputo</p>
             </div>
         </div>
 
         <nav id="navScreens" class="nav-screens contenido-oculto">
-            <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">👤 Mi Presentación</button>
+            <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏛️ Presentación</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaFeedback')">💬 Sugerencias</button>
         </nav>
@@ -33,181 +36,194 @@
         <div class="user-info">
             <span id="userNameDisplay" class="user-name">Invitado</span>
             <span id="userRoleBadge" class="badge badge-visitor">👁️ Visitante</span>
-            <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-secundary-sm contenido-oculto">Salir / Cambiar</button>
+            <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-vintage-outline contenido-oculto">Cerrar Sesión</button>
         </div>
     </header>
 
 
-    <!-- PANTALLA 1: REGISTRO / LOGIN (FULLSCREEN) -->
-    <section id="pantallaAuth" class="pantalla-seccion pantalla-fullscreen">
-        <div class="login-box-full">
-            <div class="logo-upla-login">
-                <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla">
-            </div>
-            <h2>Acceso al Portafolio</h2>
-            <p class="auth-sub">Inicia sesión o regístrate para ingresar al sistema.</p>
-
-            <div class="auth-tabs">
-                <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Iniciar Sesión</button>
-                <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
-            </div>
-
-            <form id="formLogin" onsubmit="procesarLogin(event)">
-                <div class="form-group">
-                    <label>Username / Nombre de Usuario:</label>
-                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
+    <!-- PANTALLA 1: LOGIN / REGISTRO CON DISEÑO INSTITUCIONAL UPLA -->
+    <section id="pantallaAuth" class="pantalla-seccion upla-auth-bg">
+        <div class="auth-overlay-backdrop">
+            <div class="vintage-login-card">
+                <div class="vintage-card-header">
+                    <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
+                    <h2 class="font-vintage-title">Acceso Académico</h2>
+                    <p class="auth-subtitle">Universidad Peruana Los Andes</p>
                 </div>
-                <div class="form-group">
-                    <label>Contraseña:</label>
-                    <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
-                </div>
-                <button type="submit" class="btn-primary btn-block">Ingresar al Portafolio</button>
-            </form>
 
-            <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
-                <div class="form-group">
-                    <label>Username / Nombre Completo:</label>
-                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
+                <div class="auth-tabs">
+                    <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Ingresar</button>
+                    <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
                 </div>
-                <div class="form-group">
-                    <label>Contraseña:</label>
-                    <input type="password" id="regPass" placeholder="Crea tu contraseña" required>
-                </div>
-                <div class="form-group">
-                    <label>Correo Electrónico (Opcional):</label>
-                    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com (opcional)">
-                </div>
-                <button type="submit" class="btn-primary btn-block">Crear Cuenta e Ingresar</button>
-            </form>
-        </div>
-    </section>
 
-
-    <!-- PANTALLA 2: PRESENTACIÓN MI A (FULLWIDTH) -->
-    <section id="pantallaInicio" class="pantalla-seccion pantalla-fullwidth contenido-oculto">
-        <div class="hero-card-full">
-            <div class="profile-side">
-                <div class="avatar-box">
-                    <img id="fotoPerfilImg" src="https://via.placeholder.com/160?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-large">
-                    <label id="btnCambiarFoto" class="btn-sm-photo contenido-oculto">
-                        📷 Cambiar Foto
-                        <input type="file" accept="image/*" onchange="subirFotoPerfil(event)" style="display:none;">
-                    </label>
-                </div>
-                <h3>Jhon Benitrez Poma</h3>
-                <span class="tag-major">💻 Sistemas y Cómputo</span>
-                <span class="tag-uni">🏛️ UPLA - Huancayo</span>
-            </div>
-
-            <div class="info-side">
-                <h2 id="saludoBienvenida">👋 ¡Bienvenido/a a mi Portafolio!</h2>
-                <p class="desc">
-                    Soy estudiante de <strong>Ingeniería de Sistemas y Cómputo</strong> en la Universidad Peruana Los Andes (UPLA). 
-                    Este portafolio web ha sido diseñado como un espacio centralizado para documentar, organizar y compartir los módulos prácticos, 
-                    proyectos de código y evidencias académicas desarrolladas a lo largo de mis ciclos de estudio.
-                </p>
-
-                <div class="purpose-grid">
-                    <div class="p-item">
-                        <h4>📘 ¿De qué trata este portafolio?</h4>
-                        <p>Es una plataforma web donde archivo mis tareas semanales, código fuente, documentación en PDF y demostraciones de proyectos de la universidad.</p>
+                <!-- Formulario Login -->
+                <form id="formLogin" onsubmit="procesarLogin(event)">
+                    <div class="form-group-vintage">
+                        <label>Usuario / Estudiante:</label>
+                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
                     </div>
-                    <div class="p-item">
-                        <h4>🎯 ¿Para qué me sirve?</h4>
-                        <p>Demuestra la aplicación práctica de mis conocimientos en desarrollo de software, permite el seguimiento transparente a docentes y respalda mi perfil profesional.</p>
+                    <div class="form-group-vintage">
+                        <label>Contraseña:</label>
+                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
                     </div>
+                    <button type="submit" class="btn-vintage-gold">Entrar al Portafolio</button>
+                </form>
+
+                <!-- Formulario Registro -->
+                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
+                    <div class="form-group-vintage">
+                        <label>Nombre de Usuario / Estudiante:</label>
+                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
+                    </div>
+                    <div class="form-group-vintage">
+                        <label>Contraseña:</label>
+                        <input type="password" id="regPass" placeholder="Crea una clave" required>
+                    </div>
+                    <div class="form-group-vintage">
+                        <label>Correo Institucional / Personal (Opcional):</label>
+                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com">
+                    </div>
+                    <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- PANTALLA 2: PRESENTACIÓN MI A (ESTILO VINTAGE ACADÉMICO CON VIDA Y COLOR) -->
+    <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg contenido-oculto">
+        <div class="vintage-container">
+            <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
+
+            <div class="vintage-hero-grid">
+                <!-- Columna Foto de Perfil -->
+                <div class="vintage-profile-card">
+                    <div class="vintage-frame">
+                        <img id="fotoPerfilImg" src="https://via.placeholder.com/180?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-vintage">
+                        <label id="btnCambiarFoto" class="btn-change-photo contenido-oculto">
+                            📷 Cambiar Foto
+                            <input type="file" accept="image/*" onchange="subirFotoPerfil(event)" style="display:none;">
+                        </label>
+                    </div>
+                    <h3 class="author-title">Jhon Benitrez Poma</h3>
+                    <p class="author-role">Ingeniería de Sistemas y Cómputo</p>
+                    <div class="author-location">📍 Huancayo, Perú</div>
                 </div>
 
-                <div class="hero-actions">
-                    <button class="btn-hero-primary" onclick="navegarAPantalla('pantallaCursos')">📂 Ir a Cursos y Tareas</button>
+                <!-- Columna Información y Propósito -->
+                <div class="vintage-info-card">
+                    <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
+                    <p class="lead-text">
+                        Bienvenido a mi espacio digital en la <strong>Universidad Peruana Los Andes</strong>. Aquí centralizo mis evidencias de aprendizaje, código fuente, proyectos interactivos y tareas universitarias.
+                    </p>
+
+                    <div class="vintage-boxes-container">
+                        <div class="v-box v-box-gold">
+                            <h4>📘 ¿De qué trata este portafolio?</h4>
+                            <p>Es una plataforma web donde organizo por cursos, unidades y semanas todo el material académico, guías prácticas, algoritmos y desarrollos de software de la carrera.</p>
+                        </div>
+                        <div class="v-box v-box-burgundy">
+                            <h4>🎯 ¿Para qué me sirve?</h4>
+                            <p>Funciona como un escaparate técnico para validar mi avance académico ante docentes, dar trazabilidad a entregables universitarios y consolidar mi perfil profesional.</p>
+                        </div>
+                    </div>
+
+                    <div class="vintage-actions">
+                        <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Tareas</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
 
-    <!-- PANTALLA 3: CURSOS Y TAREAS (FULLWIDTH & GRID AMPLIO) -->
-    <section id="pantallaCursos" class="pantalla-seccion pantalla-fullwidth contenido-oculto">
-        <div class="layout-full">
-            <aside class="sidebar-full">
-                <h3>Mis Cursos</h3>
-                <button class="course-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
-                <button class="course-btn" onclick="cambiarCurso('curso2', event)">🧮 Algoritmos y Estructuras de Datos</button>
-            </aside>
+    <!-- PANTALLA 3: CURSOS Y TAREAS (ESTILO LIMPIO E INTUITIVO) -->
+    <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
+        <div class="cursos-main-container">
+            
+            <!-- Selector de Cursos Superior -->
+            <div class="courses-selector-bar">
+                <button class="course-tab-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
+                <button class="course-tab-btn" onclick="cambiarCurso('curso2', event)">🧮 Algoritmos y Estructuras de Datos</button>
+            </div>
 
-            <main class="main-content-full">
-                <h2 id="tituloCurso">📱 Desarrollo de Aplicaciones 1</h2>
+            <div class="course-header-banner">
+                <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
+                <p>Navega entre las 4 unidades académicas para revisar o gestionar las tareas entregadas.</p>
+            </div>
 
-                <div class="unidades-tabs">
-                    <button class="tab-btn active" onclick="mostrarUnidad(1, event)">Unidad 1</button>
-                    <button class="tab-btn" onclick="mostrarUnidad(2, event)">Unidad 2</button>
-                    <button class="tab-btn" onclick="mostrarUnidad(3, event)">Unidad 3</button>
-                    <button class="tab-btn" onclick="mostrarUnidad(4, event)">Unidad 4</button>
-                </div>
+            <!-- Tabs de Unidades -->
+            <div class="unidades-pills">
+                <button class="pill-btn active" onclick="mostrarUnidad(1, event)">Unidad I</button>
+                <button class="pill-btn" onclick="mostrarUnidad(2, event)">Unidad II</button>
+                <button class="pill-btn" onclick="mostrarUnidad(3, event)">Unidad III</button>
+                <button class="pill-btn" onclick="mostrarUnidad(4, event)">Unidad IV</button>
+            </div>
 
-                <div id="semanasContainer" class="semanas-container-full">
-                    <!-- Carga dinámica -->
-                </div>
-            </main>
+            <!-- Grid de Semanas (Tarjetas) -->
+            <div id="semanasContainer" class="semanas-grid">
+                <!-- Se cargan dinámicamente con JS -->
+            </div>
         </div>
     </section>
 
 
-    <!-- PANTALLA 4: SUGERENCIAS (FULLWIDTH) -->
-    <section id="pantallaFeedback" class="pantalla-seccion pantalla-fullwidth contenido-oculto">
-        <div class="feedback-container-full">
-            <h3>💬 Notas y Sugerencias de Visitantes</h3>
+    <!-- PANTALLA 4: NOTAS Y SUGERENCIAS DE VISITANTES -->
+    <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
+        <div class="feedback-card-vintage">
+            <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
             <p>Deja una sugerencia, duda o comentario sobre los trabajos y temas presentados:</p>
 
             <form onsubmit="guardarComentario(event)" class="feedback-form">
-                <div class="form-row">
+                <div class="form-row-vintage">
                     <input type="text" id="feedbackNombre" placeholder="Tu nombre o usuario..." required>
                     <input type="text" id="feedbackMsg" placeholder="Escribe tu sugerencia o nota..." required>
-                    <button type="submit" class="btn-primary-sm">💬 Enviar Sugerencia</button>
+                    <button type="submit" class="btn-vintage-gold">💬 Enviar Sugerencia</button>
                 </div>
             </form>
 
-            <div id="comentariosList" class="comentarios-list">
-                <!-- Se cargan comentarios -->
+            <div id="comentariosList" class="comentarios-list-vintage">
+                <!-- Comentarios guardados -->
             </div>
         </div>
     </section>
 
 
-    <!-- MODAL SUBIR TAREA -->
+    <!-- MODAL PARA SUBIR O EDITAR TAREAS (PROPIETARIO) -->
     <div id="modalSubirTarea" class="modal">
-        <div class="modal-content modal-lg">
+        <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
-            <h3>📤 Agregar Nueva Tarea a la Semana</h3>
-            <p>Puedes adjuntar un archivo (PDF, DOCX, ZIP) o ingresar un enlace a un proyecto externo.</p>
+            <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
+            <p>Sube un archivo (PDF, DOCX, ZIP) o ingresa un enlace a un repositorio o prototipo.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
+                <input type="hidden" id="modalEditIndex" value="-1">
 
-                <div class="form-group">
-                    <label>Título / Nombre de la Tarea:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Informe de Modelado UML" required>
+                <div class="form-group-vintage">
+                    <label>Título o Nombre de la Tarea:</label>
+                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Informe de Requisitos UML" required>
                 </div>
 
-                <div class="form-group">
-                    <label>Tipo de Tarea / Formato:</label>
+                <div class="form-group-vintage">
+                    <label>Formato / Entrega:</label>
                     <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
                         <option value="archivo">📄 Subir Archivo (PDF, DOCX, ZIP, Imagen)</option>
-                        <option value="enlace">🔗 Enlace Web / Repositorio (GitHub, Figma, Drive)</option>
+                        <option value="enlace">🔗 Enlace Web (GitHub, Drive, Figma, Vercel)</option>
                     </select>
                 </div>
 
-                <div id="boxTaskFile" class="form-group">
+                <div id="boxTaskFile" class="form-group-vintage">
                     <label>Seleccionar Archivo:</label>
                     <input type="file" id="taskFile">
                 </div>
 
-                <div id="boxTaskUrl" class="form-group contenido-oculto">
+                <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
                     <label>URL / Enlace Web:</label>
                     <input type="url" id="taskUrl" placeholder="https://github.com/tuusuario/tu-proyecto">
                 </div>
 
-                <button type="submit" class="btn-primary btn-block">Guardar Tarea</button>
+                <button type="submit" class="btn-vintage-gold btn-block">Guardar Tarea</button>
             </form>
         </div>
     </div>
@@ -350,14 +366,14 @@
         function cambiarCurso(idCurso, ev) {
             cursoActual = idCurso;
             document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
-            document.querySelectorAll(".course-btn").forEach(btn => btn.classList.remove("active"));
+            document.querySelectorAll(".course-tab-btn").forEach(btn => btn.classList.remove("active"));
             if (ev) ev.target.classList.add("active");
             mostrarUnidad(1);
         }
 
         function mostrarUnidad(numUnidad, ev) {
             unidadActual = numUnidad;
-            document.querySelectorAll(".tab-btn").forEach((btn, index) => {
+            document.querySelectorAll(".pill-btn").forEach((btn, index) => {
                 btn.classList.toggle("active", index + 1 === numUnidad);
             });
             renderizarUnidad();
@@ -378,27 +394,30 @@
                 const tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
 
                 const semanaCard = document.createElement("div");
-                semanaCard.className = "semana-card";
+                semanaCard.className = "semana-card-vintage";
 
                 let html = `
-                    <div class="semana-header">
-                        <h4>Semana ${numSemana}</h4>
-                        ${tituloClase ? `<p class="clase-titulo">📘 ${tituloClase}</p>` : `<p class="clase-titulo-vacio">Sin tema asignado</p>`}
-                        ${esPropietario ? `<button class="btn-sm-title" onclick="editarTituloClase('${keyTarea}')">✏️ ${tituloClase ? 'Cambiar Tema' : 'Poner Tema'}</button>` : ''}
+                    <div class="semana-card-header">
+                        <div class="semana-title">Semana ${numSemana}</div>
+                        ${tituloClase ? `<div class="clase-tema">📘 ${tituloClase}</div>` : `<div class="clase-tema-vacio">Sin tema asignado</div>`}
+                        ${esPropietario ? `<button class="btn-xs-edit" onclick="editarTituloClase('${keyTarea}')">✏️ Tema</button>` : ''}
                     </div>
-                    <div class="tarea-info">
+                    <div class="semana-card-body">
                 `;
 
                 if (tareasGuardadas.length > 0) {
-                    html += `<p class="status-ok">✔ ${tareasGuardadas.length} Tarea(s) disponible(s):</p><div class="task-list">`;
+                    html += `<div class="task-count-tag">✔ ${tareasGuardadas.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
 
                     tareasGuardadas.forEach((task, index) => {
                         html += `
-                            <div class="task-item">
-                                <span class="task-name">${task.tipo === 'enlace' ? '🔗' : '📄'} <strong>${task.nombre}</strong></span>
-                                <div class="task-item-actions">
-                                    <a href="${task.url}" target="_blank" class="btn-download-sm">Abrir / Descargar</a>
-                                    ${esPropietario ? `<button class="btn-del-sm" onclick="eliminarTareaPropietario('${keyTarea}', ${index})">🗑️</button>` : ''}
+                            <div class="task-row-item">
+                                <span class="task-row-title">${task.tipo === 'enlace' ? '🔗' : '📄'} <strong>${task.nombre}</strong></span>
+                                <div class="task-row-btns">
+                                    <a href="${task.url}" target="_blank" class="btn-action-view" download>📄 Abrir / Descargar</a>
+                                    ${esPropietario ? `
+                                        <button class="btn-action-edit" onclick="abrirModalEditarTarea('${keyTarea}', ${index})">✏️</button>
+                                        <button class="btn-action-del" onclick="eliminarTareaPropietario('${keyTarea}', ${index})">🗑️</button>
+                                    ` : ''}
                                 </div>
                             </div>
                         `;
@@ -406,12 +425,12 @@
 
                     html += `</div>`;
                 } else {
-                    html += `<p class="status-empty">Sin tareas asignadas en esta semana</p>`;
+                    html += `<p class="empty-task-text">Sin tareas publicadas en esta semana.</p>`;
                 }
 
                 if (esPropietario) {
                     html += `
-                        <button class="btn-upload-more" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Subir Tarea Nueva</button>
+                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Agregar Tarea (Archivo o Enlace)</button>
                     `;
                 }
 
@@ -423,9 +442,30 @@
 
         function abrirModalSubirTarea(keyTarea) {
             document.getElementById("modalKeyTarea").value = keyTarea;
+            document.getElementById("modalEditIndex").value = "-1";
+            document.getElementById("modalTareaTituloAccion").innerText = "📤 Agregar Nueva Tarea";
             document.getElementById("taskTitulo").value = "";
             document.getElementById("taskUrl").value = "";
             document.getElementById("taskFile").value = "";
+            document.getElementById("modalSubirTarea").style.display = "flex";
+        }
+
+        function abrirModalEditarTarea(keyTarea, index) {
+            let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
+            const task = tareasGuardadas[index];
+
+            document.getElementById("modalKeyTarea").value = keyTarea;
+            document.getElementById("modalEditIndex").value = index;
+            document.getElementById("modalTareaTituloAccion").innerText = "✏️ Editar Tarea Existente";
+            document.getElementById("taskTitulo").value = task.nombre;
+            
+            if (task.tipo === 'enlace') {
+                document.getElementById("taskTipo").value = "enlace";
+                document.getElementById("taskUrl").value = task.url;
+            } else {
+                document.getElementById("taskTipo").value = "archivo";
+            }
+            cambiarTipoInputTask();
             document.getElementById("modalSubirTarea").style.display = "flex";
         }
 
@@ -447,6 +487,7 @@
         function guardarNuevaTareaPropietario(e) {
             e.preventDefault();
             const keyTarea = document.getElementById("modalKeyTarea").value;
+            const editIndex = parseInt(document.getElementById("modalEditIndex").value);
             const titulo = document.getElementById("taskTitulo").value.trim();
             const tipo = document.getElementById("taskTipo").value;
 
@@ -454,7 +495,14 @@
 
             if (tipo === 'enlace') {
                 const url = document.getElementById("taskUrl").value.trim();
-                tareasGuardadas.push({ id: Date.now(), nombre: titulo, url: url, tipo: 'enlace' });
+                const nuevaData = { id: Date.now(), nombre: titulo, url: url, tipo: 'enlace' };
+
+                if (editIndex >= 0) {
+                    tareasGuardadas[editIndex] = nuevaData;
+                } else {
+                    tareasGuardadas.push(nuevaData);
+                }
+
                 localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
                 cerrarModalSubirTarea();
                 renderizarUnidad();
@@ -463,12 +511,24 @@
                 if (fileInput.files && fileInput.files[0]) {
                     const reader = new FileReader();
                     reader.onload = function(evt) {
-                        tareasGuardadas.push({ id: Date.now(), nombre: titulo + " (" + fileInput.files[0].name + ")", url: evt.target.result, tipo: 'archivo' });
+                        const nuevaData = { id: Date.now(), nombre: titulo + " (" + fileInput.files[0].name + ")", url: evt.target.result, tipo: 'archivo' };
+                        
+                        if (editIndex >= 0) {
+                            tareasGuardadas[editIndex] = nuevaData;
+                        } else {
+                            tareasGuardadas.push(nuevaData);
+                        }
+
                         localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
                         cerrarModalSubirTarea();
                         renderizarUnidad();
                     };
                     reader.readAsDataURL(fileInput.files[0]);
+                } else if (editIndex >= 0) {
+                    tareasGuardadas[editIndex].nombre = titulo;
+                    localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
+                    cerrarModalSubirTarea();
+                    renderizarUnidad();
                 } else {
                     alert("Por favor selecciona un archivo.");
                 }
@@ -512,13 +572,13 @@
             const list = document.getElementById("comentariosList");
             if (!list) return;
             const comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [
-                { nombre: "Profesor UPLA", mensaje: "Excelente orden en las entregas de Desarrollo de Aplicaciones.", fecha: "15/9/2026" }
+                { nombre: "Profesor UPLA", mensaje: "Excelente organización de contenidos y tareas académicas.", fecha: "15/9/2026" }
             ];
 
             list.innerHTML = "";
             comentarios.forEach(c => {
                 const box = document.createElement("div");
-                box.className = "comment-item";
+                box.className = "comment-item-vintage";
                 box.innerHTML = `
                     <p class="c-author">👤 <strong>${c.nombre}</strong> <span class="c-date">(${c.fecha})</span></p>
                     <p class="c-text">"${c.mensaje}"</p>

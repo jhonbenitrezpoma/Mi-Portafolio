@@ -11,8 +11,14 @@
 </head>
 <body>
 
-    <!-- NAVBAR PRINCIPAL LUMINOSO -->
+    <!-- NAVBAR PRINCIPAL CON INICIO DE SESIÓN A LA IZQUIERDA -->
     <header class="navbar">
+        <div class="nav-left-zone">
+            <!-- BOTÓN DE INICIAR SESIÓN UBICADO A LA IZQUIERDA SUPERIOR -->
+            <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión / Ingresar</button>
+            <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-vintage-outline contenido-oculto">Cerrar Sesión</button>
+        </div>
+
         <div class="logo-container">
             <div class="logo-wrapper">
                 <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
@@ -27,7 +33,8 @@
             </div>
         </div>
 
-        <nav id="navScreens" class="nav-screens contenido-oculto">
+        <!-- MENÚ DE NAVEGACIÓN LIBRE PARA VISITANTES Y PROPIETARIO -->
+        <nav id="navScreens" class="nav-screens">
             <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏛️ Presentación</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaFeedback')">💬 Sugerencias</button>
@@ -36,77 +43,17 @@
         <div class="user-info">
             <span id="userNameDisplay" class="user-name">Invitado</span>
             <span id="userRoleBadge" class="badge badge-visitor">👁️ Visitante</span>
-            <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-vintage-outline contenido-oculto">Cerrar Sesión</button>
         </div>
     </header>
 
 
-    <!-- PANTALLA 1: LOGIN / REGISTRO ILUMINADO UPLA -->
-    <section id="pantallaAuth" class="pantalla-seccion upla-auth-bg">
-        <div class="auth-overlay-backdrop">
-            <div class="vintage-login-card">
-                <div class="vintage-card-header">
-                    <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
-                    <h2 class="font-vintage-title">Acceso al Portafolio</h2>
-                    <p class="auth-subtitle">Ingeniería de Sistemas y Cómputo - UPLA</p>
-                </div>
-
-                <div class="auth-tabs">
-                    <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Ingresar</button>
-                    <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
-                </div>
-
-                <!-- Formulario Login -->
-                <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
-                    <div class="form-group-vintage">
-                        <label>Usuario / Estudiante:</label>
-                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required autocomplete="off">
-                    </div>
-                    
-                    <div class="form-group-vintage">
-                        <label>Contraseña:</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío" autocomplete="new-password">
-                            <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn-vintage-gold">Ingresar al Portafolio</button>
-                </form>
-
-                <!-- Formulario Registro -->
-                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
-                    <div class="form-group-vintage">
-                        <label>Nombre Completo:</label>
-                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required autocomplete="off">
-                    </div>
-                    
-                    <div class="form-group-vintage">
-                        <label>Contraseña:</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="regPass" placeholder="Crea una contraseña" required autocomplete="new-password">
-                            <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group-vintage">
-                        <label>Correo Electrónico (Opcional):</label>
-                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" autocomplete="off">
-                    </div>
-                    
-                    <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- PANTALLA 2: PRESENTACIÓN -->
-    <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg contenido-oculto">
+    <!-- PANTALLA 1: PRESENTACIÓN MI A (APARECE PRIMERO AL ENTRAR) -->
+    <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
         <div class="vintage-container">
             <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
 
             <div class="vintage-hero-grid">
+                <!-- Columna Foto de Perfil -->
                 <div class="vintage-profile-card">
                     <div class="vintage-frame">
                         <img id="fotoPerfilImg" src="https://via.placeholder.com/180?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-vintage">
@@ -120,6 +67,7 @@
                     <div class="author-location">🏛️ UPLA - Huancayo, Perú</div>
                 </div>
 
+                <!-- Columna Información y Propósito -->
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
@@ -146,7 +94,7 @@
     </section>
 
 
-    <!-- PANTALLA 3: CURSOS Y TAREAS -->
+    <!-- PANTALLA 2: CURSOS Y TAREAS -->
     <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
         <div class="cursos-main-container">
             <div class="courses-selector-bar">
@@ -156,7 +104,7 @@
 
             <div class="course-header-banner">
                 <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
-                <p>Selecciona cualquiera de las 4 Unidades para revisar las tareas y actividades semanales.</p>
+                <p>Selecciona cualquiera de las 4 Unidades para revisar o descargar las tareas semanales.</p>
             </div>
 
             <div class="unidades-pills">
@@ -173,7 +121,7 @@
     </section>
 
 
-    <!-- PANTALLA 4: SUGERENCIAS -->
+    <!-- PANTALLA 3: SUGERENCIAS -->
     <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
         <div class="feedback-card-vintage">
             <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
@@ -188,10 +136,70 @@
             </form>
 
             <div id="comentariosList" class="comentarios-list-vintage">
-                <!-- Se cargan comentarios -->
+                <!-- Comentarios guardados -->
             </div>
         </div>
     </section>
+
+
+    <!-- MODAL VENTANA DE LOGIN / REGISTRO (SALTA AL HACER CLIC EN EL BOTÓN SUPERIOR IZQUIERDO) -->
+    <div id="modalAuthScreen" class="modal">
+        <div class="modal-content modal-vintage">
+            <button class="close-modal" onclick="cerrarModalAuth()">✕</button>
+
+            <div class="vintage-card-header">
+                <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
+                <h2 class="font-vintage-title">Acceso al Portafolio</h2>
+                <p class="auth-subtitle">Ingeniería de Sistemas y Cómputo - UPLA</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Ingresar</button>
+                <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
+            </div>
+
+            <!-- Formulario Login -->
+            <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
+                <div class="form-group-vintage">
+                    <label>Usuario / Estudiante:</label>
+                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required autocomplete="off">
+                </div>
+                
+                <div class="form-group-vintage">
+                    <label>Contraseña:</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío" autocomplete="new-password">
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-vintage-gold">Ingresar al Portafolio</button>
+            </form>
+
+            <!-- Formulario Registro -->
+            <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
+                <div class="form-group-vintage">
+                    <label>Nombre Completo:</label>
+                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required autocomplete="off">
+                </div>
+                
+                <div class="form-group-vintage">
+                    <label>Contraseña:</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="regPass" placeholder="Crea una contraseña" required autocomplete="new-password">
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                    </div>
+                </div>
+                
+                <div class="form-group-vintage">
+                    <label>Correo Electrónico (Opcional):</label>
+                    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" autocomplete="off">
+                </div>
+                
+                <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
+            </form>
+        </div>
+    </div>
 
 
     <!-- MODAL PARA SUBIR Y EDITAR TAREAS (PROPIETARIO) -->
@@ -207,7 +215,7 @@
 
                 <div class="form-group-vintage">
                     <label>Título / Nombre de la Tarea:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Diagrama de Casos de Uso UML" required>
+                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Diagrama UML" required>
                 </div>
 
                 <div class="form-group-vintage">
@@ -247,11 +255,11 @@
 
         const TAREAS_OFICIALES = {
             "curso1_U1_S1": [
-                { id: "off1", nombre: "Tarea 1: Guía de Interfaces de Usuario (PDF)", url: "tareas/tarea1-guia.pdf", tipo: "archivo" },
+                { id: "off1", nombre: "Tarea 1: Guía de Interfaces de Usuario (PDF)", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", tipo: "archivo" },
                 { id: "off2", nombre: "Proyecto NEXORA: Documento de Requisitos", url: "https://github.com", tipo: "enlace" }
             ],
             "curso2_U1_S1": [
-                { id: "off3", nombre: "Tarea 1: Ejercicios de Estructuras y Algoritmos", url: "tareas/algoritmos-s1.pdf", tipo: "archivo" }
+                { id: "off3", nombre: "Tarea 1: Ejercicios de Estructuras y Algoritmos", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", tipo: "archivo" }
             ]
         };
 
@@ -261,7 +269,18 @@
             verificarSesionGuardada();
             cargarComentarios();
             limpiarFormulariosAuth();
+            navegarAPantalla('pantallaInicio'); // Siempre muestra la presentación al entrar
         });
+
+        // VENTANA FLOTANTE DE AUTENTICACIÓN
+        function abrirModalAuth() {
+            limpiarFormulariosAuth();
+            document.getElementById("modalAuthScreen").style.display = "flex";
+        }
+
+        function cerrarModalAuth() {
+            document.getElementById("modalAuthScreen").style.display = "none";
+        }
 
         // VER Y OCULTAR CONTRASEÑA
         function togglePasswordVisibility(inputId, btn) {
@@ -275,7 +294,6 @@
             }
         }
 
-        // LIMPIAR CAMPOS DE TEXTO
         function limpiarFormulariosAuth() {
             document.getElementById("formLogin").reset();
             document.getElementById("formRegister").reset();
@@ -324,8 +342,8 @@
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
             
             limpiarFormulariosAuth();
+            cerrarModalAuth();
             actualizarInterfazUsuario();
-            navegarAPantalla('pantallaInicio');
         }
 
         function procesarRegistro(e) {
@@ -338,8 +356,8 @@
             localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
             
             limpiarFormulariosAuth();
+            cerrarModalAuth();
             actualizarInterfazUsuario();
-            navegarAPantalla('pantallaInicio');
         }
 
         function verificarSesionGuardada() {
@@ -347,11 +365,11 @@
             if (sesion) {
                 usuarioActual = sesion.nombre;
                 esPropietario = sesion.esAdmin;
-                actualizarInterfazUsuario();
-                navegarAPantalla('pantallaInicio');
             } else {
-                navegarAPantalla('pantallaAuth');
+                usuarioActual = "Invitado";
+                esPropietario = false;
             }
+            actualizarInterfazUsuario();
         }
 
         function actualizarInterfazUsuario() {
@@ -359,23 +377,30 @@
             document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ a mi Portafolio`;
 
             const badge = document.getElementById("userRoleBadge");
+            const btnLogin = document.getElementById("btnAbrirLoginNav");
             const btnSalir = document.getElementById("btnSalirNav");
             const btnLogo = document.getElementById("btnCambiarLogo");
             const btnFoto = document.getElementById("btnCambiarFoto");
-            const navScreens = document.getElementById("navScreens");
-
-            navScreens.classList.remove("contenido-oculto");
 
             if (esPropietario) {
                 badge.innerText = "👑 Propietario";
                 badge.className = "badge badge-admin";
+                btnLogin.classList.add("contenido-oculto");
                 btnSalir.classList.remove("contenido-oculto");
                 btnLogo.classList.remove("contenido-oculto");
                 btnFoto.classList.remove("contenido-oculto");
-            } else {
+            } else if (usuarioActual !== "Invitado") {
                 badge.innerText = "👁️ Visitante (" + usuarioActual + ")";
                 badge.className = "badge badge-visitor";
+                btnLogin.classList.add("contenido-oculto");
                 btnSalir.classList.remove("contenido-oculto");
+                btnLogo.classList.add("contenido-oculto");
+                btnFoto.classList.add("contenido-oculto");
+            } else {
+                badge.innerText = "👁️ Visitante";
+                badge.className = "badge badge-visitor";
+                btnLogin.classList.remove("contenido-oculto");
+                btnSalir.classList.add("contenido-oculto");
                 btnLogo.classList.add("contenido-oculto");
                 btnFoto.classList.add("contenido-oculto");
             }
@@ -388,9 +413,8 @@
             usuarioActual = "Invitado";
             esPropietario = false;
             limpiarFormulariosAuth();
-            document.getElementById("navScreens").classList.add("contenido-oculto");
-            document.getElementById("btnSalirNav").classList.add("contenido-oculto");
-            navegarAPantalla('pantallaAuth');
+            actualizarInterfazUsuario();
+            navegarAPantalla('pantallaInicio');
         }
 
         function cambiarCurso(idCurso, ev) {
@@ -442,8 +466,12 @@
                         html += `
                             <div class="task-row-item">
                                 <span class="task-row-title">${task.tipo === 'enlace' ? '🔗' : '📄'} <strong>${task.nombre}</strong></span>
-                                <div class="task-row-btns">
-                                    <a href="${task.url}" target="_blank" class="btn-action-view" download>📄 Abrir / Descargar</a>
+                                
+                                <!-- DOS BOTONES SEPARADOS: ABRIR Y DESCARGAR -->
+                                <div class="task-action-buttons-group">
+                                    <a href="${task.url}" target="_blank" class="btn-task-open">👁️ Ver / Abrir</a>
+                                    <a href="${task.url}" download="${task.nombre}" target="_blank" class="btn-task-download">📥 Descargar</a>
+                                    
                                     ${esPropietario ? `
                                         <button class="btn-action-edit" onclick="abrirModalEditarTarea('${keyTarea}', ${index})">✏️</button>
                                         <button class="btn-action-del" onclick="eliminarTareaPropietario('${keyTarea}', ${index})">🗑️</button>

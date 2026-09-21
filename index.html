@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio Académico | Jhon Benitrez - UPLA</title>
     
-    <!-- Hojas de estilo y tipografías -->
+    <!-- Estilos CSS y Tipografías -->
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- FIREBASE SDK COMPAT (Librerías ordenadas correctamente) -->
+    <!-- FIREBASE SDK COMPAT (Orden de carga obligatorio) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 </head>
 <body>
 
-    <!-- NAVEGACIÓN PRINCIPAL -->
+    <!-- CABECERA PRINCIPAL -->
     <header class="navbar">
         <div class="nav-left-zone">
             <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión</button>
@@ -74,17 +74,17 @@
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
-                        Plataforma académica institucional para el almacenamiento, consulta y gestión en tiempo real de recursos digitales, tareas y código fuente.
+                        Plataforma académica institucional para la consulta y gestión en tiempo real de recursos digitales, entregables y repositorios de software.
                     </p>
 
                     <div class="vintage-boxes-container">
                         <div class="v-box v-box-gold">
                             <h4>📘 Repositorio Académico</h4>
-                            <p>Gestión directa de guías, prácticas de laboratorio y proyectos de software.</p>
+                            <p>Gestión directa de guías, prácticas de laboratorio y proyectos.</p>
                         </div>
                         <div class="v-box v-box-burgundy">
                             <h4>🎯 Almacenamiento Nube</h4>
-                            <p>Sincronización segura de archivos desde dispositivos móviles o PC mediante Firebase Storage.</p>
+                            <p>Sincronización de archivos y documentos vía Firebase Storage.</p>
                         </div>
                     </div>
 
@@ -118,7 +118,7 @@
             </div>
 
             <div id="semanasContainer" class="semanas-grid">
-                <!-- Carga dinámica mediante JS -->
+                <!-- Se genera dinámicamente con JS -->
             </div>
         </div>
     </section>

@@ -8,13 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- LIBRERÍAS DE FIREBASE SIN FACTURACIÓN (PLAN SPARK GRATUITO) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
     <!-- NAVBAR PRINCIPAL CON INICIO DE SESIÓN A LA IZQUIERDA -->
     <header class="navbar">
         <div class="nav-left-zone">
-            <!-- BOTÓN DE INICIAR SESIÓN UBICADO A LA IZQUIERDA SUPERIOR -->
             <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión / Ingresar</button>
             <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-vintage-outline contenido-oculto">Cerrar Sesión</button>
         </div>
@@ -33,7 +36,6 @@
             </div>
         </div>
 
-        <!-- MENÚ DE NAVEGACIÓN LIBRE PARA VISITANTES Y PROPIETARIO -->
         <nav id="navScreens" class="nav-screens">
             <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏛️ Presentación</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
@@ -47,13 +49,12 @@
     </header>
 
 
-    <!-- PANTALLA 1: PRESENTACIÓN MI A (APARECE PRIMERO AL ENTRAR) -->
+    <!-- PANTALLA 1: PRESENTACIÓN MI A (SE MUESTRA PRIMERO) -->
     <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
         <div class="vintage-container">
             <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
 
             <div class="vintage-hero-grid">
-                <!-- Columna Foto de Perfil -->
                 <div class="vintage-profile-card">
                     <div class="vintage-frame">
                         <img id="fotoPerfilImg" src="https://via.placeholder.com/180?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-vintage">
@@ -67,7 +68,6 @@
                     <div class="author-location">🏛️ UPLA - Huancayo, Perú</div>
                 </div>
 
-                <!-- Columna Información y Propósito -->
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
@@ -115,7 +115,7 @@
             </div>
 
             <div id="semanasContainer" class="semanas-grid">
-                <!-- Carga dinámica -->
+                <!-- Carga dinámica desde la nube -->
             </div>
         </div>
     </section>
@@ -142,7 +142,7 @@
     </section>
 
 
-    <!-- MODAL VENTANA DE LOGIN / REGISTRO (SALTA AL HACER CLIC EN EL BOTÓN SUPERIOR IZQUIERDO) -->
+    <!-- MODAL VENTANA DE LOGIN -->
     <div id="modalAuthScreen" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalAuth()">✕</button>
@@ -158,7 +158,6 @@
                 <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
             </div>
 
-            <!-- Formulario Login -->
             <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Usuario / Estudiante:</label>
@@ -169,14 +168,13 @@
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
                         <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío" autocomplete="new-password">
-                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)">👁️</button>
                     </div>
                 </div>
                 
                 <button type="submit" class="btn-vintage-gold">Ingresar al Portafolio</button>
             </form>
 
-            <!-- Formulario Registro -->
             <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Nombre Completo:</label>
@@ -187,13 +185,8 @@
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
                         <input type="password" id="regPass" placeholder="Crea una contraseña" required autocomplete="new-password">
-                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)">👁️</button>
                     </div>
-                </div>
-                
-                <div class="form-group-vintage">
-                    <label>Correo Electrónico (Opcional):</label>
-                    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" autocomplete="off">
                 </div>
                 
                 <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
@@ -202,16 +195,15 @@
     </div>
 
 
-    <!-- MODAL PARA SUBIR Y EDITAR TAREAS (PROPIETARIO) -->
+    <!-- MODAL PARA AGREGAR TAREAS -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
             <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
-            <p>Adjunta un archivo o ingresa un enlace a tu proyecto en GitHub, Drive o Figma.</p>
+            <p>Pega el enlace de tu archivo (Google Drive, GitHub, Figma, etc.).</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
-                <input type="hidden" id="modalEditIndex" value="-1">
 
                 <div class="form-group-vintage">
                     <label>Título / Nombre de la Tarea:</label>
@@ -219,30 +211,34 @@
                 </div>
 
                 <div class="form-group-vintage">
-                    <label>Tipo de Entrega:</label>
-                    <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
-                        <option value="archivo">📄 Subir Archivo (PDF, DOCX, ZIP, Imagen)</option>
-                        <option value="enlace">🔗 Enlace Web (GitHub, Drive, Figma, Vercel)</option>
-                    </select>
+                    <label>Enlace / URL de la Tarea (Google Drive, GitHub, etc.):</label>
+                    <input type="url" id="taskUrl" placeholder="https://drive.google.com/... o https://github.com/..." required>
                 </div>
 
-                <div id="boxTaskFile" class="form-group-vintage">
-                    <label>Seleccionar Archivo:</label>
-                    <input type="file" id="taskFile">
-                </div>
-
-                <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
-                    <label>URL / Enlace Web:</label>
-                    <input type="url" id="taskUrl" placeholder="https://github.com/tuusuario/tu-proyecto">
-                </div>
-
-                <button type="submit" class="btn-vintage-gold btn-block">Guardar Tarea</button>
+                <button type="submit" id="btnGuardarTareaSubmit" class="btn-vintage-gold btn-block">Guardar Tarea en la Nube</button>
             </form>
         </div>
     </div>
 
 
+    <!-- SCRIPT PRINCIPAL CON FIREBASE FIRESTORE -->
     <script>
+        // ========================================================
+        // 1. REEMPLAZA ESTAS CLAVES CON TUS DATOS DE FIREBASE (DEL PASO 1)
+        // ========================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-REEMPLAZA_CON_TU_API_KEY",
+            authDomain: "tu-proyecto.firebaseapp.com",
+            projectId: "tu-proyecto-id",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef123456"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Estado Global
         let usuarioActual = "Invitado";
         let esPropietario = false;
         let cursoActual = 'curso1';
@@ -253,26 +249,210 @@
             curso2: "🧮 Algoritmos y Estructuras de Datos"
         };
 
-        const TAREAS_OFICIALES = {
-            "curso1_U1_S1": [
-                { id: "off1", nombre: "Tarea 1: Guía de Interfaces de Usuario (PDF)", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", tipo: "archivo" },
-                { id: "off2", nombre: "Proyecto NEXORA: Documento de Requisitos", url: "https://github.com", tipo: "enlace" }
-            ],
-            "curso2_U1_S1": [
-                { id: "off3", nombre: "Tarea 1: Ejercicios de Estructuras y Algoritmos", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", tipo: "archivo" }
-            ]
-        };
-
         document.addEventListener("DOMContentLoaded", () => {
-            cargarLogoGuardado();
-            cargarFotoPerfil();
             verificarSesionGuardada();
-            cargarComentarios();
-            limpiarFormulariosAuth();
-            navegarAPantalla('pantallaInicio'); // Siempre muestra la presentación al entrar
+            cargarFotoPerfil();
+            cargarLogoGuardado();
+            cargarComentariosFirebase();
+            navegarAPantalla('pantallaInicio');
         });
 
-        // VENTANA FLOTANTE DE AUTENTICACIÓN
+        // ========================================================
+        // 2. GESTIÓN DE TAREAS EN LA NUBE (FIRESTORE)
+        // ========================================================
+        function renderizarUnidad() {
+            const container = document.getElementById("semanasContainer");
+            if (!container) return;
+            container.innerHTML = "<p style='text-align:center; width:100%; font-weight:bold; color:#0284c7;'>🔄 Cargando tareas desde la nube...</p>";
+
+            const semanaInicio = (unidadActual - 1) * 4 + 1;
+
+            db.collection("tareas")
+              .where("curso", "==", cursoActual)
+              .where("unidad", "==", unidadActual)
+              .get()
+              .then((querySnapshot) => {
+                  container.innerHTML = "";
+                  
+                  let tareasMap = {};
+                  querySnapshot.forEach((doc) => {
+                      const data = doc.data();
+                      data.docId = doc.id;
+                      if (!tareasMap[data.semana]) tareasMap[data.semana] = [];
+                      tareasMap[data.semana].push(data);
+                  });
+
+                  for (let i = 0; i < 4; i++) {
+                      const numSemana = semanaInicio + i;
+                      const tareasDeSemana = tareasMap[numSemana] || [];
+
+                      const semanaCard = document.createElement("div");
+                      semanaCard.className = "semana-card-vintage";
+
+                      let html = `
+                          <div class="semana-card-header">
+                              <div class="semana-title">Semana ${numSemana}</div>
+                          </div>
+                          <div class="semana-card-body">
+                      `;
+
+                      if (tareasDeSemana.length > 0) {
+                          html += `<div class="task-count-tag">✔ ${tareasDeSemana.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
+
+                          tareasDeSemana.forEach((task) => {
+                              html += `
+                                  <div class="task-row-item">
+                                      <span class="task-row-title">🔗 <strong>${task.nombre}</strong></span>
+                                      
+                                      <div class="task-action-buttons-group">
+                                          <a href="${task.url}" target="_blank" class="btn-task-open">👁️ Ver / Abrir</a>
+                                          <a href="${task.url}" target="_blank" download class="btn-task-download">📥 Descargar</a>
+                                          
+                                          ${esPropietario ? `
+                                              <button class="btn-action-del" onclick="eliminarTareaFirebase('${task.docId}')">🗑️</button>
+                                          ` : ''}
+                                      </div>
+                                  </div>
+                              `;
+                          });
+
+                          html += `</div>`;
+                      } else {
+                          html += `<p class="empty-task-text">Sin tareas publicadas en esta semana.</p>`;
+                      }
+
+                      if (esPropietario) {
+                          html += `
+                              <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${numSemana}')">➕ Agregar Tarea Nueva</button>
+                          `;
+                      }
+
+                      html += `</div>`;
+                      semanaCard.innerHTML = html;
+                      container.appendChild(semanaCard);
+                  }
+              }).catch(err => {
+                  container.innerHTML = "<p style='text-align:center;'>Error conectando a Firebase. Revisa tus claves.</p>";
+              });
+        }
+
+        function guardarNuevaTareaPropietario(e) {
+            e.preventDefault();
+            const numSemana = parseInt(document.getElementById("modalKeyTarea").value);
+            const titulo = document.getElementById("taskTitulo").value.trim();
+            const url = document.getElementById("taskUrl").value.trim();
+
+            db.collection("tareas").add({
+                curso: cursoActual,
+                unidad: unidadActual,
+                semana: numSemana,
+                nombre: titulo,
+                url: url,
+                fecha: new Date()
+            }).then(() => {
+                cerrarModalSubirTarea();
+                renderizarUnidad();
+            });
+        }
+
+        function eliminarTareaFirebase(docId) {
+            if (confirm("¿Estás seguro de eliminar esta tarea de la nube?")) {
+                db.collection("tareas").doc(docId).delete().then(() => {
+                    renderizarUnidad();
+                });
+            }
+        }
+
+        // ========================================================
+        // 3. FOTO Y LOGO EN FIRESTORE
+        // ========================================================
+        function subirFotoPerfil(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64 = e.target.result;
+                document.getElementById("fotoPerfilImg").src = base64;
+                db.collection("config").doc("perfil").set({ fotoUrl: base64 });
+            };
+            reader.readAsDataURL(archivo);
+        }
+
+        function cargarFotoPerfil() {
+            db.collection("config").doc("perfil").get().then(doc => {
+                if (doc.exists && doc.data().fotoUrl) {
+                    document.getElementById("fotoPerfilImg").src = doc.data().fotoUrl;
+                }
+            });
+        }
+
+        function subirNuevoLogo(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64 = e.target.result;
+                aplicarLogo(base64);
+                db.collection("config").doc("logo").set({ logoUrl: base64 });
+            };
+            reader.readAsDataURL(archivo);
+        }
+
+        function cargarLogoGuardado() {
+            db.collection("config").doc("logo").get().then(doc => {
+                if (doc.exists && doc.data().logoUrl) {
+                    aplicarLogo(doc.data().logoUrl);
+                }
+            });
+        }
+
+        function aplicarLogo(src) {
+            document.getElementById("logoHeaderImg").src = src;
+            document.getElementById("logoLoginImg").src = src;
+        }
+
+        // ========================================================
+        // 4. COMENTARIOS Y SUGERENCIAS
+        // ========================================================
+        function guardarComentario(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("feedbackNombre").value.trim();
+            const mensaje = document.getElementById("feedbackMsg").value.trim();
+
+            if (!nombre || !mensaje) return;
+
+            db.collection("comentarios").add({
+                nombre: nombre,
+                mensaje: mensaje,
+                fecha: new Date().toLocaleDateString()
+            }).then(() => {
+                document.getElementById("feedbackMsg").value = "";
+                cargarComentariosFirebase();
+            });
+        }
+
+        function cargarComentariosFirebase() {
+            const list = document.getElementById("comentariosList");
+            if (!list) return;
+
+            db.collection("comentarios").get().then((querySnapshot) => {
+                list.innerHTML = "";
+                querySnapshot.forEach((doc) => {
+                    const c = doc.data();
+                    const box = document.createElement("div");
+                    box.className = "comment-item-vintage";
+                    box.innerHTML = `
+                        <p class="c-author">👤 <strong>${c.nombre}</strong> <span class="c-date">(${c.fecha})</span></p>
+                        <p class="c-text">"${c.mensaje}"</p>
+                    `;
+                    list.appendChild(box);
+                });
+            });
+        }
+
+        // ========================================================
+        // 5. NAVEGACIÓN Y LOGIN
+        // ========================================================
         function abrirModalAuth() {
             limpiarFormulariosAuth();
             document.getElementById("modalAuthScreen").style.display = "flex";
@@ -282,7 +462,6 @@
             document.getElementById("modalAuthScreen").style.display = "none";
         }
 
-        // VER Y OCULTAR CONTRASEÑA
         function togglePasswordVisibility(inputId, btn) {
             const passInput = document.getElementById(inputId);
             if (passInput.type === "password") {
@@ -433,253 +612,16 @@
             renderizarUnidad();
         }
 
-        function renderizarUnidad() {
-            const container = document.getElementById("semanasContainer");
-            if (!container) return;
-            container.innerHTML = "";
-
-            const semanaInicio = (unidadActual - 1) * 4 + 1;
-
-            for (let i = 0; i < 4; i++) {
-                const numSemana = semanaInicio + i;
-                const keyTarea = `${cursoActual}_U${unidadActual}_S${numSemana}`;
-
-                const tituloClase = localStorage.getItem("titulo_clase_" + keyTarea) || "";
-                const tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
-
-                const semanaCard = document.createElement("div");
-                semanaCard.className = "semana-card-vintage";
-
-                let html = `
-                    <div class="semana-card-header">
-                        <div class="semana-title">Semana ${numSemana}</div>
-                        ${tituloClase ? `<div class="clase-tema">📘 ${tituloClase}</div>` : `<div class="clase-tema-vacio">Sin tema asignado</div>`}
-                        ${esPropietario ? `<button class="btn-xs-edit" onclick="editarTituloClase('${keyTarea}')">✏️ Tema</button>` : ''}
-                    </div>
-                    <div class="semana-card-body">
-                `;
-
-                if (tareasGuardadas.length > 0) {
-                    html += `<div class="task-count-tag">✔ ${tareasGuardadas.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
-
-                    tareasGuardadas.forEach((task, index) => {
-                        html += `
-                            <div class="task-row-item">
-                                <span class="task-row-title">${task.tipo === 'enlace' ? '🔗' : '📄'} <strong>${task.nombre}</strong></span>
-                                
-                                <!-- DOS BOTONES SEPARADOS: ABRIR Y DESCARGAR -->
-                                <div class="task-action-buttons-group">
-                                    <a href="${task.url}" target="_blank" class="btn-task-open">👁️ Ver / Abrir</a>
-                                    <a href="${task.url}" download="${task.nombre}" target="_blank" class="btn-task-download">📥 Descargar</a>
-                                    
-                                    ${esPropietario ? `
-                                        <button class="btn-action-edit" onclick="abrirModalEditarTarea('${keyTarea}', ${index})">✏️</button>
-                                        <button class="btn-action-del" onclick="eliminarTareaPropietario('${keyTarea}', ${index})">🗑️</button>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        `;
-                    });
-
-                    html += `</div>`;
-                } else {
-                    html += `<p class="empty-task-text">Sin tareas publicadas en esta semana.</p>`;
-                }
-
-                if (esPropietario) {
-                    html += `
-                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Agregar Tarea Nueva</button>
-                    `;
-                }
-
-                html += `</div>`;
-                semanaCard.innerHTML = html;
-                container.appendChild(semanaCard);
-            }
-        }
-
-        function abrirModalSubirTarea(keyTarea) {
-            document.getElementById("modalKeyTarea").value = keyTarea;
-            document.getElementById("modalEditIndex").value = "-1";
-            document.getElementById("modalTareaTituloAccion").innerText = "📤 Agregar Nueva Tarea";
+        function abrirModalSubirTarea(semanaNum) {
+            document.getElementById("modalKeyTarea").value = semanaNum;
+            document.getElementById("modalTareaTituloAccion").innerText = "📤 Agregar Nueva Tarea a la Nube";
             document.getElementById("taskTitulo").value = "";
             document.getElementById("taskUrl").value = "";
-            document.getElementById("taskFile").value = "";
-            document.getElementById("modalSubirTarea").style.display = "flex";
-        }
-
-        function abrirModalEditarTarea(keyTarea, index) {
-            let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
-            const task = tareasGuardadas[index];
-
-            document.getElementById("modalKeyTarea").value = keyTarea;
-            document.getElementById("modalEditIndex").value = index;
-            document.getElementById("modalTareaTituloAccion").innerText = "✏️ Editar Tarea Existente";
-            document.getElementById("taskTitulo").value = task.nombre;
-            
-            if (task.tipo === 'enlace') {
-                document.getElementById("taskTipo").value = "enlace";
-                document.getElementById("taskUrl").value = task.url;
-            } else {
-                document.getElementById("taskTipo").value = "archivo";
-            }
-            cambiarTipoInputTask();
             document.getElementById("modalSubirTarea").style.display = "flex";
         }
 
         function cerrarModalSubirTarea() {
             document.getElementById("modalSubirTarea").style.display = "none";
-        }
-
-        function cambiarTipoInputTask() {
-            const tipo = document.getElementById("taskTipo").value;
-            if (tipo === 'archivo') {
-                document.getElementById("boxTaskFile").classList.remove("contenido-oculto");
-                document.getElementById("boxTaskUrl").classList.add("contenido-oculto");
-            } else {
-                document.getElementById("boxTaskFile").classList.add("contenido-oculto");
-                document.getElementById("boxTaskUrl").classList.remove("contenido-oculto");
-            }
-        }
-
-        function guardarNuevaTareaPropietario(e) {
-            e.preventDefault();
-            const keyTarea = document.getElementById("modalKeyTarea").value;
-            const editIndex = parseInt(document.getElementById("modalEditIndex").value);
-            const titulo = document.getElementById("taskTitulo").value.trim();
-            const tipo = document.getElementById("taskTipo").value;
-
-            let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
-
-            if (tipo === 'enlace') {
-                const url = document.getElementById("taskUrl").value.trim();
-                const nuevaData = { id: Date.now(), nombre: titulo, url: url, tipo: 'enlace' };
-
-                if (editIndex >= 0) {
-                    tareasGuardadas[editIndex] = nuevaData;
-                } else {
-                    tareasGuardadas.push(nuevaData);
-                }
-
-                localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                cerrarModalSubirTarea();
-                renderizarUnidad();
-            } else {
-                const fileInput = document.getElementById("taskFile");
-                if (fileInput.files && fileInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(evt) {
-                        const nuevaData = { id: Date.now(), nombre: titulo + " (" + fileInput.files[0].name + ")", url: evt.target.result, tipo: 'archivo' };
-                        
-                        if (editIndex >= 0) {
-                            tareasGuardadas[editIndex] = nuevaData;
-                        } else {
-                            tareasGuardadas.push(nuevaData);
-                        }
-
-                        localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                        cerrarModalSubirTarea();
-                        renderizarUnidad();
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
-                } else if (editIndex >= 0) {
-                    tareasGuardadas[editIndex].nombre = titulo;
-                    localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                    cerrarModalSubirTarea();
-                    renderizarUnidad();
-                } else {
-                    alert("Por favor selecciona un archivo.");
-                }
-            }
-        }
-
-        function eliminarTareaPropietario(keyTarea, index) {
-            if (confirm("¿Estás seguro de eliminar esta tarea de la semana?")) {
-                let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
-                tareasGuardadas.splice(index, 1);
-                localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                renderizarUnidad();
-            }
-        }
-
-        function editarTituloClase(keyTarea) {
-            const actual = localStorage.getItem("titulo_clase_" + keyTarea) || "";
-            const nuevo = prompt("Ingresa el tema o título de esta clase:", actual);
-            if (nuevo !== null) {
-                localStorage.setItem("titulo_clase_" + keyTarea, nuevo.trim());
-                renderizarUnidad();
-            }
-        }
-
-        function guardarComentario(e) {
-            e.preventDefault();
-            const nombre = document.getElementById("feedbackNombre").value.trim();
-            const mensaje = document.getElementById("feedbackMsg").value.trim();
-
-            if (!nombre || !mensaje) return;
-
-            let comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [];
-            comentarios.unshift({ nombre: nombre, mensaje: mensaje, fecha: new Date().toLocaleDateString() });
-            localStorage.setItem("comentarios_visitantes", JSON.stringify(comentarios));
-
-            document.getElementById("feedbackMsg").value = "";
-            cargarComentarios();
-        }
-
-        function cargarComentarios() {
-            const list = document.getElementById("comentariosList");
-            if (!list) return;
-            const comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [
-                { nombre: "Profesor UPLA", mensaje: "Excelente organización de contenidos y tareas académicas.", fecha: "15/9/2026" }
-            ];
-
-            list.innerHTML = "";
-            comentarios.forEach(c => {
-                const box = document.createElement("div");
-                box.className = "comment-item-vintage";
-                box.innerHTML = `
-                    <p class="c-author">👤 <strong>${c.nombre}</strong> <span class="c-date">(${c.fecha})</span></p>
-                    <p class="c-text">"${c.mensaje}"</p>
-                `;
-                list.appendChild(box);
-            });
-        }
-
-        function subirFotoPerfil(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                localStorage.setItem("foto_perfil_jhon", e.target.result);
-                document.getElementById("fotoPerfilImg").src = e.target.result;
-            };
-            reader.readAsDataURL(archivo);
-        }
-
-        function cargarFotoPerfil() {
-            const foto = localStorage.getItem("foto_perfil_jhon");
-            if (foto) document.getElementById("fotoPerfilImg").src = foto;
-        }
-
-        function subirNuevoLogo(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                localStorage.setItem("custom_upla_logo", e.target.result);
-                aplicarLogo(e.target.result);
-            };
-            reader.readAsDataURL(archivo);
-        }
-
-        function cargarLogoGuardado() {
-            const logo = localStorage.getItem("custom_upla_logo");
-            if (logo) aplicarLogo(logo);
-        }
-
-        function aplicarLogo(src) {
-            document.getElementById("logoHeaderImg").src = src;
-            document.getElementById("logoLoginImg").src = src;
         }
     </script>
 </body>

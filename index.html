@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- FIREBASE FIRESTORE (SIN FACTURACIÓN / PLAN SPARK GRATIS) -->
+    <!-- FIREBASE SDK COMPAT -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
@@ -49,7 +49,7 @@
     </header>
 
 
-    <!-- PANTALLA 1: PRESENTACIÓN MI A -->
+    <!-- PANTALLA 1: PRESENTACIÓN -->
     <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
         <div class="vintage-container">
             <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
@@ -71,17 +71,17 @@
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
-                        Bienvenido a mi plataforma académica en la <strong>Universidad Peruana Los Andes</strong>. Aquí organizo, documento y comparto mis entregables, proyectos de código y guías prácticas desarrolladas durante el ciclo académico.
+                        Bienvenido a mi plataforma académica en la <strong>Universidad Peruana Los Andes</strong>. Aquí organizo, documento y comparto mis entregables, proyectos de código Java y guías prácticas en PDF o enlaces a Google Drive/GitHub.
                     </p>
 
                     <div class="vintage-boxes-container">
                         <div class="v-box v-box-gold">
                             <h4>📘 ¿De qué trata este portafolio?</h4>
-                            <p>Es un espacio web centralizado donde archivo tareas semanales, documentación en PDF, enlaces a GitHub/Figma y guías de desarrollo software.</p>
+                            <p>Es un espacio web centralizado donde archivo tareas semanales, documentación en PDF, código Java y repositorios académicos.</p>
                         </div>
                         <div class="v-box v-box-burgundy">
                             <h4>🎯 ¿Para qué me sirve?</h4>
-                            <p>Demuestra la aplicación práctica de mis competencias profesionales, facilita la revisión por parte de docentes y consolida mi perfil profesional.</p>
+                            <p>Demuestra la aplicación práctica de mis competencias profesionales, facilita la revisión por docentes y consolida mis entregables.</p>
                         </div>
                     </div>
 
@@ -104,7 +104,7 @@
 
             <div class="course-header-banner">
                 <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
-                <p>Selecciona cualquiera de las 4 Unidades para revisar o descargar las tareas semanales.</p>
+                <p>Selecciona cualquiera de las 4 Unidades para revisar, abrir o descargar las tareas semanales.</p>
             </div>
 
             <div class="unidades-pills">
@@ -115,7 +115,7 @@
             </div>
 
             <div id="semanasContainer" class="semanas-grid">
-                <!-- Carga dinámica -->
+                <!-- Se genera dinámicamente mediante el script.js -->
             </div>
         </div>
     </section>
@@ -125,7 +125,7 @@
     <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
         <div class="feedback-card-vintage">
             <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
-            <p>Deja un mensaje, observación o recomendación sobre las tareas y proyectos presentados:</p>
+            <p>Deja un mensaje, observación o recomendación sobre las tareas y proyectos en Java/PDF presentados:</p>
 
             <form onsubmit="guardarComentario(event)" class="feedback-form">
                 <div class="form-row-vintage">
@@ -195,533 +195,47 @@
     </div>
 
 
-    <!-- MODAL PARA AGREGAR TAREAS -->
+    <!-- MODAL PARA AGREGAR TAREAS (USANDO GOOGLE DRIVE Y GITHUB) -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
-            <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
-            <p>Puedes subir un archivo ligero (< 750KB) o un enlace web a Drive/GitHub.</p>
+            <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Publicar Nueva Tarea</h3>
+            <p>Ingresa el título de la tarea y el enlace público alojado en Google Drive o GitHub.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
 
                 <div class="form-group-vintage">
                     <label>Título / Nombre de la Tarea:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Informe PDF / Word" required>
+                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2 - Informe PDF o Código Java" required>
                 </div>
 
                 <div class="form-group-vintage">
-                    <label>Tipo de Entrega:</label>
-                    <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
-                        <option value="archivo">📄 Subir Archivo Directo (PDF, Word, Imagen < 750KB)</option>
-                        <option value="enlace">🔗 Enlace Web (Google Drive, GitHub, OneDrive)</option>
+                    <label>Tipo de Documento:</label>
+                    <select id="taskTipo" required>
+                        <option value="drive">📄 Documento PDF / Word (Enlace de Google Drive)</option>
+                        <option value="github">💻 Código Java / Proyecto (Enlace de GitHub)</option>
+                        <option value="otro">🔗 Otro Enlace Web</option>
                     </select>
                 </div>
 
-                <div id="boxTaskFile" class="form-group-vintage">
-                    <label>Seleccionar Archivo (Máx 750 KB):</label>
-                    <input type="file" id="taskFile" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.png,.jpg,.jpeg">
+                <div class="form-group-vintage">
+                    <label>URL / Enlace Público (Google Drive o GitHub):</label>
+                    <input type="url" id="taskUrl" placeholder="https://drive.google.com/... o https://github.com/..." required>
+                    <small style="color:#64748b; display:block; margin-top:5px;">
+                        💡 Recuerda configurar el archivo en Google Drive con acceso <strong>"Cualquier persona con el enlace"</strong>.
+                    </small>
                 </div>
 
-                <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
-                    <label>URL / Enlace Web:</label>
-                    <input type="url" id="taskUrl" placeholder="https://drive.google.com/... o https://github.com/...">
-                </div>
-
-                <button type="submit" id="btnGuardarTareaSubmit" class="btn-vintage-gold btn-block">Guardar Tarea en la Nube</button>
+                <button type="submit" id="btnGuardarTareaSubmit" class="btn-vintage-gold btn-block">Publicar Tarea para los Visitantes</button>
             </form>
         </div>
     </div>
 
-
-    <!-- SCRIPT DE FIREBASE FIRESTORE -->
-    <script>
-        // ========================================================
-        // 1. REEMPLAZA CON TUS CLAVES DE FIREBASE (DEL PASO 1)
-        // ========================================================
-        const firebaseConfig = {
-            apiKey: "AIzaSyD-REEMPLAZA_CON_TU_API_KEY",
-            authDomain: "tu-proyecto.firebaseapp.com",
-            projectId: "tu-proyecto-id",
-            storageBucket: "tu-proyecto.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef123456"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // Estado Global
-        let usuarioActual = "Invitado";
-        let esPropietario = false;
-        let cursoActual = 'curso1';
-        let unidadActual = 1;
-
-        const nombresCursos = {
-            curso1: "📱 Desarrollo de Aplicaciones 1",
-            curso2: "🧮 Algoritmos y Estructuras de Datos"
-        };
-
-        document.addEventListener("DOMContentLoaded", () => {
-            verificarSesionGuardada();
-            cargarFotoPerfil();
-            cargarLogoGuardado();
-            cargarComentariosFirebase();
-            navegarAPantalla('pantallaInicio');
-        });
-
-        // ========================================================
-        // 2. TAREAS: GUARDAR CON MANEJO DE ERRORES Y TIMEOUT
-        // ========================================================
-        function renderizarUnidad() {
-            const container = document.getElementById("semanasContainer");
-            if (!container) return;
-            container.innerHTML = "<p style='text-align:center; width:100%; font-weight:bold; color:#0284c7;'>🔄 Cargando tareas desde la nube...</p>";
-
-            const semanaInicio = (unidadActual - 1) * 4 + 1;
-
-            db.collection("tareas")
-              .where("curso", "==", cursoActual)
-              .where("unidad", "==", unidadActual)
-              .get()
-              .then((querySnapshot) => {
-                  container.innerHTML = "";
-                  
-                  let tareasMap = {};
-                  querySnapshot.forEach((doc) => {
-                      const data = doc.data();
-                      data.docId = doc.id;
-                      if (!tareasMap[data.semana]) tareasMap[data.semana] = [];
-                      tareasMap[data.semana].push(data);
-                  });
-
-                  for (let i = 0; i < 4; i++) {
-                      const numSemana = semanaInicio + i;
-                      const tareasDeSemana = tareasMap[numSemana] || [];
-
-                      const semanaCard = document.createElement("div");
-                      semanaCard.className = "semana-card-vintage";
-
-                      let html = `
-                          <div class="semana-card-header">
-                              <div class="semana-title">Semana ${numSemana}</div>
-                          </div>
-                          <div class="semana-card-body">
-                      `;
-
-                      if (tareasDeSemana.length > 0) {
-                          html += `<div class="task-count-tag">✔ ${tareasDeSemana.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
-
-                          tareasDeSemana.forEach((task) => {
-                              const icono = task.tipo === 'enlace' ? '🔗' : '📄';
-                              html += `
-                                  <div class="task-row-item">
-                                      <span class="task-row-title">${icono} <strong>${task.nombre}</strong></span>
-                                      
-                                      <div class="task-action-buttons-group">
-                                          <a href="${task.url}" target="_blank" class="btn-task-open">👁️ Ver / Abrir</a>
-                                          <a href="${task.url}" download="${task.nombre}" class="btn-task-download">📥 Descargar</a>
-                                          
-                                          ${esPropietario ? `
-                                              <button class="btn-action-del" onclick="eliminarTareaFirebase('${task.docId}')">🗑️</button>
-                                          ` : ''}
-                                      </div>
-                                  </div>
-                              `;
-                          });
-
-                          html += `</div>`;
-                      } else {
-                          html += `<p class="empty-task-text">Sin tareas publicadas en esta semana.</p>`;
-                      }
-
-                      if (esPropietario) {
-                          html += `
-                              <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${numSemana}')">➕ Agregar Tarea Nueva</button>
-                          `;
-                      }
-
-                      html += `</div>`;
-                      semanaCard.innerHTML = html;
-                      container.appendChild(semanaCard);
-                  }
-              }).catch(err => {
-                  container.innerHTML = "<p style='text-align:center;'>Error conectando a Firebase. Revisa tus claves o conexión.</p>";
-              });
-        }
-
-        function guardarNuevaTareaPropietario(e) {
-            e.preventDefault();
-            const numSemana = parseInt(document.getElementById("modalKeyTarea").value);
-            const titulo = document.getElementById("taskTitulo").value.trim();
-            const tipo = document.getElementById("taskTipo").value;
-            const btnSubmit = document.getElementById("btnGuardarTareaSubmit");
-
-            btnSubmit.innerText = "⏳ Guardando en la nube...";
-            btnSubmit.disabled = true;
-
-            const resetBtn = () => {
-                btnSubmit.innerText = "Guardar Tarea en la Nube";
-                btnSubmit.disabled = false;
-            };
-
-            if (tipo === 'archivo') {
-                const fileInput = document.getElementById("taskFile");
-                if (fileInput.files && fileInput.files[0]) {
-                    const archivo = fileInput.files[0];
-
-                    // Límite seguro para Firestore
-                    if (archivo.size > 750 * 1024) {
-                        alert("El archivo pesa más de 750 KB. Firestore no permite subir documentos tan pesados por este método. Selecciona la opción '🔗 Enlace Web' y pega el link de Google Drive / GitHub.");
-                        resetBtn();
-                        return;
-                    }
-
-                    const reader = new FileReader();
-                    reader.onload = function(evt) {
-                        const fileDataUrl = evt.target.result;
-
-                        db.collection("tareas").add({
-                            curso: cursoActual,
-                            unidad: unidadActual,
-                            semana: numSemana,
-                            nombre: `${titulo} (${archivo.name})`,
-                            url: fileDataUrl,
-                            tipo: 'archivo',
-                            fecha: new Date()
-                        }).then(() => {
-                            resetBtn();
-                            cerrarModalSubirTarea();
-                            renderizarUnidad();
-                        }).catch(err => {
-                            alert("Error al guardar en la nube: " + err.message);
-                            resetBtn();
-                        });
-                    };
-                    reader.readAsDataURL(archivo);
-                } else {
-                    alert("Por favor selecciona un archivo de tu equipo.");
-                    resetBtn();
-                }
-            } else {
-                const url = document.getElementById("taskUrl").value.trim();
-                if (!url) {
-                    alert("Por favor ingresa una URL válida.");
-                    resetBtn();
-                    return;
-                }
-
-                db.collection("tareas").add({
-                    curso: cursoActual,
-                    unidad: unidadActual,
-                    semana: numSemana,
-                    nombre: titulo,
-                    url: url,
-                    tipo: 'enlace',
-                    fecha: new Date()
-                }).then(() => {
-                    resetBtn();
-                    cerrarModalSubirTarea();
-                    renderizarUnidad();
-                }).catch(err => {
-                    alert("Error al guardar enlace: " + err.message);
-                    resetBtn();
-                });
-            }
-        }
-
-        function eliminarTareaFirebase(docId) {
-            if (confirm("¿Estás seguro de eliminar esta tarea de la nube?")) {
-                db.collection("tareas").doc(docId).delete().then(() => {
-                    renderizarUnidad();
-                });
-            }
-        }
-
-        // ========================================================
-        // 3. FOTO Y LOGO EN FIRESTORE
-        // ========================================================
-        function subirFotoPerfil(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-
-            if (archivo.size > 500 * 1024) {
-                alert("La foto de perfil debe ser menor a 500 KB.");
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const base64 = e.target.result;
-                document.getElementById("fotoPerfilImg").src = base64;
-                db.collection("config").doc("perfil").set({ fotoUrl: base64 });
-            };
-            reader.readAsDataURL(archivo);
-        }
-
-        function cargarFotoPerfil() {
-            db.collection("config").doc("perfil").get().then(doc => {
-                if (doc.exists && doc.data().fotoUrl) {
-                    document.getElementById("fotoPerfilImg").src = doc.data().fotoUrl;
-                }
-            });
-        }
-
-        function subirNuevoLogo(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-
-            if (archivo.size > 500 * 1024) {
-                alert("El logo debe ser menor a 500 KB.");
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const base64 = e.target.result;
-                aplicarLogo(base64);
-                db.collection("config").doc("logo").set({ logoUrl: base64 });
-            };
-            reader.readAsDataURL(archivo);
-        }
-
-        function cargarLogoGuardado() {
-            db.collection("config").doc("logo").get().then(doc => {
-                if (doc.exists && doc.data().logoUrl) {
-                    aplicarLogo(doc.data().logoUrl);
-                }
-            });
-        }
-
-        function aplicarLogo(src) {
-            document.getElementById("logoHeaderImg").src = src;
-            document.getElementById("logoLoginImg").src = src;
-        }
-
-        // ========================================================
-        // 4. COMENTARIOS Y SUGERENCIAS
-        // ========================================================
-        function guardarComentario(e) {
-            e.preventDefault();
-            const nombre = document.getElementById("feedbackNombre").value.trim();
-            const mensaje = document.getElementById("feedbackMsg").value.trim();
-
-            if (!nombre || !mensaje) return;
-
-            db.collection("comentarios").add({
-                nombre: nombre,
-                mensaje: mensaje,
-                fecha: new Date().toLocaleDateString()
-            }).then(() => {
-                document.getElementById("feedbackMsg").value = "";
-                cargarComentariosFirebase();
-            });
-        }
-
-        function cargarComentariosFirebase() {
-            const list = document.getElementById("comentariosList");
-            if (!list) return;
-
-            db.collection("comentarios").get().then((querySnapshot) => {
-                list.innerHTML = "";
-                querySnapshot.forEach((doc) => {
-                    const c = doc.data();
-                    const box = document.createElement("div");
-                    box.className = "comment-item-vintage";
-                    box.innerHTML = `
-                        <p class="c-author">👤 <strong>${c.nombre}</strong> <span class="c-date">(${c.fecha})</span></p>
-                        <p class="c-text">"${c.mensaje}"</p>
-                    `;
-                    list.appendChild(box);
-                });
-            });
-        }
-
-        // ========================================================
-        // 5. NAVEGACIÓN Y AUTH
-        // ========================================================
-        function abrirModalAuth() {
-            limpiarFormulariosAuth();
-            document.getElementById("modalAuthScreen").style.display = "flex";
-        }
-
-        function cerrarModalAuth() {
-            document.getElementById("modalAuthScreen").style.display = "none";
-        }
-
-        function togglePasswordVisibility(inputId, btn) {
-            const passInput = document.getElementById(inputId);
-            if (passInput.type === "password") {
-                passInput.type = "text";
-                btn.innerText = "🙈";
-            } else {
-                passInput.type = "password";
-                btn.innerText = "👁️";
-            }
-        }
-
-        function limpiarFormulariosAuth() {
-            document.getElementById("formLogin").reset();
-            document.getElementById("formRegister").reset();
-        }
-
-        function navegarAPantalla(idPantalla) {
-            document.querySelectorAll(".pantalla-seccion").forEach(sec => sec.classList.add("contenido-oculto"));
-            document.getElementById(idPantalla).classList.remove("contenido-oculto");
-
-            document.querySelectorAll(".nav-screen-btn").forEach(btn => btn.classList.remove("active"));
-            
-            if (idPantalla === 'pantallaInicio') document.querySelectorAll(".nav-screen-btn")[0]?.classList.add("active");
-            if (idPantalla === 'pantallaCursos') document.querySelectorAll(".nav-screen-btn")[1]?.classList.add("active");
-            if (idPantalla === 'pantallaFeedback') document.querySelectorAll(".nav-screen-btn")[2]?.classList.add("active");
-        }
-
-        function mostrarTabAuth(tab) {
-            limpiarFormulariosAuth();
-            if (tab === 'login') {
-                document.getElementById('formLogin').classList.remove('contenido-oculto');
-                document.getElementById('formRegister').classList.add('contenido-oculto');
-                document.getElementById('tabLoginBtn').classList.add('active');
-                document.getElementById('tabRegisterBtn').classList.remove('active');
-            } else {
-                document.getElementById('formLogin').classList.add('contenido-oculto');
-                document.getElementById('formRegister').classList.remove('contenido-oculto');
-                document.getElementById('tabRegisterBtn').classList.add('active');
-                document.getElementById('tabLoginBtn').classList.remove('active');
-            }
-        }
-
-        function procesarLogin(e) {
-            e.preventDefault();
-            const inputUser = document.getElementById("loginUsuario").value.trim().toLowerCase();
-            const inputPass = document.getElementById("loginPass").value.trim();
-
-            if ((inputUser === "jhon benitrez" || inputUser === "jhon benitres") && inputPass === "123456789") {
-                esPropietario = true;
-                usuarioActual = "Jhon Benitrez";
-            } else {
-                esPropietario = false;
-                usuarioActual = document.getElementById("loginUsuario").value.trim();
-            }
-
-            const sesion = { nombre: usuarioActual, esAdmin: esPropietario };
-            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
-            
-            limpiarFormulariosAuth();
-            cerrarModalAuth();
-            actualizarInterfazUsuario();
-        }
-
-        function procesarRegistro(e) {
-            e.preventDefault();
-            const nombre = document.getElementById("regUsuario").value.trim();
-            esPropietario = false;
-            usuarioActual = nombre;
-
-            const sesion = { nombre: usuarioActual, esAdmin: false };
-            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
-            
-            limpiarFormulariosAuth();
-            cerrarModalAuth();
-            actualizarInterfazUsuario();
-        }
-
-        function verificarSesionGuardada() {
-            const sesion = JSON.parse(localStorage.getItem("sesion_portafolio_upla"));
-            if (sesion) {
-                usuarioActual = sesion.nombre;
-                esPropietario = sesion.esAdmin;
-            } else {
-                usuarioActual = "Invitado";
-                esPropietario = false;
-            }
-            actualizarInterfazUsuario();
-        }
-
-        function actualizarInterfazUsuario() {
-            document.getElementById("userNameDisplay").innerText = usuarioActual;
-            document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ a mi Portafolio`;
-
-            const badge = document.getElementById("userRoleBadge");
-            const btnLogin = document.getElementById("btnAbrirLoginNav");
-            const btnSalir = document.getElementById("btnSalirNav");
-            const btnLogo = document.getElementById("btnCambiarLogo");
-            const btnFoto = document.getElementById("btnCambiarFoto");
-
-            if (esPropietario) {
-                badge.innerText = "👑 Propietario";
-                badge.className = "badge badge-admin";
-                btnLogin.classList.add("contenido-oculto");
-                btnSalir.classList.remove("contenido-oculto");
-                btnLogo.classList.remove("contenido-oculto");
-                btnFoto.classList.remove("contenido-oculto");
-            } else if (usuarioActual !== "Invitado") {
-                badge.innerText = "👁️ Visitante (" + usuarioActual + ")";
-                badge.className = "badge badge-visitor";
-                btnLogin.classList.add("contenido-oculto");
-                btnSalir.classList.remove("contenido-oculto");
-                btnLogo.classList.add("contenido-oculto");
-                btnFoto.classList.add("contenido-oculto");
-            } else {
-                badge.innerText = "👁️ Visitante";
-                badge.className = "badge badge-visitor";
-                btnLogin.classList.remove("contenido-oculto");
-                btnSalir.classList.add("contenido-oculto");
-                btnLogo.classList.add("contenido-oculto");
-                btnFoto.classList.add("contenido-oculto");
-            }
-
-            renderizarUnidad();
-        }
-
-        function cerrarSesion() {
-            localStorage.removeItem("sesion_portafolio_upla");
-            usuarioActual = "Invitado";
-            esPropietario = false;
-            limpiarFormulariosAuth();
-            actualizarInterfazUsuario();
-            navegarAPantalla('pantallaInicio');
-        }
-
-        function cambiarCurso(idCurso, ev) {
-            cursoActual = idCurso;
-            document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
-            document.querySelectorAll(".course-tab-btn").forEach(btn => btn.classList.remove("active"));
-            if (ev) ev.target.classList.add("active");
-            mostrarUnidad(1);
-        }
-
-        function mostrarUnidad(numUnidad, ev) {
-            unidadActual = numUnidad;
-            document.querySelectorAll(".pill-btn").forEach((btn, index) => {
-                btn.classList.toggle("active", index + 1 === numUnidad);
-            });
-            renderizarUnidad();
-        }
-
-        function abrirModalSubirTarea(semanaNum) {
-            document.getElementById("modalKeyTarea").value = semanaNum;
-            document.getElementById("modalTareaTituloAccion").innerText = "📤 Agregar Nueva Tarea a la Nube";
-            document.getElementById("taskTitulo").value = "";
-            document.getElementById("taskUrl").value = "";
-            document.getElementById("taskFile").value = "";
-            document.getElementById("modalSubirTarea").style.display = "flex";
-        }
-
-        function cerrarModalSubirTarea() {
-            document.getElementById("modalSubirTarea").style.display = "none";
-        }
-
-        function cambiarTipoInputTask() {
-            const tipo = document.getElementById("taskTipo").value;
-            if (tipo === 'archivo') {
-                document.getElementById("boxTaskFile").classList.remove("contenido-oculto");
-                document.getElementById("boxTaskUrl").classList.add("contenido-oculto");
-            } else {
-                document.getElementById("boxTaskFile").classList.add("contenido-oculto");
-                document.getElementById("boxTaskUrl").classList.remove("contenido-oculto");
-            }
-        }
+    <!-- SCRIPT DE LA LÓGICA PRINCIPAL (LLAMADO AL ARCHIVO JS SEPARADO) -->
+    <script src="script.js"></script>
+</body>
+</html>
     </script>
 </body>
 </html>

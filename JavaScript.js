@@ -1,5 +1,5 @@
 // ========================================================
-// CONFIGURACIÓN DE FIREBASE (COMPAT DE FIREBASE V9)
+// CONFIGURACIÓN DE FIREBASE COMPAT (V9)
 // ========================================================
 const firebaseConfig = {
     apiKey: "TU_API_KEY_AQUI",
@@ -10,7 +10,7 @@ const firebaseConfig = {
     appId: "1:1234567890:web:abcdef123456"
 };
 
-// Inicialización de servicios
+// Inicialización de la app si no ha sido instanciada
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
@@ -18,7 +18,7 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-// Estado Global
+// Estado Global de la aplicación
 let usuarioActual = "Invitado";
 let esPropietario = false;
 let cursoActual = 'curso1';
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================================================
-// GESTIÓN DE CURSOS Y SUBIDA DE ARCHIVOS A FIREBASE STORAGE
+// REPO DE TAREAS Y SUBIDA A FIREBASE STORAGE
 // ========================================================
 let desuscritoTareas = null;
 
@@ -234,7 +234,7 @@ function eliminarTareaFirebase(docId, storagePath) {
 }
 
 // ========================================================
-// GESTIÓN DE MULTIMEDIA (PERFIL Y LOGO)
+// FOTO DE PERFIL Y LOGO A STORAGE
 // ========================================================
 function subirFotoPerfil(event) {
     const archivo = event.target.files[0];
@@ -288,7 +288,7 @@ function aplicarLogo(src) {
 }
 
 // ========================================================
-// SUGERENCIAS Y COMENTARIOS EN TIEMPO REAL
+// FEEDBACK EN TIEMPO REAL
 // ========================================================
 function guardarComentario(e) {
     e.preventDefault();
@@ -327,7 +327,7 @@ function escucharComentariosEnTiempoReal() {
 }
 
 // ========================================================
-// CONTROLES DE SESIÓN Y VISTAS
+// CONTROL DE NAVEGACIÓN Y SESIÓN
 // ========================================================
 function abrirModalAuth() {
     document.getElementById("modalAuthScreen").style.display = "flex";

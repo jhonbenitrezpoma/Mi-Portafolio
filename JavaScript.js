@@ -1,5 +1,5 @@
 // ========================================================
-// CONFIGURACIÓN DE FIREBASE FIRESTORE
+// CONFIGURACIÓN DE FIREBASE (COMPAT DE FIREBASE V9)
 // ========================================================
 const firebaseConfig = {
     apiKey: "TU_API_KEY_AQUI",
@@ -10,8 +10,13 @@ const firebaseConfig = {
     appId: "1:1234567890:web:abcdef123456"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Inicialización de servicios
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 // Estado Global
 let usuarioActual = "Invitado";
@@ -33,19 +38,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================================================
-// MANEJO DE TAREAS EN TIEMPO REAL (GOOGLE DRIVE Y GITHUB)
+// GESTIÓN DE CURSOS Y SUBIDA DE ARCHIVOS A FIREBASE STORAGE
 // ========================================================
-
-// Escucha reactiva en tiempo real para que todos los visitantes vean cambios al instante
 let desuscritoTareas = null;
 
 function renderizarUnidad() {
     const container = document.getElementById("semanasContainer");
     if (!container) return;
     
-    container.innerHTML = "<p style='text-align:center; width:100%; font-weight:bold; color:#0284c7;'>🔄 Sincronizando tareas desde la nube...</p>";
+    container.innerHTML = "<p style='text-align:center; width:100%; font-weight:bold; color:#0284c7;'>🔄 Cargando entregables...</p>";
 
-    // Cancelar la suscripción previa para evitar fugas de memoria
     if (desuscritoTareas) desuscritoTareas();
 
     const semanaInicio = (unidadActual - 1) * 4 + 1;
@@ -83,19 +85,20 @@ function renderizarUnidad() {
 
                     tareasDeSemana.forEach((task) => {
                         let icono = '📄';
-                        if (task.tipo === 'github') icono = '💻';
-                        if (task.tipo === 'drive') icono = '📘';
+                        if (task.nombre.toLowerCase().endsWith('.java')) icono = '💻';
+                        else if (task.nombre.toLowerCase().endsWith('.pdf')) icono = '📘';
+                        else if (task.nombre.toLowerCase().endsWith('.zip') || task.nombre.toLowerCase().endsWith('.rar')) icono = '📦';
 
                         html += `
                             <div class="task-row-item">
                                 <span class="task-row-title">${icono} <strong>${task.nombre}</strong></span>
                                 
                                 <div class="task-action-buttons-group">
-                                    <a href="${task.url}" target="_blank" class="btn-task-open">👁️ Abrir / Ver Documento</a>
-                                    <a href="${task.url}" target="_blank" class="btn-task-download">📥 Descargar / Repositorio</a>
+                                    <a href="${task.url}" target="_blank" rel="noopener noreferrer" class="btn-task-open">👁️ Abrir</a>
+                                    <a href="${task.url}" download target="_blank" rel="noopener noreferrer" class="btn-task-download">📥 Descargar</a>
                                     
                                     ${esPropietario ? `
-                                        <button class="btn-action-del" onclick="eliminarTareaFirebase('${task.docId}')">🗑️</button>
+                                        <button class="btn-action-del" onclick="eliminarTareaFirebase('${task.docId}', '${task.storagePath || ''}')">🗑️</button>
                                     ` : ''}
                                 </div>
                             </div>
@@ -104,12 +107,12 @@ function renderizarUnidad() {
 
                     html += `</div>`;
                 } else {
-                    html += `<p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">Sin entregables publicados en esta semana.</p>`;
+                    html += `<p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">Sin entregables publicados.</p>`;
                 }
 
                 if (esPropietario) {
                     html += `
-                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${numSemana}')">➕ Publicar Tarea en Drive/GitHub</button>
+                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${numSemana}')">➕ Cargar Archivo</button>
                     `;
                 }
 
@@ -118,70 +121,134 @@ function renderizarUnidad() {
                 container.appendChild(semanaCard);
             }
         }, (error) => {
-            container.innerHTML = "<p style='text-align:center; color:red;'>Error al conectar con la base de datos.</p>";
+            console.error(error);
+            container.innerHTML = "<p style='text-align:center; color:red;'>Error al consultar la base de datos.</p>";
         });
+}
+
+function cambiarMetodoSubida() {
+    const origen = document.getElementById("taskOrigen").value;
+    if (origen === 'dispositivo') {
+        document.getElementById("contenedorSubirArchivo").classList.remove("contenido-oculto");
+        document.getElementById("contenedorEnlaceWeb").classList.add("contenido-oculto");
+    } else {
+        document.getElementById("contenedorSubirArchivo").classList.add("contenido-oculto");
+        document.getElementById("contenedorEnlaceWeb").classList.remove("contenido-oculto");
+    }
 }
 
 function guardarNuevaTareaPropietario(e) {
     e.preventDefault();
     const numSemana = parseInt(document.getElementById("modalKeyTarea").value);
     const titulo = document.getElementById("taskTitulo").value.trim();
-    const tipo = document.getElementById("taskTipo").value;
-    const url = document.getElementById("taskUrl").value.trim();
+    const origen = document.getElementById("taskOrigen").value;
     const btnSubmit = document.getElementById("btnGuardarTareaSubmit");
+    const progressContainer = document.getElementById("progressContainer");
+    const progressBar = document.getElementById("progressBarSubida");
+    const progressText = document.getElementById("progressText");
 
-    if (!url) {
-        alert("Por favor ingresa una URL válida de Google Drive o GitHub.");
-        return;
+    if (origen === 'dispositivo') {
+        const fileInput = document.getElementById("taskFileLocal");
+        if (!fileInput.files || fileInput.files.length === 0) {
+            alert("Selecciona un archivo de tu dispositivo.");
+            return;
+        }
+
+        const archivo = fileInput.files[0];
+        const rutaStorage = `tareas/${Date.now()}_${archivo.name}`;
+        const refStorage = storage.ref().child(rutaStorage);
+
+        btnSubmit.innerText = "⏳ Cargando archivo...";
+        btnSubmit.disabled = true;
+        progressContainer.classList.remove("contenido-oculto");
+        progressBar.value = 0;
+
+        const uploadTask = refStorage.put(archivo);
+
+        uploadTask.on('state_changed', 
+            (snapshot) => {
+                const porcentaje = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                progressBar.value = porcentaje;
+                progressText.innerText = `${porcentaje}% completado`;
+            }, 
+            (error) => {
+                alert("Error durante la carga: " + error.message);
+                btnSubmit.innerText = "Subir y Sincronizar";
+                btnSubmit.disabled = false;
+                progressContainer.classList.add("contenido-oculto");
+            }, 
+            () => {
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    db.collection("tareas").add({
+                        curso: cursoActual,
+                        unidad: unidadActual,
+                        semana: numSemana,
+                        nombre: `${titulo} (${archivo.name})`,
+                        url: downloadURL,
+                        storagePath: rutaStorage,
+                        fecha: new Date()
+                    }).then(() => {
+                        btnSubmit.innerText = "Subir y Sincronizar";
+                        btnSubmit.disabled = false;
+                        progressContainer.classList.add("contenido-oculto");
+                        cerrarModalSubirTarea();
+                    });
+                });
+            }
+        );
+
+    } else {
+        const urlWeb = document.getElementById("taskUrlWeb").value.trim();
+        if (!urlWeb) {
+            alert("Ingrese una URL válida.");
+            return;
+        }
+
+        btnSubmit.innerText = "⏳ Guardando...";
+        btnSubmit.disabled = true;
+
+        db.collection("tareas").add({
+            curso: cursoActual,
+            unidad: unidadActual,
+            semana: numSemana,
+            nombre: titulo,
+            url: urlWeb,
+            storagePath: "",
+            fecha: new Date()
+        }).then(() => {
+            btnSubmit.innerText = "Subir y Sincronizar";
+            btnSubmit.disabled = false;
+            cerrarModalSubirTarea();
+        });
     }
-
-    btnSubmit.innerText = "⏳ Guardando en la nube...";
-    btnSubmit.disabled = true;
-
-    db.collection("tareas").add({
-        curso: cursoActual,
-        unidad: unidadActual,
-        semana: numSemana,
-        nombre: titulo,
-        url: url,
-        tipo: tipo,
-        fecha: new Date()
-    }).then(() => {
-        btnSubmit.innerText = "Publicar Tarea para los Visitantes";
-        btnSubmit.disabled = false;
-        cerrarModalSubirTarea();
-    }).catch(err => {
-        alert("Error al registrar la tarea: " + err.message);
-        btnSubmit.innerText = "Publicar Tarea para los Visitantes";
-        btnSubmit.disabled = false;
-    });
 }
 
-function eliminarTareaFirebase(docId) {
-    if (confirm("¿Estás seguro de eliminar esta tarea del portafolio?")) {
-        db.collection("tareas").doc(docId).delete();
+function eliminarTareaFirebase(docId, storagePath) {
+    if (confirm("¿Confirmas la eliminación del archivo seleccionado?")) {
+        db.collection("tareas").doc(docId).delete().then(() => {
+            if (storagePath) {
+                storage.ref().child(storagePath).delete().catch(err => console.error("Error al borrar de Storage:", err));
+            }
+        });
     }
 }
 
 // ========================================================
-// FOTO Y LOGO EN FIRESTORE
+// GESTIÓN DE MULTIMEDIA (PERFIL Y LOGO)
 // ========================================================
 function subirFotoPerfil(event) {
     const archivo = event.target.files[0];
     if (!archivo) return;
 
-    if (archivo.size > 300 * 1024) {
-        alert("La imagen debe pesar menos de 300 KB.");
-        return;
-    }
+    const rutaStorage = `perfil/${Date.now()}_${archivo.name}`;
+    const refStorage = storage.ref().child(rutaStorage);
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const base64 = e.target.result;
-        document.getElementById("fotoPerfilImg").src = base64;
-        db.collection("config").doc("perfil").set({ fotoUrl: base64 });
-    };
-    reader.readAsDataURL(archivo);
+    refStorage.put(archivo).then(snapshot => {
+        snapshot.ref.getDownloadURL().then(url => {
+            document.getElementById("fotoPerfilImg").src = url;
+            db.collection("config").doc("perfil").set({ fotoUrl: url });
+        });
+    });
 }
 
 function cargarFotoPerfil() {
@@ -196,18 +263,15 @@ function subirNuevoLogo(event) {
     const archivo = event.target.files[0];
     if (!archivo) return;
 
-    if (archivo.size > 300 * 1024) {
-        alert("El logo debe pesar menos de 300 KB.");
-        return;
-    }
+    const rutaStorage = `logo/${Date.now()}_${archivo.name}`;
+    const refStorage = storage.ref().child(rutaStorage);
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const base64 = e.target.result;
-        aplicarLogo(base64);
-        db.collection("config").doc("logo").set({ logoUrl: base64 });
-    };
-    reader.readAsDataURL(archivo);
+    refStorage.put(archivo).then(snapshot => {
+        snapshot.ref.getDownloadURL().then(url => {
+            aplicarLogo(url);
+            db.collection("config").doc("logo").set({ logoUrl: url });
+        });
+    });
 }
 
 function cargarLogoGuardado() {
@@ -224,7 +288,7 @@ function aplicarLogo(src) {
 }
 
 // ========================================================
-// COMENTARIOS Y SUGERENCIAS
+// SUGERENCIAS Y COMENTARIOS EN TIEMPO REAL
 // ========================================================
 function guardarComentario(e) {
     e.preventDefault();
@@ -263,7 +327,7 @@ function escucharComentariosEnTiempoReal() {
 }
 
 // ========================================================
-// AUTENTICACIÓN Y NAVEGACIÓN
+// CONTROLES DE SESIÓN Y VISTAS
 // ========================================================
 function abrirModalAuth() {
     document.getElementById("modalAuthScreen").style.display = "flex";
@@ -417,7 +481,9 @@ function mostrarUnidad(numUnidad, ev) {
 function abrirModalSubirTarea(semanaNum) {
     document.getElementById("modalKeyTarea").value = semanaNum;
     document.getElementById("taskTitulo").value = "";
-    document.getElementById("taskUrl").value = "";
+    document.getElementById("taskFileLocal").value = "";
+    document.getElementById("taskUrlWeb").value = "";
+    document.getElementById("progressContainer").classList.add("contenido-oculto");
     document.getElementById("modalSubirTarea").style.display = "flex";
 }
 

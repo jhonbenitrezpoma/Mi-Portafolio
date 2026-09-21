@@ -4,31 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio Académico | Jhon Benitrez - UPLA</title>
-    
-    <!-- Estilos CSS y Tipografías -->
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- FIREBASE SDK COMPAT (Orden de carga obligatorio) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 </head>
 <body>
 
-    <!-- CABECERA PRINCIPAL -->
+    <!-- NAVBAR PRINCIPAL CON INICIO DE SESIÓN A LA IZQUIERDA -->
     <header class="navbar">
         <div class="nav-left-zone">
-            <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión</button>
+            <!-- BOTÓN DE INICIAR SESIÓN UBICADO A LA IZQUIERDA SUPERIOR -->
+            <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión / Ingresar</button>
             <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-vintage-outline contenido-oculto">Cerrar Sesión</button>
         </div>
 
         <div class="logo-container">
             <div class="logo-wrapper">
                 <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
-                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo institucional">
+                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo desde tu PC">
                     📷
                     <input type="file" accept="image/*" onchange="subirNuevoLogo(event)" style="display:none;">
                 </label>
@@ -39,6 +33,7 @@
             </div>
         </div>
 
+        <!-- MENÚ DE NAVEGACIÓN LIBRE PARA VISITANTES Y PROPIETARIO -->
         <nav id="navScreens" class="nav-screens">
             <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏛️ Presentación</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
@@ -52,12 +47,13 @@
     </header>
 
 
-    <!-- PANTALLA 1: PRESENTACIÓN -->
-    <section id="pantallaInicio" class="pantalla-seccion">
+    <!-- PANTALLA 1: PRESENTACIÓN MI A (APARECE PRIMERO AL ENTRAR) -->
+    <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
         <div class="vintage-container">
-            <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA</div>
+            <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
 
             <div class="vintage-hero-grid">
+                <!-- Columna Foto de Perfil -->
                 <div class="vintage-profile-card">
                     <div class="vintage-frame">
                         <img id="fotoPerfilImg" src="https://via.placeholder.com/180?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-vintage">
@@ -71,25 +67,26 @@
                     <div class="author-location">🏛️ UPLA - Huancayo, Perú</div>
                 </div>
 
+                <!-- Columna Información y Propósito -->
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
-                        Plataforma académica institucional para la consulta y gestión en tiempo real de recursos digitales, entregables y repositorios de software.
+                        Bienvenido a mi plataforma académica en la <strong>Universidad Peruana Los Andes</strong>. Aquí organizo, documento y comparto mis entregables, proyectos de código y guías prácticas desarrolladas durante el ciclo académico.
                     </p>
 
                     <div class="vintage-boxes-container">
                         <div class="v-box v-box-gold">
-                            <h4>📘 Repositorio Académico</h4>
-                            <p>Gestión directa de guías, prácticas de laboratorio y proyectos.</p>
+                            <h4>📘 ¿De qué trata este portafolio?</h4>
+                            <p>Es un espacio web centralizado donde archivo tareas semanales, documentación en PDF, enlaces a GitHub/Figma y guías de desarrollo software.</p>
                         </div>
                         <div class="v-box v-box-burgundy">
-                            <h4>🎯 Almacenamiento Nube</h4>
-                            <p>Sincronización de archivos y documentos vía Firebase Storage.</p>
+                            <h4>🎯 ¿Para qué me sirve?</h4>
+                            <p>Demuestra la aplicación práctica de mis competencias profesionales, facilita la revisión por parte de docentes y consolida mi perfil profesional.</p>
                         </div>
                     </div>
 
                     <div class="vintage-actions">
-                        <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Entregables</button>
+                        <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Tareas</button>
                     </div>
                 </div>
             </div>
@@ -98,7 +95,7 @@
 
 
     <!-- PANTALLA 2: CURSOS Y TAREAS -->
-    <section id="pantallaCursos" class="pantalla-seccion contenido-oculto">
+    <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
         <div class="cursos-main-container">
             <div class="courses-selector-bar">
                 <button class="course-tab-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
@@ -107,7 +104,7 @@
 
             <div class="course-header-banner">
                 <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
-                <p>Selecciona una Unidad para revisar, visualizar o descargar la documentación cargada.</p>
+                <p>Selecciona cualquiera de las 4 Unidades para revisar o descargar las tareas semanales.</p>
             </div>
 
             <div class="unidades-pills">
@@ -118,36 +115,42 @@
             </div>
 
             <div id="semanasContainer" class="semanas-grid">
-                <!-- Se genera dinámicamente con JS -->
+                <!-- Carga dinámica -->
             </div>
         </div>
     </section>
 
 
     <!-- PANTALLA 3: SUGERENCIAS -->
-    <section id="pantallaFeedback" class="pantalla-seccion contenido-oculto">
+    <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
         <div class="feedback-card-vintage">
-            <h3 class="font-vintage-title">💬 Observaciones y Feedback</h3>
+            <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
+            <p>Deja un mensaje, observación o recomendación sobre las tareas y proyectos presentados:</p>
+
             <form onsubmit="guardarComentario(event)" class="feedback-form">
                 <div class="form-row-vintage">
-                    <input type="text" id="feedbackNombre" placeholder="Tu nombre..." required>
-                    <input type="text" id="feedbackMsg" placeholder="Escribe tu observación..." required>
-                    <button type="submit" class="btn-vintage-gold">💬 Enviar</button>
+                    <input type="text" id="feedbackNombre" placeholder="Tu nombre o usuario..." required>
+                    <input type="text" id="feedbackMsg" placeholder="Escribe tu mensaje o sugerencia..." required>
+                    <button type="submit" class="btn-vintage-gold">💬 Enviar Sugerencia</button>
                 </div>
             </form>
-            <div id="comentariosList" class="comentarios-list-vintage"></div>
+
+            <div id="comentariosList" class="comentarios-list-vintage">
+                <!-- Comentarios guardados -->
+            </div>
         </div>
     </section>
 
 
-    <!-- MODAL DE AUTENTICACIÓN -->
+    <!-- MODAL VENTANA DE LOGIN / REGISTRO (SALTA AL HACER CLIC EN EL BOTÓN SUPERIOR IZQUIERDO) -->
     <div id="modalAuthScreen" class="modal">
-        <div class="modal-content">
+        <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalAuth()">✕</button>
 
             <div class="vintage-card-header">
                 <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
-                <h2 class="font-vintage-title">Acceso al Sistema</h2>
+                <h2 class="font-vintage-title">Acceso al Portafolio</h2>
+                <p class="auth-subtitle">Ingeniería de Sistemas y Cómputo - UPLA</p>
             </div>
 
             <div class="auth-tabs">
@@ -155,85 +158,529 @@
                 <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
             </div>
 
+            <!-- Formulario Login -->
             <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Usuario / Estudiante:</label>
-                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
+                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required autocomplete="off">
                 </div>
                 
                 <div class="form-group-vintage">
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
-                        <input type="password" id="loginPass" placeholder="Ingrese contraseña">
-                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)">👁️</button>
+                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío" autocomplete="new-password">
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-vintage-gold btn-block">Ingresar</button>
+                <button type="submit" class="btn-vintage-gold">Ingresar al Portafolio</button>
             </form>
 
+            <!-- Formulario Registro -->
             <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Nombre Completo:</label>
-                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
+                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required autocomplete="off">
                 </div>
                 
                 <div class="form-group-vintage">
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
-                        <input type="password" id="regPass" placeholder="Cree una contraseña" required>
-                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)">👁️</button>
+                        <input type="password" id="regPass" placeholder="Crea una contraseña" required autocomplete="new-password">
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-vintage-gold btn-block">Crear Cuenta</button>
+                <div class="form-group-vintage">
+                    <label>Correo Electrónico (Opcional):</label>
+                    <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" autocomplete="off">
+                </div>
+                
+                <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
             </form>
         </div>
     </div>
 
 
-    <!-- MODAL DE GESTIÓN DE SUBIDA DE ARCHIVOS -->
+    <!-- MODAL PARA SUBIR Y EDITAR TAREAS (PROPIETARIO) -->
     <div id="modalSubirTarea" class="modal">
-        <div class="modal-content">
+        <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
-            <h3 class="font-vintage-title">📤 Cargar Entregable / Archivo</h3>
-            <p style="font-size:0.85rem; color:#64748b; margin-bottom: 1rem;">Selecciona un archivo local (PDF, Word, Java, ZIP) o utiliza un enlace web.</p>
+            <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
+            <p>Adjunta un archivo o ingresa un enlace a tu proyecto en GitHub, Drive o Figma.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
+                <input type="hidden" id="modalEditIndex" value="-1">
 
                 <div class="form-group-vintage">
-                    <label>Título del Archivo / Entrega:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Práctica 01 - Estructura de Datos" required>
+                    <label>Título / Nombre de la Tarea:</label>
+                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Diagrama UML" required>
                 </div>
 
                 <div class="form-group-vintage">
-                    <label>Tipo de Carga:</label>
-                    <select id="taskOrigen" onchange="cambiarMetodoSubida()" required>
-                        <option value="dispositivo">📁 Archivo desde PC / Móvil (PDF, Java, Word, ZIP)</option>
-                        <option value="enlace">🔗 Enlace Externo (GitHub / Google Drive)</option>
+                    <label>Tipo de Entrega:</label>
+                    <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
+                        <option value="archivo">📄 Subir Archivo (PDF, DOCX, ZIP, Imagen)</option>
+                        <option value="enlace">🔗 Enlace Web (GitHub, Drive, Figma, Vercel)</option>
                     </select>
                 </div>
 
-                <div id="contenedorSubirArchivo" class="form-group-vintage">
+                <div id="boxTaskFile" class="form-group-vintage">
                     <label>Seleccionar Archivo:</label>
-                    <input type="file" id="taskFileLocal" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.png,.jpg,.java,.txt,.cpp">
-                    <div id="progressContainer" class="contenido-oculto" style="margin-top: 10px;">
-                        <progress id="progressBarSubida" value="0" max="100" style="width: 100%; height: 12px;"></progress>
-                        <span id="progressText" style="font-size: 0.75rem; color: #0284c7; font-weight: bold;">0%</span>
-                    </div>
+                    <input type="file" id="taskFile">
                 </div>
 
-                <div id="contenedorEnlaceWeb" class="form-group-vintage contenido-oculto">
-                    <label>URL Web:</label>
-                    <input type="url" id="taskUrlWeb" placeholder="https://github.com/usuario/repositorio">
+                <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
+                    <label>URL / Enlace Web:</label>
+                    <input type="url" id="taskUrl" placeholder="https://github.com/tuusuario/tu-proyecto">
                 </div>
 
-                <button type="submit" id="btnGuardarTareaSubmit" class="btn-vintage-gold btn-block">Subir y Sincronizar</button>
+                <button type="submit" class="btn-vintage-gold btn-block">Guardar Tarea</button>
             </form>
         </div>
     </div>
 
-    <script src="script.js"></script>
+
+    <script>
+        let usuarioActual = "Invitado";
+        let esPropietario = false;
+        let cursoActual = 'curso1';
+        let unidadActual = 1;
+
+        const nombresCursos = {
+            curso1: "📱 Desarrollo de Aplicaciones 1",
+            curso2: "🧮 Algoritmos y Estructuras de Datos"
+        };
+
+        const TAREAS_OFICIALES = {
+            "curso1_U1_S1": [
+                { id: "off1", nombre: "Tarea 1: Guía de Interfaces de Usuario (PDF)", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", tipo: "archivo" },
+                { id: "off2", nombre: "Proyecto NEXORA: Documento de Requisitos", url: "https://github.com", tipo: "enlace" }
+            ],
+            "curso2_U1_S1": [
+                { id: "off3", nombre: "Tarea 1: Ejercicios de Estructuras y Algoritmos", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", tipo: "archivo" }
+            ]
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarLogoGuardado();
+            cargarFotoPerfil();
+            verificarSesionGuardada();
+            cargarComentarios();
+            limpiarFormulariosAuth();
+            navegarAPantalla('pantallaInicio'); // Siempre muestra la presentación al entrar
+        });
+
+        // VENTANA FLOTANTE DE AUTENTICACIÓN
+        function abrirModalAuth() {
+            limpiarFormulariosAuth();
+            document.getElementById("modalAuthScreen").style.display = "flex";
+        }
+
+        function cerrarModalAuth() {
+            document.getElementById("modalAuthScreen").style.display = "none";
+        }
+
+        // VER Y OCULTAR CONTRASEÑA
+        function togglePasswordVisibility(inputId, btn) {
+            const passInput = document.getElementById(inputId);
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                btn.innerText = "🙈";
+            } else {
+                passInput.type = "password";
+                btn.innerText = "👁️";
+            }
+        }
+
+        function limpiarFormulariosAuth() {
+            document.getElementById("formLogin").reset();
+            document.getElementById("formRegister").reset();
+        }
+
+        function navegarAPantalla(idPantalla) {
+            document.querySelectorAll(".pantalla-seccion").forEach(sec => sec.classList.add("contenido-oculto"));
+            document.getElementById(idPantalla).classList.remove("contenido-oculto");
+
+            document.querySelectorAll(".nav-screen-btn").forEach(btn => btn.classList.remove("active"));
+            
+            if (idPantalla === 'pantallaInicio') document.querySelectorAll(".nav-screen-btn")[0]?.classList.add("active");
+            if (idPantalla === 'pantallaCursos') document.querySelectorAll(".nav-screen-btn")[1]?.classList.add("active");
+            if (idPantalla === 'pantallaFeedback') document.querySelectorAll(".nav-screen-btn")[2]?.classList.add("active");
+        }
+
+        function mostrarTabAuth(tab) {
+            limpiarFormulariosAuth();
+            if (tab === 'login') {
+                document.getElementById('formLogin').classList.remove('contenido-oculto');
+                document.getElementById('formRegister').classList.add('contenido-oculto');
+                document.getElementById('tabLoginBtn').classList.add('active');
+                document.getElementById('tabRegisterBtn').classList.remove('active');
+            } else {
+                document.getElementById('formLogin').classList.add('contenido-oculto');
+                document.getElementById('formRegister').classList.remove('contenido-oculto');
+                document.getElementById('tabRegisterBtn').classList.add('active');
+                document.getElementById('tabLoginBtn').classList.remove('active');
+            }
+        }
+
+        function procesarLogin(e) {
+            e.preventDefault();
+            const inputUser = document.getElementById("loginUsuario").value.trim().toLowerCase();
+            const inputPass = document.getElementById("loginPass").value.trim();
+
+            if ((inputUser === "jhon benitrez" || inputUser === "jhon benitres") && inputPass === "123456789") {
+                esPropietario = true;
+                usuarioActual = "Jhon Benitrez";
+            } else {
+                esPropietario = false;
+                usuarioActual = document.getElementById("loginUsuario").value.trim();
+            }
+
+            const sesion = { nombre: usuarioActual, esAdmin: esPropietario };
+            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
+            
+            limpiarFormulariosAuth();
+            cerrarModalAuth();
+            actualizarInterfazUsuario();
+        }
+
+        function procesarRegistro(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("regUsuario").value.trim();
+            esPropietario = false;
+            usuarioActual = nombre;
+
+            const sesion = { nombre: usuarioActual, esAdmin: false };
+            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
+            
+            limpiarFormulariosAuth();
+            cerrarModalAuth();
+            actualizarInterfazUsuario();
+        }
+
+        function verificarSesionGuardada() {
+            const sesion = JSON.parse(localStorage.getItem("sesion_portafolio_upla"));
+            if (sesion) {
+                usuarioActual = sesion.nombre;
+                esPropietario = sesion.esAdmin;
+            } else {
+                usuarioActual = "Invitado";
+                esPropietario = false;
+            }
+            actualizarInterfazUsuario();
+        }
+
+        function actualizarInterfazUsuario() {
+            document.getElementById("userNameDisplay").innerText = usuarioActual;
+            document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ a mi Portafolio`;
+
+            const badge = document.getElementById("userRoleBadge");
+            const btnLogin = document.getElementById("btnAbrirLoginNav");
+            const btnSalir = document.getElementById("btnSalirNav");
+            const btnLogo = document.getElementById("btnCambiarLogo");
+            const btnFoto = document.getElementById("btnCambiarFoto");
+
+            if (esPropietario) {
+                badge.innerText = "👑 Propietario";
+                badge.className = "badge badge-admin";
+                btnLogin.classList.add("contenido-oculto");
+                btnSalir.classList.remove("contenido-oculto");
+                btnLogo.classList.remove("contenido-oculto");
+                btnFoto.classList.remove("contenido-oculto");
+            } else if (usuarioActual !== "Invitado") {
+                badge.innerText = "👁️ Visitante (" + usuarioActual + ")";
+                badge.className = "badge badge-visitor";
+                btnLogin.classList.add("contenido-oculto");
+                btnSalir.classList.remove("contenido-oculto");
+                btnLogo.classList.add("contenido-oculto");
+                btnFoto.classList.add("contenido-oculto");
+            } else {
+                badge.innerText = "👁️ Visitante";
+                badge.className = "badge badge-visitor";
+                btnLogin.classList.remove("contenido-oculto");
+                btnSalir.classList.add("contenido-oculto");
+                btnLogo.classList.add("contenido-oculto");
+                btnFoto.classList.add("contenido-oculto");
+            }
+
+            renderizarUnidad();
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem("sesion_portafolio_upla");
+            usuarioActual = "Invitado";
+            esPropietario = false;
+            limpiarFormulariosAuth();
+            actualizarInterfazUsuario();
+            navegarAPantalla('pantallaInicio');
+        }
+
+        function cambiarCurso(idCurso, ev) {
+            cursoActual = idCurso;
+            document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
+            document.querySelectorAll(".course-tab-btn").forEach(btn => btn.classList.remove("active"));
+            if (ev) ev.target.classList.add("active");
+            mostrarUnidad(1);
+        }
+
+        function mostrarUnidad(numUnidad, ev) {
+            unidadActual = numUnidad;
+            document.querySelectorAll(".pill-btn").forEach((btn, index) => {
+                btn.classList.toggle("active", index + 1 === numUnidad);
+            });
+            renderizarUnidad();
+        }
+
+        function renderizarUnidad() {
+            const container = document.getElementById("semanasContainer");
+            if (!container) return;
+            container.innerHTML = "";
+
+            const semanaInicio = (unidadActual - 1) * 4 + 1;
+
+            for (let i = 0; i < 4; i++) {
+                const numSemana = semanaInicio + i;
+                const keyTarea = `${cursoActual}_U${unidadActual}_S${numSemana}`;
+
+                const tituloClase = localStorage.getItem("titulo_clase_" + keyTarea) || "";
+                const tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
+
+                const semanaCard = document.createElement("div");
+                semanaCard.className = "semana-card-vintage";
+
+                let html = `
+                    <div class="semana-card-header">
+                        <div class="semana-title">Semana ${numSemana}</div>
+                        ${tituloClase ? `<div class="clase-tema">📘 ${tituloClase}</div>` : `<div class="clase-tema-vacio">Sin tema asignado</div>`}
+                        ${esPropietario ? `<button class="btn-xs-edit" onclick="editarTituloClase('${keyTarea}')">✏️ Tema</button>` : ''}
+                    </div>
+                    <div class="semana-card-body">
+                `;
+
+                if (tareasGuardadas.length > 0) {
+                    html += `<div class="task-count-tag">✔ ${tareasGuardadas.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
+
+                    tareasGuardadas.forEach((task, index) => {
+                        html += `
+                            <div class="task-row-item">
+                                <span class="task-row-title">${task.tipo === 'enlace' ? '🔗' : '📄'} <strong>${task.nombre}</strong></span>
+                                
+                                <!-- DOS BOTONES SEPARADOS: ABRIR Y DESCARGAR -->
+                                <div class="task-action-buttons-group">
+                                    <a href="${task.url}" target="_blank" class="btn-task-open">👁️ Ver / Abrir</a>
+                                    <a href="${task.url}" download="${task.nombre}" target="_blank" class="btn-task-download">📥 Descargar</a>
+                                    
+                                    ${esPropietario ? `
+                                        <button class="btn-action-edit" onclick="abrirModalEditarTarea('${keyTarea}',${index})">✏️</button>
+                                        <button class="btn-action-del" onclick="eliminarTareaPropietario('${keyTarea}',${index})">🗑️</button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `</div>`;
+                } else {
+                    html += `<p class="empty-task-text">Sin tareas publicadas en esta semana.</p>`;
+                }
+
+                if (esPropietario) {
+                    html += `
+                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Agregar Tarea Nueva</button>
+                    `;
+                }
+
+                html += `</div>`;
+                semanaCard.innerHTML = html;
+                container.appendChild(semanaCard);
+            }
+        }
+
+        function abrirModalSubirTarea(keyTarea) {
+            document.getElementById("modalKeyTarea").value = keyTarea;
+            document.getElementById("modalEditIndex").value = "-1";
+            document.getElementById("modalTareaTituloAccion").innerText = "📤 Agregar Nueva Tarea";
+            document.getElementById("taskTitulo").value = "";
+            document.getElementById("taskUrl").value = "";
+            document.getElementById("taskFile").value = "";
+            document.getElementById("modalSubirTarea").style.display = "flex";
+        }
+
+        function abrirModalEditarTarea(keyTarea, index) {
+            let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
+            const task = tareasGuardadas[index];
+
+            document.getElementById("modalKeyTarea").value = keyTarea;
+            document.getElementById("modalEditIndex").value = index;
+            document.getElementById("modalTareaTituloAccion").innerText = "✏️ Editar Tarea Existente";
+            document.getElementById("taskTitulo").value = task.nombre;
+            
+            if (task.tipo === 'enlace') {
+                document.getElementById("taskTipo").value = "enlace";
+                document.getElementById("taskUrl").value = task.url;
+            } else {
+                document.getElementById("taskTipo").value = "archivo";
+            }
+            cambiarTipoInputTask();
+            document.getElementById("modalSubirTarea").style.display = "flex";
+        }
+
+        function cerrarModalSubirTarea() {
+            document.getElementById("modalSubirTarea").style.display = "none";
+        }
+
+        function cambiarTipoInputTask() {
+            const tipo = document.getElementById("taskTipo").value;
+            if (tipo === 'archivo') {
+                document.getElementById("boxTaskFile").classList.remove("contenido-oculto");
+                document.getElementById("boxTaskUrl").classList.add("contenido-oculto");
+            } else {
+                document.getElementById("boxTaskFile").classList.add("contenido-oculto");
+                document.getElementById("boxTaskUrl").classList.remove("contenido-oculto");
+            }
+        }
+
+        function guardarNuevaTareaPropietario(e) {
+            e.preventDefault();
+            const keyTarea = document.getElementById("modalKeyTarea").value;
+            const editIndex = parseInt(document.getElementById("modalEditIndex").value);
+            const titulo = document.getElementById("taskTitulo").value.trim();
+            const tipo = document.getElementById("taskTipo").value;
+
+            let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
+
+            if (tipo === 'enlace') {
+                const url = document.getElementById("taskUrl").value.trim();
+                const nuevaData = { id: Date.now(), nombre: titulo, url: url, tipo: 'enlace' };
+
+                if (editIndex >= 0) {
+                    tareasGuardadas[editIndex] = nuevaData;
+                } else {
+                    tareasGuardadas.push(nuevaData);
+                }
+
+                localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
+                cerrarModalSubirTarea();
+                renderizarUnidad();
+            } else {
+                const fileInput = document.getElementById("taskFile");
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        const nuevaData = { id: Date.now(), nombre: titulo + " (" + fileInput.files[0].name + ")", url: evt.target.result, tipo: 'archivo' };
+                        
+                        if (editIndex >= 0) {
+                            tareasGuardadas[editIndex] = nuevaData;
+                        } else {
+                            tareasGuardadas.push(nuevaData);
+                        }
+
+                        localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
+                        cerrarModalSubirTarea();
+                        renderizarUnidad();
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else if (editIndex >= 0) {
+                    tareasGuardadas[editIndex].nombre = titulo;
+                    localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
+                    cerrarModalSubirTarea();
+                    renderizarUnidad();
+                } else {
+                    alert("Por favor selecciona un archivo.");
+                }
+            }
+        }
+
+        function eliminarTareaPropietario(keyTarea, index) {
+            if (confirm("¿Estás seguro de eliminar esta tarea de la semana?")) {
+                let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
+                tareasGuardadas.splice(index, 1);
+                localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
+                renderizarUnidad();
+            }
+        }
+
+        function editarTituloClase(keyTarea) {
+            const actual = localStorage.getItem("titulo_clase_" + keyTarea) || "";
+            const nuevo = prompt("Ingresa el tema o título de esta clase:", actual);
+            if (nuevo !== null) {
+                localStorage.setItem("titulo_clase_" + keyTarea, nuevo.trim());
+                renderizarUnidad();
+            }
+        }
+
+        function guardarComentario(e) {
+            e.preventDefault();
+            const nombre = document.getElementById("feedbackNombre").value.trim();
+            const mensaje = document.getElementById("feedbackMsg").value.trim();
+
+            if (!nombre || !mensaje) return;
+
+            let comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [];
+            comentarios.unshift({ nombre: nombre, mensaje: mensaje, fecha: new Date().toLocaleDateString() });
+            localStorage.setItem("comentarios_visitantes", JSON.stringify(comentarios));
+
+            document.getElementById("feedbackMsg").value = "";
+            cargarComentarios();
+        }
+
+        function cargarComentarios() {
+            const list = document.getElementById("comentariosList");
+            if (!list) return;
+            const comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [
+                { nombre: "Profesor UPLA", mensaje: "Excelente organización de contenidos y tareas académicas.", fecha: "15/9/2026" }
+            ];
+
+            list.innerHTML = "";
+            comentarios.forEach(c => {
+                const box = document.createElement("div");
+                box.className = "comment-item-vintage";
+                box.innerHTML = `
+                    <p class="c-author">👤 <strong>${c.nombre}</strong> <span class="c-date">(${c.fecha})</span></p>
+                    <p class="c-text">"${c.mensaje}"</p>
+                `;
+                list.appendChild(box);
+            });
+        }
+
+        function subirFotoPerfil(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                localStorage.setItem("foto_perfil_jhon", e.target.result);
+                document.getElementById("fotoPerfilImg").src = e.target.result;
+            };
+            reader.readAsDataURL(archivo);
+        }
+
+        function cargarFotoPerfil() {
+            const foto = localStorage.getItem("foto_perfil_jhon");
+            if (foto) document.getElementById("fotoPerfilImg").src = foto;
+        }
+
+        function subirNuevoLogo(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                localStorage.setItem("custom_upla_logo", e.target.result);
+                aplicarLogo(e.target.result);
+            };
+            reader.readAsDataURL(archivo);
+        }
+
+        function cargarLogoGuardado() {
+            const logo = localStorage.getItem("custom_upla_logo");
+            if (logo) aplicarLogo(logo);
+        }
+
+        function aplicarLogo(src) {
+            document.getElementById("logoHeaderImg").src = src;
+            document.getElementById("logoLoginImg").src = src;
+        }
+    </script>
 </body>
 </html>

@@ -4,28 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio Académico | Jhon Benitrez - UPLA</title>
+    
+    <!-- Hojas de estilo y tipografías -->
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- FIREBASE SDK COMPAT -->
+    <!-- FIREBASE SDK COMPAT (Librerías ordenadas correctamente) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 </head>
 <body>
 
-    <!-- NAVBAR PRINCIPAL CON INICIO DE SESIÓN A LA IZQUIERDA -->
+    <!-- NAVEGACIÓN PRINCIPAL -->
     <header class="navbar">
         <div class="nav-left-zone">
-            <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión / Ingresar</button>
+            <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión</button>
             <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-vintage-outline contenido-oculto">Cerrar Sesión</button>
         </div>
 
         <div class="logo-container">
             <div class="logo-wrapper">
                 <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
-                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo desde tu PC">
+                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo institucional">
                     📷
                     <input type="file" accept="image/*" onchange="subirNuevoLogo(event)" style="display:none;">
                 </label>
@@ -50,9 +53,9 @@
 
 
     <!-- PANTALLA 1: PRESENTACIÓN -->
-    <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
+    <section id="pantallaInicio" class="pantalla-seccion">
         <div class="vintage-container">
-            <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
+            <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA</div>
 
             <div class="vintage-hero-grid">
                 <div class="vintage-profile-card">
@@ -71,22 +74,22 @@
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
-                        Bienvenido a mi plataforma académica en la <strong>Universidad Peruana Los Andes</strong>. Aquí organizo, documento y comparto mis entregables, proyectos de código Java y guías prácticas en PDF o enlaces a Google Drive/GitHub.
+                        Plataforma académica institucional para el almacenamiento, consulta y gestión en tiempo real de recursos digitales, tareas y código fuente.
                     </p>
 
                     <div class="vintage-boxes-container">
                         <div class="v-box v-box-gold">
-                            <h4>📘 ¿De qué trata este portafolio?</h4>
-                            <p>Es un espacio web centralizado donde archivo tareas semanales, documentación en PDF, código Java y repositorios académicos.</p>
+                            <h4>📘 Repositorio Académico</h4>
+                            <p>Gestión directa de guías, prácticas de laboratorio y proyectos de software.</p>
                         </div>
                         <div class="v-box v-box-burgundy">
-                            <h4>🎯 ¿Para qué me sirve?</h4>
-                            <p>Demuestra la aplicación práctica de mis competencias profesionales, facilita la revisión por docentes y consolida mis entregables.</p>
+                            <h4>🎯 Almacenamiento Nube</h4>
+                            <p>Sincronización segura de archivos desde dispositivos móviles o PC mediante Firebase Storage.</p>
                         </div>
                     </div>
 
                     <div class="vintage-actions">
-                        <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Tareas</button>
+                        <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Entregables</button>
                     </div>
                 </div>
             </div>
@@ -95,7 +98,7 @@
 
 
     <!-- PANTALLA 2: CURSOS Y TAREAS -->
-    <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
+    <section id="pantallaCursos" class="pantalla-seccion contenido-oculto">
         <div class="cursos-main-container">
             <div class="courses-selector-bar">
                 <button class="course-tab-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
@@ -104,7 +107,7 @@
 
             <div class="course-header-banner">
                 <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
-                <p>Selecciona cualquiera de las 4 Unidades para revisar, abrir o descargar las tareas semanales.</p>
+                <p>Selecciona una Unidad para revisar, visualizar o descargar la documentación cargada.</p>
             </div>
 
             <div class="unidades-pills">
@@ -115,42 +118,36 @@
             </div>
 
             <div id="semanasContainer" class="semanas-grid">
-                <!-- Se genera dinámicamente mediante el script.js -->
+                <!-- Carga dinámica mediante JS -->
             </div>
         </div>
     </section>
 
 
     <!-- PANTALLA 3: SUGERENCIAS -->
-    <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
+    <section id="pantallaFeedback" class="pantalla-seccion contenido-oculto">
         <div class="feedback-card-vintage">
-            <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
-            <p>Deja un mensaje, observación o recomendación sobre las tareas y proyectos en Java/PDF presentados:</p>
-
+            <h3 class="font-vintage-title">💬 Observaciones y Feedback</h3>
             <form onsubmit="guardarComentario(event)" class="feedback-form">
                 <div class="form-row-vintage">
-                    <input type="text" id="feedbackNombre" placeholder="Tu nombre o usuario..." required>
-                    <input type="text" id="feedbackMsg" placeholder="Escribe tu mensaje o sugerencia..." required>
-                    <button type="submit" class="btn-vintage-gold">💬 Enviar Sugerencia</button>
+                    <input type="text" id="feedbackNombre" placeholder="Tu nombre..." required>
+                    <input type="text" id="feedbackMsg" placeholder="Escribe tu observación..." required>
+                    <button type="submit" class="btn-vintage-gold">💬 Enviar</button>
                 </div>
             </form>
-
-            <div id="comentariosList" class="comentarios-list-vintage">
-                <!-- Comentarios guardados -->
-            </div>
+            <div id="comentariosList" class="comentarios-list-vintage"></div>
         </div>
     </section>
 
 
-    <!-- MODAL VENTANA DE LOGIN -->
+    <!-- MODAL DE AUTENTICACIÓN -->
     <div id="modalAuthScreen" class="modal">
-        <div class="modal-content modal-vintage">
+        <div class="modal-content">
             <button class="close-modal" onclick="cerrarModalAuth()">✕</button>
 
             <div class="vintage-card-header">
                 <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
-                <h2 class="font-vintage-title">Acceso al Portafolio</h2>
-                <p class="auth-subtitle">Ingeniería de Sistemas y Cómputo - UPLA</p>
+                <h2 class="font-vintage-title">Acceso al Sistema</h2>
             </div>
 
             <div class="auth-tabs">
@@ -161,81 +158,82 @@
             <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Usuario / Estudiante:</label>
-                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required autocomplete="off">
+                    <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
                 </div>
                 
                 <div class="form-group-vintage">
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
-                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío" autocomplete="new-password">
+                        <input type="password" id="loginPass" placeholder="Ingrese contraseña">
                         <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)">👁️</button>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-vintage-gold">Ingresar al Portafolio</button>
+                <button type="submit" class="btn-vintage-gold btn-block">Ingresar</button>
             </form>
 
             <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Nombre Completo:</label>
-                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required autocomplete="off">
+                    <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
                 </div>
                 
                 <div class="form-group-vintage">
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
-                        <input type="password" id="regPass" placeholder="Crea una contraseña" required autocomplete="new-password">
+                        <input type="password" id="regPass" placeholder="Cree una contraseña" required>
                         <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)">👁️</button>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
+                <button type="submit" class="btn-vintage-gold btn-block">Crear Cuenta</button>
             </form>
         </div>
     </div>
 
 
-    <!-- MODAL PARA AGREGAR TAREAS (USANDO GOOGLE DRIVE Y GITHUB) -->
+    <!-- MODAL DE GESTIÓN DE SUBIDA DE ARCHIVOS -->
     <div id="modalSubirTarea" class="modal">
-        <div class="modal-content modal-vintage">
+        <div class="modal-content">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
-            <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Publicar Nueva Tarea</h3>
-            <p>Ingresa el título de la tarea y el enlace público alojado en Google Drive o GitHub.</p>
+            <h3 class="font-vintage-title">📤 Cargar Entregable / Archivo</h3>
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom: 1rem;">Selecciona un archivo local (PDF, Word, Java, ZIP) o utiliza un enlace web.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
 
                 <div class="form-group-vintage">
-                    <label>Título / Nombre de la Tarea:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2 - Informe PDF o Código Java" required>
+                    <label>Título del Archivo / Entrega:</label>
+                    <input type="text" id="taskTitulo" placeholder="Ej: Práctica 01 - Estructura de Datos" required>
                 </div>
 
                 <div class="form-group-vintage">
-                    <label>Tipo de Documento:</label>
-                    <select id="taskTipo" required>
-                        <option value="drive">📄 Documento PDF / Word (Enlace de Google Drive)</option>
-                        <option value="github">💻 Código Java / Proyecto (Enlace de GitHub)</option>
-                        <option value="otro">🔗 Otro Enlace Web</option>
+                    <label>Tipo de Carga:</label>
+                    <select id="taskOrigen" onchange="cambiarMetodoSubida()" required>
+                        <option value="dispositivo">📁 Archivo desde PC / Móvil (PDF, Java, Word, ZIP)</option>
+                        <option value="enlace">🔗 Enlace Externo (GitHub / Google Drive)</option>
                     </select>
                 </div>
 
-                <div class="form-group-vintage">
-                    <label>URL / Enlace Público (Google Drive o GitHub):</label>
-                    <input type="url" id="taskUrl" placeholder="https://drive.google.com/... o https://github.com/..." required>
-                    <small style="color:#64748b; display:block; margin-top:5px;">
-                        💡 Recuerda configurar el archivo en Google Drive con acceso <strong>"Cualquier persona con el enlace"</strong>.
-                    </small>
+                <div id="contenedorSubirArchivo" class="form-group-vintage">
+                    <label>Seleccionar Archivo:</label>
+                    <input type="file" id="taskFileLocal" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.png,.jpg,.java,.txt,.cpp">
+                    <div id="progressContainer" class="contenido-oculto" style="margin-top: 10px;">
+                        <progress id="progressBarSubida" value="0" max="100" style="width: 100%; height: 12px;"></progress>
+                        <span id="progressText" style="font-size: 0.75rem; color: #0284c7; font-weight: bold;">0%</span>
+                    </div>
                 </div>
 
-                <button type="submit" id="btnGuardarTareaSubmit" class="btn-vintage-gold btn-block">Publicar Tarea para los Visitantes</button>
+                <div id="contenedorEnlaceWeb" class="form-group-vintage contenido-oculto">
+                    <label>URL Web:</label>
+                    <input type="url" id="taskUrlWeb" placeholder="https://github.com/usuario/repositorio">
+                </div>
+
+                <button type="submit" id="btnGuardarTareaSubmit" class="btn-vintage-gold btn-block">Subir y Sincronizar</button>
             </form>
         </div>
     </div>
 
-    <!-- SCRIPT DE LA LÓGICA PRINCIPAL (LLAMADO AL ARCHIVO JS SEPARADO) -->
     <script src="script.js"></script>
-</body>
-</html>
-    </script>
 </body>
 </html>

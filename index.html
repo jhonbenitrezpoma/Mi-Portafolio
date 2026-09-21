@@ -195,12 +195,12 @@
     </div>
 
 
-    <!-- MODAL PARA AGREGAR TAREAS (SOPORTA SUBIR ARCHIVOS Y ENLACES) -->
+    <!-- MODAL PARA AGREGAR TAREAS -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
             <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
-            <p>Puedes subir un archivo (PDF, Word, ZIP, Imagen) o pegar un enlace web.</p>
+            <p>Puedes subir un archivo ligero (< 750KB) o un enlace web a Drive/GitHub.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
@@ -213,18 +213,16 @@
                 <div class="form-group-vintage">
                     <label>Tipo de Entrega:</label>
                     <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
-                        <option value="archivo">📄 Subir Archivo (PDF, Word, Excel, ZIP, Imagen)</option>
-                        <option value="enlace">🔗 Enlace Web (Google Drive, GitHub, Figma)</option>
+                        <option value="archivo">📄 Subir Archivo Directo (PDF, Word, Imagen < 750KB)</option>
+                        <option value="enlace">🔗 Enlace Web (Google Drive, GitHub, OneDrive)</option>
                     </select>
                 </div>
 
-                <!-- CAMPO PARA SUBIR ARCHIVOS DIRECTOS -->
                 <div id="boxTaskFile" class="form-group-vintage">
-                    <label>Seleccionar Archivo de tu PC:</label>
+                    <label>Seleccionar Archivo (Máx 750 KB):</label>
                     <input type="file" id="taskFile" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.png,.jpg,.jpeg">
                 </div>
 
-                <!-- CAMPO PARA PEGAR ENLACE WEB -->
                 <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
                     <label>URL / Enlace Web:</label>
                     <input type="url" id="taskUrl" placeholder="https://drive.google.com/... o https://github.com/...">
@@ -273,7 +271,7 @@
         });
 
         // ========================================================
-        // 2. TAREAS: SUBIR PDF, WORD, ZIP O ENLACE A FIRESTORE
+        // 2. TAREAS: GUARDAR CON MANEJO DE ERRORES Y TIMEOUT
         // ========================================================
         function renderizarUnidad() {
             const container = document.getElementById("semanasContainer");
@@ -348,7 +346,7 @@
                       container.appendChild(semanaCard);
                   }
               }).catch(err => {
-                  container.innerHTML = "<p style='text-align:center;'>Error conectando a Firebase. Revisa tus claves.</p>";
+                  container.innerHTML = "<p style='text-align:center;'>Error conectando a Firebase. Revisa tus claves o conexión.</p>";
               });
         }
 
@@ -359,19 +357,25 @@
             const tipo = document.getElementById("taskTipo").value;
             const btnSubmit = document.getElementById("btnGuardarTareaSubmit");
 
+            btnSubmit.innerText = "⏳ Guardando en la nube...";
+            btnSubmit.disabled = true;
+
+            const resetBtn = () => {
+                btnSubmit.innerText = "Guardar Tarea en la Nube";
+                btnSubmit.disabled = false;
+            };
+
             if (tipo === 'archivo') {
                 const fileInput = document.getElementById("taskFile");
                 if (fileInput.files && fileInput.files[0]) {
                     const archivo = fileInput.files[0];
 
-                    // Validar tamaño máximo para guardar en Firestore
-                    if (archivo.size > 10 * 1024 * 1024) {
-                        alert("El archivo supera los 10MB. Para archivos muy pesados usa la opción de 'Enlace Web' (Google Drive / GitHub).");
+                    // Límite seguro para Firestore
+                    if (archivo.size > 750 * 1024) {
+                        alert("El archivo pesa más de 750 KB. Firestore no permite subir documentos tan pesados por este método. Selecciona la opción '🔗 Enlace Web' y pega el link de Google Drive / GitHub.");
+                        resetBtn();
                         return;
                     }
-
-                    btnSubmit.innerText = "⏳ Guardando archivo en la nube...";
-                    btnSubmit.disabled = true;
 
                     const reader = new FileReader();
                     reader.onload = function(evt) {
@@ -386,18 +390,27 @@
                             tipo: 'archivo',
                             fecha: new Date()
                         }).then(() => {
-                            btnSubmit.innerText = "Guardar Tarea en la Nube";
-                            btnSubmit.disabled = false;
+                            resetBtn();
                             cerrarModalSubirTarea();
                             renderizarUnidad();
+                        }).catch(err => {
+                            alert("Error al guardar en la nube: " + err.message);
+                            resetBtn();
                         });
                     };
                     reader.readAsDataURL(archivo);
                 } else {
-                    alert("Por favor selecciona un archivo (PDF, Word, ZIP) de tu equipo.");
+                    alert("Por favor selecciona un archivo de tu equipo.");
+                    resetBtn();
                 }
             } else {
                 const url = document.getElementById("taskUrl").value.trim();
+                if (!url) {
+                    alert("Por favor ingresa una URL válida.");
+                    resetBtn();
+                    return;
+                }
+
                 db.collection("tareas").add({
                     curso: cursoActual,
                     unidad: unidadActual,
@@ -407,8 +420,12 @@
                     tipo: 'enlace',
                     fecha: new Date()
                 }).then(() => {
+                    resetBtn();
                     cerrarModalSubirTarea();
                     renderizarUnidad();
+                }).catch(err => {
+                    alert("Error al guardar enlace: " + err.message);
+                    resetBtn();
                 });
             }
         }
@@ -427,6 +444,12 @@
         function subirFotoPerfil(event) {
             const archivo = event.target.files[0];
             if (!archivo) return;
+
+            if (archivo.size > 500 * 1024) {
+                alert("La foto de perfil debe ser menor a 500 KB.");
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 const base64 = e.target.result;
@@ -447,6 +470,12 @@
         function subirNuevoLogo(event) {
             const archivo = event.target.files[0];
             if (!archivo) return;
+
+            if (archivo.size > 500 * 1024) {
+                alert("El logo debe ser menor a 500 KB.");
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 const base64 = e.target.result;

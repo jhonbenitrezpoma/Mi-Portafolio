@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- LIBRERÍAS DE FIREBASE SIN FACTURACIÓN (PLAN SPARK GRATUITO) -->
+    <!-- FIREBASE FIRESTORE (SIN FACTURACIÓN / PLAN SPARK GRATIS) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
@@ -49,7 +49,7 @@
     </header>
 
 
-    <!-- PANTALLA 1: PRESENTACIÓN MI A (SE MUESTRA PRIMERO) -->
+    <!-- PANTALLA 1: PRESENTACIÓN MI A -->
     <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
         <div class="vintage-container">
             <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
@@ -115,7 +115,7 @@
             </div>
 
             <div id="semanasContainer" class="semanas-grid">
-                <!-- Carga dinámica desde la nube -->
+                <!-- Carga dinámica -->
             </div>
         </div>
     </section>
@@ -195,24 +195,39 @@
     </div>
 
 
-    <!-- MODAL PARA AGREGAR TAREAS -->
+    <!-- MODAL PARA AGREGAR TAREAS (SOPORTA SUBIR ARCHIVOS Y ENLACES) -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
             <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
-            <p>Pega el enlace de tu archivo (Google Drive, GitHub, Figma, etc.).</p>
+            <p>Puedes subir un archivo (PDF, Word, ZIP, Imagen) o pegar un enlace web.</p>
 
             <form onsubmit="guardarNuevaTareaPropietario(event)">
                 <input type="hidden" id="modalKeyTarea">
 
                 <div class="form-group-vintage">
                     <label>Título / Nombre de la Tarea:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Diagrama UML" required>
+                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Informe PDF / Word" required>
                 </div>
 
                 <div class="form-group-vintage">
-                    <label>Enlace / URL de la Tarea (Google Drive, GitHub, etc.):</label>
-                    <input type="url" id="taskUrl" placeholder="https://drive.google.com/... o https://github.com/..." required>
+                    <label>Tipo de Entrega:</label>
+                    <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
+                        <option value="archivo">📄 Subir Archivo (PDF, Word, Excel, ZIP, Imagen)</option>
+                        <option value="enlace">🔗 Enlace Web (Google Drive, GitHub, Figma)</option>
+                    </select>
+                </div>
+
+                <!-- CAMPO PARA SUBIR ARCHIVOS DIRECTOS -->
+                <div id="boxTaskFile" class="form-group-vintage">
+                    <label>Seleccionar Archivo de tu PC:</label>
+                    <input type="file" id="taskFile" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.png,.jpg,.jpeg">
+                </div>
+
+                <!-- CAMPO PARA PEGAR ENLACE WEB -->
+                <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
+                    <label>URL / Enlace Web:</label>
+                    <input type="url" id="taskUrl" placeholder="https://drive.google.com/... o https://github.com/...">
                 </div>
 
                 <button type="submit" id="btnGuardarTareaSubmit" class="btn-vintage-gold btn-block">Guardar Tarea en la Nube</button>
@@ -221,10 +236,10 @@
     </div>
 
 
-    <!-- SCRIPT PRINCIPAL CON FIREBASE FIRESTORE -->
+    <!-- SCRIPT DE FIREBASE FIRESTORE -->
     <script>
         // ========================================================
-        // 1. REEMPLAZA ESTAS CLAVES CON TUS DATOS DE FIREBASE (DEL PASO 1)
+        // 1. REEMPLAZA CON TUS CLAVES DE FIREBASE (DEL PASO 1)
         // ========================================================
         const firebaseConfig = {
             apiKey: "AIzaSyD-REEMPLAZA_CON_TU_API_KEY",
@@ -258,7 +273,7 @@
         });
 
         // ========================================================
-        // 2. GESTIÓN DE TAREAS EN LA NUBE (FIRESTORE)
+        // 2. TAREAS: SUBIR PDF, WORD, ZIP O ENLACE A FIRESTORE
         // ========================================================
         function renderizarUnidad() {
             const container = document.getElementById("semanasContainer");
@@ -300,13 +315,14 @@
                           html += `<div class="task-count-tag">✔ ${tareasDeSemana.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
 
                           tareasDeSemana.forEach((task) => {
+                              const icono = task.tipo === 'enlace' ? '🔗' : '📄';
                               html += `
                                   <div class="task-row-item">
-                                      <span class="task-row-title">🔗 <strong>${task.nombre}</strong></span>
+                                      <span class="task-row-title">${icono} <strong>${task.nombre}</strong></span>
                                       
                                       <div class="task-action-buttons-group">
                                           <a href="${task.url}" target="_blank" class="btn-task-open">👁️ Ver / Abrir</a>
-                                          <a href="${task.url}" target="_blank" download class="btn-task-download">📥 Descargar</a>
+                                          <a href="${task.url}" download="${task.nombre}" class="btn-task-download">📥 Descargar</a>
                                           
                                           ${esPropietario ? `
                                               <button class="btn-action-del" onclick="eliminarTareaFirebase('${task.docId}')">🗑️</button>
@@ -340,19 +356,61 @@
             e.preventDefault();
             const numSemana = parseInt(document.getElementById("modalKeyTarea").value);
             const titulo = document.getElementById("taskTitulo").value.trim();
-            const url = document.getElementById("taskUrl").value.trim();
+            const tipo = document.getElementById("taskTipo").value;
+            const btnSubmit = document.getElementById("btnGuardarTareaSubmit");
 
-            db.collection("tareas").add({
-                curso: cursoActual,
-                unidad: unidadActual,
-                semana: numSemana,
-                nombre: titulo,
-                url: url,
-                fecha: new Date()
-            }).then(() => {
-                cerrarModalSubirTarea();
-                renderizarUnidad();
-            });
+            if (tipo === 'archivo') {
+                const fileInput = document.getElementById("taskFile");
+                if (fileInput.files && fileInput.files[0]) {
+                    const archivo = fileInput.files[0];
+
+                    // Validar tamaño máximo para guardar en Firestore
+                    if (archivo.size > 10 * 1024 * 1024) {
+                        alert("El archivo supera los 10MB. Para archivos muy pesados usa la opción de 'Enlace Web' (Google Drive / GitHub).");
+                        return;
+                    }
+
+                    btnSubmit.innerText = "⏳ Guardando archivo en la nube...";
+                    btnSubmit.disabled = true;
+
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        const fileDataUrl = evt.target.result;
+
+                        db.collection("tareas").add({
+                            curso: cursoActual,
+                            unidad: unidadActual,
+                            semana: numSemana,
+                            nombre: `${titulo} (${archivo.name})`,
+                            url: fileDataUrl,
+                            tipo: 'archivo',
+                            fecha: new Date()
+                        }).then(() => {
+                            btnSubmit.innerText = "Guardar Tarea en la Nube";
+                            btnSubmit.disabled = false;
+                            cerrarModalSubirTarea();
+                            renderizarUnidad();
+                        });
+                    };
+                    reader.readAsDataURL(archivo);
+                } else {
+                    alert("Por favor selecciona un archivo (PDF, Word, ZIP) de tu equipo.");
+                }
+            } else {
+                const url = document.getElementById("taskUrl").value.trim();
+                db.collection("tareas").add({
+                    curso: cursoActual,
+                    unidad: unidadActual,
+                    semana: numSemana,
+                    nombre: titulo,
+                    url: url,
+                    tipo: 'enlace',
+                    fecha: new Date()
+                }).then(() => {
+                    cerrarModalSubirTarea();
+                    renderizarUnidad();
+                });
+            }
         }
 
         function eliminarTareaFirebase(docId) {
@@ -451,7 +509,7 @@
         }
 
         // ========================================================
-        // 5. NAVEGACIÓN Y LOGIN
+        // 5. NAVEGACIÓN Y AUTH
         // ========================================================
         function abrirModalAuth() {
             limpiarFormulariosAuth();
@@ -617,11 +675,23 @@
             document.getElementById("modalTareaTituloAccion").innerText = "📤 Agregar Nueva Tarea a la Nube";
             document.getElementById("taskTitulo").value = "";
             document.getElementById("taskUrl").value = "";
+            document.getElementById("taskFile").value = "";
             document.getElementById("modalSubirTarea").style.display = "flex";
         }
 
         function cerrarModalSubirTarea() {
             document.getElementById("modalSubirTarea").style.display = "none";
+        }
+
+        function cambiarTipoInputTask() {
+            const tipo = document.getElementById("taskTipo").value;
+            if (tipo === 'archivo') {
+                document.getElementById("boxTaskFile").classList.remove("contenido-oculto");
+                document.getElementById("boxTaskUrl").classList.add("contenido-oculto");
+            } else {
+                document.getElementById("boxTaskFile").classList.add("contenido-oculto");
+                document.getElementById("boxTaskUrl").classList.remove("contenido-oculto");
+            }
         }
     </script>
 </body>

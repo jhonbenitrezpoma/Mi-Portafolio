@@ -1,634 +1,898 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Portafolio Académico | Jhon Benitrez - UPLA</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
-    <!-- NAVBAR PRINCIPAL -->
-    <header class="navbar">
-        <div class="logo-container">
-            <div class="logo-wrapper">
-                <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
-                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar Logo">
-                    📷
-                    <input type="file" accept="image/*" onchange="subirNuevoLogo(event)" style="display:none;">
-                </label>
-            </div>
-            <div>
-                <h1 class="font-vintage-title">PORTAFOLIO UPLA</h1>
-                <p class="sub-logo">Ingeniería de Sistemas y Cómputo</p>
-            </div>
+    <!-- FONDO -->
+    <div class="bg-japan-art">
+        <div class="bg-sun-circle"></div>
+
+        <div class="kanji-bg"
+            style="top: 10%; left: 5%; font-size: 16rem;">
+            学
         </div>
 
-        <nav id="navScreens" class="nav-screens contenido-oculto">
-            <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏛️ Presentación</button>
-            <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
-            <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaFeedback')">💬 Sugerencias</button>
-        </nav>
-
-        <div class="user-info">
-            <span id="userNameDisplay" class="user-name">Invitado</span>
-            <span id="userRoleBadge" class="badge badge-visitor">👁️ Visitante</span>
-            <button id="btnSalirNav" onclick="cerrarSesion()" class="btn-vintage-outline contenido-oculto">Cerrar Sesión</button>
+        <div class="kanji-bg"
+            style="bottom: 5%; right: 8%; font-size: 20rem;">
+            道
         </div>
-    </header>
 
-
-    <!-- PANTALLA 1: LOGIN / REGISTRO -->
-    <section id="pantallaAuth" class="pantalla-seccion upla-auth-bg">
-        <div class="auth-overlay-backdrop">
-            <div class="vintage-login-card">
-                <div class="vintage-card-header">
-                    <img id="logoLoginImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-auth">
-                    <h2 class="font-vintage-title">Acceso Académico</h2>
-                    <p class="auth-subtitle">Universidad Peruana Los Andes</p>
-                </div>
-
-                <div class="auth-tabs">
-                    <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Ingresar</button>
-                    <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
-                </div>
-
-                <form id="formLogin" onsubmit="procesarLogin(event)">
-                    <div class="form-group-vintage">
-                        <label>Usuario / Estudiante:</label>
-                        <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required>
-                    </div>
-                    <div class="form-group-vintage">
-                        <label>Contraseña:</label>
-                        <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío">
-                    </div>
-                    <button type="submit" class="btn-vintage-gold">Entrar al Portafolio</button>
-                </form>
-
-                <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)">
-                    <div class="form-group-vintage">
-                        <label>Nombre de Usuario / Estudiante:</label>
-                        <input type="text" id="regUsuario" placeholder="Ej: Maria López" required>
-                    </div>
-                    <div class="form-group-vintage">
-                        <label>Contraseña:</label>
-                        <input type="password" id="regPass" placeholder="Crea una clave" required>
-                    </div>
-                    <div class="form-group-vintage">
-                        <label>Correo Institucional / Personal (Opcional):</label>
-                        <input type="email" id="regCorreo" placeholder="correo@ejemplo.com">
-                    </div>
-                    <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- PANTALLA 2: PRESENTACIÓN PERSONAL -->
-    <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg contenido-oculto">
-        <div class="vintage-container">
-            <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
-
-            <div class="vintage-hero-grid">
-                <div class="vintage-profile-card">
-                    <div class="vintage-frame">
-                        <img id="fotoPerfilImg" src="https://via.placeholder.com/180?text=Jhon+B" alt="Foto de Jhon Benitrez" class="avatar-vintage">
-                        <label id="btnCambiarFoto" class="btn-change-photo contenido-oculto">
-                            📷 Cambiar Foto
-                            <input type="file" accept="image/*" onchange="subirFotoPerfil(event)" style="display:none;">
-                        </label>
-                    </div>
-                    <h3 class="author-title">Jhon Benitrez Poma</h3>
-                    <p class="author-role">Ingeniería de Sistemas y Cómputo</p>
-                    <div class="author-location">📍 Huancayo, Perú</div>
-                </div>
-
-                <div class="vintage-info-card">
-                    <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
-                    <p class="lead-text">
-                        Bienvenido a mi espacio digital en la <strong>Universidad Peruana Los Andes</strong>. Aquí centralizo mis evidencias de aprendizaje, código fuente, proyectos interactivos y tareas universitarias.
-                    </p>
-
-                    <div class="vintage-boxes-container">
-                        <div class="v-box v-box-gold">
-                            <h4>📘 ¿De qué trata este portafolio?</h4>
-                            <p>Es una plataforma web donde organizo por cursos, unidades y semanas todo el material académico, guías prácticas, algoritmos y desarrollos de software de la carrera.</p>
-                        </div>
-                        <div class="v-box v-box-burgundy">
-                            <h4>🎯 ¿Para qué me sirve?</h4>
-                            <p>Funciona como un escaparate técnico para validar mi avance académico ante docentes, dar trazabilidad a entregables universitarios y consolidar mi perfil profesional.</p>
-                        </div>
-                    </div>
-
-                    <div class="vintage-actions">
-                        <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Tareas</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- PANTALLA 3: CURSOS Y TAREAS -->
-    <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
-        <div class="cursos-main-container">
-            <div class="courses-selector-bar">
-                <button class="course-tab-btn active" onclick="cambiarCurso('curso1', event)">📱 Desarrollo de Aplicaciones 1</button>
-                <button class="course-tab-btn" onclick="cambiarCurso('curso2', event)">🧮 Algoritmos y Estructuras de Datos</button>
-            </div>
-
-            <div class="course-header-banner">
-                <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
-                <p>Navega entre las 4 unidades académicas para revisar o gestionar las tareas entregadas.</p>
-            </div>
-
-            <div class="unidades-pills">
-                <button class="pill-btn active" onclick="mostrarUnidad(1, event)">Unidad I</button>
-                <button class="pill-btn" onclick="mostrarUnidad(2, event)">Unidad II</button>
-                <button class="pill-btn" onclick="mostrarUnidad(3, event)">Unidad III</button>
-                <button class="pill-btn" onclick="mostrarUnidad(4, event)">Unidad IV</button>
-            </div>
-
-            <div id="semanasContainer" class="semanas-grid">
-                <!-- Se cargan dinámicamente -->
-            </div>
-        </div>
-    </section>
-
-
-    <!-- PANTALLA 4: SUGERENCIAS -->
-    <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
-        <div class="feedback-card-vintage">
-            <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
-            <p>Deja una sugerencia, duda o comentario sobre los trabajos y temas presentados:</p>
-
-            <form onsubmit="guardarComentario(event)" class="feedback-form">
-                <div class="form-row-vintage">
-                    <input type="text" id="feedbackNombre" placeholder="Tu nombre o usuario..." required>
-                    <input type="text" id="feedbackMsg" placeholder="Escribe tu sugerencia o nota..." required>
-                    <button type="submit" class="btn-vintage-gold">💬 Enviar Sugerencia</button>
-                </div>
-            </form>
-
-            <div id="comentariosList" class="comentarios-list-vintage">
-                <!-- Comentarios guardados -->
-            </div>
-        </div>
-    </section>
-
-
-    <!-- MODAL SUBIR Y EDITAR TAREA (PROPIETARIO) -->
-    <div id="modalSubirTarea" class="modal">
-        <div class="modal-content modal-vintage">
-            <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
-            <h3 class="font-vintage-title" id="modalTareaTituloAccion">📤 Agregar Nueva Tarea</h3>
-            <p>Sube un archivo (PDF, DOCX, ZIP, Imagen) o ingresa un enlace web.</p>
-
-            <form onsubmit="guardarNuevaTareaPropietario(event)">
-                <input type="hidden" id="modalKeyTarea">
-                <input type="hidden" id="modalEditIndex" value="-1">
-
-                <div class="form-group-vintage">
-                    <label>Título o Nombre de la Tarea:</label>
-                    <input type="text" id="taskTitulo" placeholder="Ej: Tarea 2: Informe de Requisitos UML" required>
-                </div>
-
-                <div class="form-group-vintage">
-                    <label>Formato / Entrega:</label>
-                    <select id="taskTipo" onchange="cambiarTipoInputTask()" required>
-                        <option value="archivo">📄 Subir Archivo / Imagen (PDF, DOCX, PNG, ZIP)</option>
-                        <option value="enlace">🔗 Enlace Web (GitHub, Drive, Figma)</option>
-                    </select>
-                </div>
-
-                <div id="boxTaskFile" class="form-group-vintage">
-                    <label>Seleccionar Archivo / Imagen:</label>
-                    <input type="file" id="taskFile">
-                </div>
-
-                <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
-                    <label>URL / Enlace Web:</label>
-                    <input type="url" id="taskUrl" placeholder="https://github.com/tuusuario/tu-proyecto">
-                </div>
-
-                <button type="submit" class="btn-vintage-gold btn-block">Guardar Tarea</button>
-            </form>
+        <div class="kanji-bg"
+            style="top: 45%; right: 15%; font-size: 14rem;">
+            UPLA
         </div>
     </div>
 
 
-    <script>
-        let usuarioActual = "Invitado";
-        let esPropietario = false;
-        let cursoActual = 'curso1';
-        let unidadActual = 1;
+    <!-- AVISO SUPABASE -->
+    <div id="configBanner"
+         class="config-banner contenido-oculto">
 
-        const nombresCursos = {
-            curso1: "📱 Desarrollo de Aplicaciones 1",
-            curso2: "🧮 Algoritmos y Estructuras de Datos"
-        };
+        ⚠️ Falta conectar la base de datos Supabase:
+        completa <strong>SUPABASE_URL</strong>,
+        <strong>SUPABASE_ANON_KEY</strong> y
+        <strong>OWNER_EMAIL</strong> en el código.
 
-        const TAREAS_OFICIALES = {
-            "curso1_U1_S1": [
-                { id: "off1", nombre: "Tarea 1: Guía de Interfaces de Usuario (PDF)", url: "tareas/tarea1-guia.pdf", tipo: "archivo" },
-                { id: "off2", nombre: "Proyecto NEXORA: Documento de Requisitos", url: "https://github.com", tipo: "enlace" }
-            ],
-            "curso2_U1_S1": [
-                { id: "off3", nombre: "Tarea 1: Ejercicios de Estructuras y Algoritmos", url: "tareas/algoritmos-s1.pdf", tipo: "archivo" }
-            ]
-        };
+    </div>
 
-        document.addEventListener("DOMContentLoaded", () => {
-            cargarLogoGuardado();
-            cargarFotoPerfil();
-            verificarSesionGuardada();
-            cargarComentarios();
 
-            // ESCUCHADOR DE CAMBIOS EN TIEMPO REAL
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'foto_perfil_jhon') cargarFotoPerfil();
-                if (e.key === 'custom_upla_logo') cargarLogoGuardado();
-                if (e.key === 'comentarios_visitantes') cargarComentarios();
-                if (e.key && (e.key.startsWith('list_tareas_') || e.key.startsWith('titulo_clase_'))) {
-                    renderizarUnidad();
-                }
-            });
-        });
+    <!-- =========================
+         NAVBAR
+    ========================== -->
 
-        function navegarAPantalla(idPantalla) {
-            document.querySelectorAll(".pantalla-seccion").forEach(sec => sec.classList.add("contenido-oculto"));
-            document.getElementById(idPantalla).classList.remove("contenido-oculto");
+    <header class="navbar">
 
-            document.querySelectorAll(".nav-screen-btn").forEach(btn => btn.classList.remove("active"));
-            
-            if (idPantalla === 'pantallaInicio') document.querySelectorAll(".nav-screen-btn")[0]?.classList.add("active");
-            if (idPantalla === 'pantallaCursos') document.querySelectorAll(".nav-screen-btn")[1]?.classList.add("active");
-            if (idPantalla === 'pantallaFeedback') document.querySelectorAll(".nav-screen-btn")[2]?.classList.add("active");
-        }
+        <div class="nav-left-zone">
 
-        function mostrarTabAuth(tab) {
-            if (tab === 'login') {
-                document.getElementById('formLogin').classList.remove('contenido-oculto');
-                document.getElementById('formRegister').classList.add('contenido-oculto');
-                document.getElementById('tabLoginBtn').classList.add('active');
-                document.getElementById('tabRegisterBtn').classList.remove('active');
-            } else {
-                document.getElementById('formLogin').classList.add('contenido-oculto');
-                document.getElementById('formRegister').classList.remove('contenido-oculto');
-                document.getElementById('tabRegisterBtn').classList.add('active');
-                document.getElementById('tabLoginBtn').classList.remove('active');
-            }
-        }
+            <div class="logo-container">
 
-        function procesarLogin(e) {
-            e.preventDefault();
-            const inputUser = document.getElementById("loginUsuario").value.trim().toLowerCase();
-            const inputPass = document.getElementById("loginPass").value.trim();
+                <div class="logo-wrapper">
 
-            if ((inputUser === "jhon benitrez" || inputUser === "jhon benitres") && inputPass === "123456789") {
-                esPropietario = true;
-                usuarioActual = "Jhon Benitrez";
-            } else {
-                esPropietario = false;
-                usuarioActual = document.getElementById("loginUsuario").value.trim();
-            }
+                    <img
+                        id="logoHeaderImg"
+                        src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png"
+                        alt="Logo UPLA"
+                        class="img-upla-header"
+                    >
 
-            const sesion = { nombre: usuarioActual, esAdmin: esPropietario };
-            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
-            actualizarInterfazUsuario();
-            navegarAPantalla('pantallaInicio');
-        }
+                    <label
+                        id="btnCambiarLogo"
+                        class="btn-change-logo contenido-oculto"
+                        title="Cambiar logo institucional"
+                    >
 
-        function procesarRegistro(e) {
-            e.preventDefault();
-            const nombre = document.getElementById("regUsuario").value.trim();
-            esPropietario = false;
-            usuarioActual = nombre;
+                        📷
 
-            const sesion = { nombre: usuarioActual, esAdmin: false };
-            localStorage.setItem("sesion_portafolio_upla", JSON.stringify(sesion));
-            actualizarInterfazUsuario();
-            navegarAPantalla('pantallaInicio');
-        }
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onchange="subirImagenAjuste(event, 'logo', 'imagenes')"
+                            style="display:none;"
+                        >
 
-        function verificarSesionGuardada() {
-            const sesion = JSON.parse(localStorage.getItem("sesion_portafolio_upla"));
-            if (sesion) {
-                usuarioActual = sesion.nombre;
-                esPropietario = sesion.esAdmin;
-                actualizarInterfazUsuario();
-                navegarAPantalla('pantallaInicio');
-            } else {
-                navegarAPantalla('pantallaAuth');
-            }
-        }
+                    </label>
 
-        function actualizarInterfazUsuario() {
-            document.getElementById("userNameDisplay").innerText = usuarioActual;
-            document.getElementById("saludoBienvenida").innerText = `👋 ¡Hola, ${usuarioActual}! Bienvenid@ a mi Portafolio`;
+                </div>
 
-            const badge = document.getElementById("userRoleBadge");
-            const btnSalir = document.getElementById("btnSalirNav");
-            const btnLogo = document.getElementById("btnCambiarLogo");
-            const btnFoto = document.getElementById("btnCambiarFoto");
-            const navScreens = document.getElementById("navScreens");
+                <div>
 
-            navScreens.classList.remove("contenido-oculto");
+                    <h1 class="font-vintage-title font-bold">
+                        UPLA PORTAFOLIO
+                    </h1>
 
-            if (esPropietario) {
-                badge.innerText = "👑 Propietario";
-                badge.className = "badge badge-admin";
-                btnSalir.classList.remove("contenido-oculto");
-                btnLogo.classList.remove("contenido-oculto");
-                btnFoto.classList.remove("contenido-oculto");
-            } else {
-                badge.innerText = "👁️ Visitante (" + usuarioActual + ")";
-                badge.className = "badge badge-visitor";
-                btnSalir.classList.remove("contenido-oculto");
-                btnLogo.classList.add("contenido-oculto");
-                btnFoto.classList.add("contenido-oculto");
-            }
+                    <span class="sub-logo">
+                        Ingeniería de Sistemas
+                    </span>
 
-            renderizarUnidad();
-        }
+                </div>
 
-        function cerrarSesion() {
-            localStorage.removeItem("sesion_portafolio_upla");
-            usuarioActual = "Invitado";
-            esPropietario = false;
-            document.getElementById("navScreens").classList.add("contenido-oculto");
-            document.getElementById("btnSalirNav").classList.add("contenido-oculto");
-            navegarAPantalla('pantallaAuth');
-        }
+            </div>
 
-        function cambiarCurso(idCurso, ev) {
-            cursoActual = idCurso;
-            document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
-            document.querySelectorAll(".course-tab-btn").forEach(btn => btn.classList.remove("active"));
-            if (ev) ev.target.classList.add("active");
-            mostrarUnidad(1);
-        }
+        </div>
 
-        function mostrarUnidad(numUnidad, ev) {
-            unidadActual = numUnidad;
-            document.querySelectorAll(".pill-btn").forEach((btn, index) => {
-                btn.classList.toggle("active", index + 1 === numUnidad);
-            });
-            renderizarUnidad();
-        }
 
-        function renderizarUnidad() {
-            const container = document.getElementById("semanasContainer");
-            if (!container) return;
-            container.innerHTML = "";
+        <!-- MENÚ -->
 
-            const semanaInicio = (unidadActual - 1) * 4 + 1;
+        <div class="nav-screens">
 
-            for (let i = 0; i < 4; i++) {
-                const numSemana = semanaInicio + i;
-                const keyTarea = `${cursoActual}_U${unidadActual}_S${numSemana}`;
+            <button
+                class="nav-screen-btn active"
+                onclick="navegarAPantalla('pantallaInicio')"
+            >
+                PRESENTACIÓN
+            </button>
 
-                const tituloClase = localStorage.getItem("titulo_clase_" + keyTarea) || "";
-                const tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
+            <button
+                class="nav-screen-btn"
+                onclick="navegarAPantalla('pantallaCursos')"
+            >
+                CURSOS Y TAREAS
+            </button>
 
-                const semanaCard = document.createElement("div");
-                semanaCard.className = "semana-card-vintage";
+            <button
+                class="nav-screen-btn"
+                onclick="navegarAPantalla('pantallaFeedback')"
+            >
+                SUGERENCIAS
+            </button>
 
-                let html = `
-                    <div class="semana-card-header">
-                        <div class="semana-title">Semana ${numSemana}</div>
-                        ${tituloClase ? `<div class="clase-tema">📘 ${tituloClase}</div>` : `<div class="clase-tema-vacio">Sin tema asignado</div>`}
-                        ${esPropietario ? `<button class="btn-xs-edit" onclick="editarTituloClase('${keyTarea}')">✏️ Tema</button>` : ''}
+        </div>
+
+
+        <!-- USUARIO -->
+
+        <div class="user-info">
+
+            <span id="userNameDisplay"
+                  class="user-name">
+                Invitado
+            </span>
+
+            <span id="userRoleBadge"
+                  class="badge badge-visitor">
+                👁️ Visitante
+            </span>
+
+            <button
+                id="btnAbrirLoginNav"
+                onclick="abrirModalAuth()"
+                class="btn-login-left"
+            >
+                🔑 INGRESAR
+            </button>
+
+            <button
+                id="btnSalirNav"
+                onclick="cerrarSesion()"
+                class="btn-vintage-outline contenido-oculto"
+            >
+                Cerrar Sesión
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         PANTALLA 1
+         PRESENTACIÓN
+    ========================== -->
+
+    <section
+        id="pantallaInicio"
+        class="pantalla-seccion vintage-presentation-bg"
+    >
+
+        <div class="vintage-container">
+
+            <div class="vintage-badge-top font-vintage-title">
+                ✦ PORTAFOLIO ACADÉMICO OFICIAL • UPLA 2026 ✦
+            </div>
+
+
+            <div class="vintage-hero-grid glass-panel glow-crimson">
+
+
+                <!-- PERFIL -->
+
+                <div class="vintage-profile-card">
+
+                    <div class="vintage-frame">
+
+                        <img
+                            id="fotoPerfilImg"
+                            src=""
+                            alt="Foto de Jhon Benitrez"
+                            class="avatar-vintage"
+                        >
+
+                        <label
+                            id="btnCambiarFoto"
+                            class="btn-change-photo contenido-oculto"
+                        >
+
+                            📷 Cambiar Foto
+
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onchange="subirImagenAjuste(event, 'foto_perfil', 'imagenes')"
+                                style="display:none;"
+                            >
+
+                        </label>
+
                     </div>
-                    <div class="semana-card-body">
-                `;
 
-                if (tareasGuardadas.length > 0) {
-                    html += `<div class="task-count-tag">✔ ${tareasGuardadas.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
 
-                    tareasGuardadas.forEach((task, index) => {
-                        const esImagen = task.url && (task.url.startsWith("data:image") || task.url.match(/\.(jpeg|jpg|gif|png|webp)$/i));
+                    <h3 class="author-title font-vintage-title">
+                        Jhon Benitrez Poma
+                    </h3>
 
-                        html += `
-                            <div class="task-row-item">
-                                <span class="task-row-title">${task.tipo === 'enlace' ? '🔗' : '📄'} <strong>${task.nombre}</strong></span>
-                                ${esImagen ? `<div class="task-img-preview"><img src="${task.url}" alt="Vista previa imagen"></div>` : ''}
-                                <div class="task-row-btns">
-                                    <a href="${task.url}" target="_blank" class="btn-action-view" download="${task.nombre}">📄 Abrir / Descargar</a>
-                                    ${esPropietario ? `
-                                        <button class="btn-action-edit" onclick="abrirModalEditarTarea('${keyTarea}',${index})">✏️</button>
-                                        <button class="btn-action-del" onclick="eliminarTareaPropietario('${keyTarea}',${index})">🗑️</button>
-                                    ` : ''}
-                                </div>
-                            </div>
-                        `;
-                    });
+                    <p class="author-role">
+                        Ingeniería de Sistemas y Cómputo
+                    </p>
 
-                    html += `</div>`;
-                } else {
-                    html += `<p class="empty-task-text">Sin tareas publicadas en esta semana.</p>`;
-                }
+                    <div class="author-location">
+                        🏛️ UPLA - Huancayo, Perú
+                    </div>
 
-                if (esPropietario) {
-                    html += `
-                        <button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Agregar Tarea (Archivo o Enlace)</button>
-                    `;
-                }
+                </div>
 
-                html += `</div>`;
-                semanaCard.innerHTML = html;
-                container.appendChild(semanaCard);
-            }
-        }
 
-        // EDITAR O GUARDAR MÚLTIPLES TAREAS Y CONVERTIR A BASE64 PERMANENTE
-        function abrirModalSubirTarea(keyTarea) {
-            document.getElementById("modalKeyTarea").value = keyTarea;
-            document.getElementById("modalEditIndex").value = "-1";
-            document.getElementById("modalTareaTituloAccion").innerText = "📤 Agregar Nueva Tarea";
-            document.getElementById("taskTitulo").value = "";
-            document.getElementById("taskUrl").value = "";
-            document.getElementById("taskFile").value = "";
-            document.getElementById("modalSubirTarea").style.display = "flex";
-        }
+                <!-- INFORMACIÓN -->
 
-        function abrirModalEditarTarea(keyTarea, index) {
-            let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
-            const task = tareasGuardadas[index];
+                <div class="vintage-info-card">
 
-            document.getElementById("modalKeyTarea").value = keyTarea;
-            document.getElementById("modalEditIndex").value = index;
-            document.getElementById("modalTareaTituloAccion").innerText = "✏️ Editar Tarea Existente";
-            document.getElementById("taskTitulo").value = task.nombre;
-            
-            if (task.tipo === 'enlace') {
-                document.getElementById("taskTipo").value = "enlace";
-                document.getElementById("taskUrl").value = task.url;
-            } else {
-                document.getElementById("taskTipo").value = "archivo";
-            }
-            cambiarTipoInputTask();
-            document.getElementById("modalSubirTarea").style.display = "flex";
-        }
+                    <h2
+                        id="saludoBienvenida"
+                        class="font-vintage-title"
+                    >
+                        👋 ¡Bienvenido/a a mi Portafolio!
+                    </h2>
 
-        function cerrarModalSubirTarea() {
-            document.getElementById("modalSubirTarea").style.display = "none";
-        }
+                    <p class="lead-text">
+                        "Plataforma centralizada académica de la Universidad
+                        Peruana Los Andes. Aquí documento mis entregables,
+                        proyectos de software, código fuente y guías prácticas
+                        desarrolladas durante mi formación profesional."
+                    </p>
 
-        function cambiarTipoInputTask() {
-            const tipo = document.getElementById("taskTipo").value;
-            if (tipo === 'archivo') {
-                document.getElementById("boxTaskFile").classList.remove("contenido-oculto");
-                document.getElementById("boxTaskUrl").classList.add("contenido-oculto");
-            } else {
-                document.getElementById("boxTaskFile").classList.add("contenido-oculto");
-                document.getElementById("boxTaskUrl").classList.remove("contenido-oculto");
-            }
-        }
 
-        function guardarNuevaTareaPropietario(e) {
-            e.preventDefault();
-            const keyTarea = document.getElementById("modalKeyTarea").value;
-            const editIndex = parseInt(document.getElementById("modalEditIndex").value);
-            const titulo = document.getElementById("taskTitulo").value.trim();
-            const tipo = document.getElementById("taskTipo").value;
+                    <div class="vintage-boxes-container">
 
-            let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
+                        <div class="v-box v-box-gold">
 
-            if (tipo === 'enlace') {
-                const url = document.getElementById("taskUrl").value.trim();
-                const nuevaData = { id: Date.now(), nombre: titulo, url: url, tipo: 'enlace' };
+                            <h4 class="font-vintage-title">
+                                📘 Propósito del Portafolio
+                            </h4>
 
-                if (editIndex >= 0) {
-                    tareasGuardadas[editIndex] = nuevaData;
-                } else {
-                    tareasGuardadas.push(nuevaData);
-                }
+                            <p>
+                                Espacio donde archivo tareas semanales,
+                                documentación técnica, enlaces a repositorios
+                                (GitHub) y prototipos.
+                            </p>
 
-                localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                cerrarModalSubirTarea();
-                renderizarUnidad();
-            } else {
-                const fileInput = document.getElementById("taskFile");
-                if (fileInput.files && fileInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(evt) {
-                        const nuevaData = { id: Date.now(), nombre: titulo + " (" + fileInput.files[0].name + ")", url: evt.target.result, tipo: 'archivo' };
-                        
-                        if (editIndex >= 0) {
-                            tareasGuardadas[editIndex] = nuevaData;
-                        } else {
-                            tareasGuardadas.push(nuevaData);
-                        }
+                        </div>
 
-                        localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                        cerrarModalSubirTarea();
-                        renderizarUnidad();
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
-                } else if (editIndex >= 0) {
-                    tareasGuardadas[editIndex].nombre = titulo;
-                    localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                    cerrarModalSubirTarea();
-                    renderizarUnidad();
-                } else {
-                    alert("Por favor selecciona un archivo o imagen.");
-                }
-            }
-        }
 
-        function eliminarTareaPropietario(keyTarea, index) {
-            if (confirm("¿Estás seguro de eliminar esta tarea?")) {
-                let tareasGuardadas = JSON.parse(localStorage.getItem("list_tareas_" + keyTarea)) || (TAREAS_OFICIALES[keyTarea] || []);
-                tareasGuardadas.splice(index, 1);
-                localStorage.setItem("list_tareas_" + keyTarea, JSON.stringify(tareasGuardadas));
-                renderizarUnidad();
-            }
-        }
+                        <div class="v-box v-box-burgundy">
 
-        function editarTituloClase(keyTarea) {
-            const actual = localStorage.getItem("titulo_clase_" + keyTarea) || "";
-            const nuevo = prompt("Ingresa el tema o título de esta clase:", actual);
-            if (nuevo !== null) {
-                localStorage.setItem("titulo_clase_" + keyTarea, nuevo.trim());
-                renderizarUnidad();
-            }
-        }
+                            <h4 class="font-vintage-title">
+                                🎯 Objetivos Profesionales
+                            </h4>
 
-        function guardarComentario(e) {
-            e.preventDefault();
-            const nombre = document.getElementById("feedbackNombre").value.trim();
-            const mensaje = document.getElementById("feedbackMsg").value.trim();
+                            <p>
+                                Demuestra el dominio técnico de mis competencias,
+                                facilita la revisión docente y consolida mi
+                                perfil como Ingeniero de Sistemas.
+                            </p>
 
-            if (!nombre || !mensaje) return;
+                        </div>
 
-            let comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [];
-            comentarios.unshift({ nombre: nombre, mensaje: mensaje, fecha: new Date().toLocaleDateString() });
-            localStorage.setItem("comentarios_visitantes", JSON.stringify(comentarios));
+                    </div>
 
-            document.getElementById("feedbackMsg").value = "";
-            cargarComentarios();
-        }
 
-        function cargarComentarios() {
-            const list = document.getElementById("comentariosList");
-            if (!list) return;
-            const comentarios = JSON.parse(localStorage.getItem("comentarios_visitantes")) || [
-                { nombre: "Profesor UPLA", mensaje: "Excelente organización de contenidos y tareas académicas.", fecha: "15/9/2026" }
-            ];
+                    <div class="vintage-actions">
 
-            list.innerHTML = "";
-            comentarios.forEach(c => {
-                const box = document.createElement("div");
-                box.className = "comment-item-vintage";
-                box.innerHTML = `
-                    <p class="c-author">👤 <strong>${c.nombre}</strong> <span class="c-date">(${c.fecha})</span></p>
-                    <p class="c-text">"${c.mensaje}"</p>
-                `;
-                list.appendChild(box);
-            });
-        }
+                        <button
+                            class="btn-vintage-gold font-vintage-title"
+                            onclick="navegarAPantalla('pantallaCursos')"
+                        >
 
-        function subirFotoPerfil(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                localStorage.setItem("foto_perfil_jhon", e.target.result);
-                document.getElementById("fotoPerfilImg").src = e.target.result;
-            };
-            reader.readAsDataURL(archivo);
-        }
+                            <span>
+                                EXPLORAR CURSOS Y TAREAS ➔
+                            </span>
 
-        function cargarFotoPerfil() {
-            const foto = localStorage.getItem("foto_perfil_jhon");
-            if (foto) document.getElementById("fotoPerfilImg").src = foto;
-        }
+                        </button>
 
-        function subirNuevoLogo(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                localStorage.setItem("custom_upla_logo", e.target.result);
-                aplicarLogo(e.target.result);
-            };
-            reader.readAsDataURL(archivo);
-        }
+                    </div>
 
-        function cargarLogoGuardado() {
-            const logo = localStorage.getItem("custom_upla_logo");
-            if (logo) aplicarLogo(logo);
-        }
+                </div>
 
-        function aplicarLogo(src) {
-            document.getElementById("logoHeaderImg").src = src;
-            document.getElementById("logoLoginImg").src = src;
-        }
-    </script>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PANTALLA 2
+         CURSOS Y TAREAS
+    ========================== -->
+
+    <section
+        id="pantallaCursos"
+        class="pantalla-seccion cursos-bg contenido-oculto"
+    >
+
+        <div class="cursos-main-container">
+
+
+            <!-- CURSOS -->
+
+            <div class="courses-selector-bar">
+
+                <button
+                    class="course-tab-btn active font-vintage-title"
+                    onclick="cambiarCurso('curso1', event)"
+                >
+                    📱 Desarrollo de Aplicaciones 1
+                </button>
+
+                <button
+                    class="course-tab-btn font-vintage-title"
+                    onclick="cambiarCurso('curso2', event)"
+                >
+                    🧮 Algoritmos y Estructura de Datos
+                </button>
+
+            </div>
+
+
+            <!-- CABECERA -->
+
+            <div class="course-header-banner glass-panel">
+
+                <h2
+                    id="tituloCurso"
+                    class="font-vintage-title"
+                >
+                    📱 Desarrollo de Aplicaciones 1
+                </h2>
+
+                <p>
+                    Selecciona cualquiera de las 4 Unidades académicas
+                    para revisar las tareas y avances semanales.
+                </p>
+
+            </div>
+
+
+            <!-- UNIDADES -->
+
+            <div class="unidades-pills">
+
+                <button
+                    class="pill-btn active font-vintage-title"
+                    onclick="mostrarUnidad(1)"
+                >
+
+                    <img
+                        src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=150&auto=format&fit=crop"
+                        class="pill-thumb"
+                        alt="Unidad I"
+                    >
+
+                    Unidad I
+
+                </button>
+
+
+                <button
+                    class="pill-btn font-vintage-title"
+                    onclick="mostrarUnidad(2)"
+                >
+
+                    <img
+                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=150&auto=format&fit=crop"
+                        class="pill-thumb"
+                        alt="Unidad II"
+                    >
+
+                    Unidad II
+
+                </button>
+
+
+                <button
+                    class="pill-btn font-vintage-title"
+                    onclick="mostrarUnidad(3)"
+                >
+
+                    <img
+                        src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=150&auto=format&fit=crop"
+                        class="pill-thumb"
+                        alt="Unidad III"
+                    >
+
+                    Unidad III
+
+                </button>
+
+
+                <button
+                    class="pill-btn font-vintage-title"
+                    onclick="mostrarUnidad(4)"
+                >
+
+                    <img
+                        src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=150&auto=format&fit=crop"
+                        class="pill-thumb"
+                        alt="Unidad IV"
+                    >
+
+                    Unidad IV
+
+                </button>
+
+            </div>
+
+
+            <!-- SEMANAS -->
+
+            <div
+                id="semanasContainer"
+                class="semanas-grid"
+            >
+                <!-- Generación dinámica de semanas -->
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PANTALLA 3
+         SUGERENCIAS
+    ========================== -->
+
+    <section
+        id="pantallaFeedback"
+        class="pantalla-seccion feedback-bg contenido-oculto"
+    >
+
+        <div class="feedback-card-vintage glass-panel glow-crimson">
+
+            <h3 class="font-vintage-title">
+                💬 Notas y Sugerencias Académicas
+            </h3>
+
+            <p>
+                Deja un comentario, observación o recomendación
+                sobre los proyectos y entregables presentados:
+            </p>
+
+
+            <form
+                onsubmit="guardarComentario(event)"
+                class="feedback-form"
+            >
+
+                <div class="form-row-vintage">
+
+                    <input
+                        type="text"
+                        id="feedbackNombre"
+                        placeholder="Tu nombre..."
+                        maxlength="60"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="feedbackMsg"
+                        placeholder="Escribe tu mensaje o sugerencia..."
+                        maxlength="500"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        id="btnEnviarComentario"
+                        class="btn-vintage-gold font-vintage-title"
+                        style="width: auto;"
+                    >
+                        Enviar Sugerencia
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div
+                id="comentariosList"
+                class="comentarios-list-vintage"
+            >
+                <!-- Comentarios guardados -->
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MODAL LOGIN
+    ========================== -->
+
+    <div id="modalAuthScreen" class="modal">
+
+        <div class="modal-content modal-vintage">
+
+            <button
+                class="close-modal"
+                onclick="cerrarModalAuth()"
+            >
+                ✕
+            </button>
+
+
+            <div class="vintage-card-header">
+
+                <img
+                    id="logoLoginImg"
+                    src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png"
+                    alt="Logo UPLA"
+                    class="img-upla-auth"
+                >
+
+                <h2
+                    class="font-vintage-title"
+                    style="color:#fff; font-size:1.4rem;"
+                >
+                    Acceso al Portafolio
+                </h2>
+
+                <p class="auth-subtitle">
+                    Ingeniería de Sistemas y Cómputo - UPLA
+                </p>
+
+            </div>
+
+
+            <!-- TABS -->
+
+            <div class="auth-tabs">
+
+                <button
+                    id="tabLoginBtn"
+                    class="auth-tab-btn active font-vintage-title"
+                    onclick="mostrarTabAuth('login')"
+                >
+                    Ingresar
+                </button>
+
+                <button
+                    id="tabRegisterBtn"
+                    class="auth-tab-btn font-vintage-title"
+                    onclick="mostrarTabAuth('register')"
+                >
+                    Registrarse
+                </button>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <form
+                id="formLogin"
+                onsubmit="procesarLogin(event)"
+                autocomplete="off"
+            >
+
+                <div class="form-group-vintage">
+
+                    <label>
+                        Usuario / Estudiante:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="loginUsuario"
+                        placeholder="Ej: Jhon Benitrez"
+                        required
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="form-group-vintage">
+
+                    <label>
+                        Contraseña:
+                    </label>
+
+                    <div class="password-input-wrapper">
+
+                        <input
+                            type="password"
+                            id="loginPass"
+                            placeholder="Propietario clave / Visitante vacío"
+                            autocomplete="new-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="btn-toggle-password"
+                            onclick="togglePasswordVisibility('loginPass', this)"
+                            title="Ver / Ocultar"
+                        >
+                            👁️
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="btnLoginSubmit"
+                    class="btn-vintage-gold font-vintage-title"
+                    style="width:100%;"
+                >
+                    Ingresar al Sistema
+                </button>
+
+            </form>
+
+
+            <!-- REGISTRO -->
+
+            <form
+                id="formRegister"
+                class="contenido-oculto"
+                onsubmit="procesarRegistro(event)"
+                autocomplete="off"
+            >
+
+                <div class="form-group-vintage">
+
+                    <label>
+                        Nombre Completo:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="regUsuario"
+                        placeholder="Ej: María López"
+                        required
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="form-group-vintage">
+
+                    <label>
+                        Contraseña:
+                    </label>
+
+                    <div class="password-input-wrapper">
+
+                        <input
+                            type="password"
+                            id="regPass"
+                            placeholder="Crea una contraseña"
+                            required
+                            autocomplete="new-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="btn-toggle-password"
+                            onclick="togglePasswordVisibility('regPass', this)"
+                            title="Ver / Ocultar"
+                        >
+                            👁️
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group-vintage">
+
+                    <label>
+                        Correo Electrónico (Opcional):
+                    </label>
+
+                    <input
+                        type="email"
+                        id="regCorreo"
+                        placeholder="correo@ejemplo.com"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn-vintage-gold font-vintage-title"
+                    style="width:100%;"
+                >
+                    Crear Cuenta e Ingresar
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MODAL TAREAS
+    ========================== -->
+
+    <div id="modalSubirTarea" class="modal">
+
+        <div class="modal-content modal-vintage">
+
+            <button
+                class="close-modal"
+                onclick="cerrarModalSubirTarea()"
+            >
+                ✕
+            </button>
+
+
+            <h3
+                class="font-vintage-title"
+                id="modalTareaTituloAccion"
+                style="color:#fff; font-size:1.3rem; margin-bottom:0.4rem;"
+            >
+                📤 Agregar Tarea
+            </h3>
+
+
+            <p
+                style="color:var(--text-sub); font-size:0.85rem; margin-bottom:1.2rem;"
+            >
+                Adjunta un archivo o ingresa enlace a tu proyecto
+                en GitHub, Drive o Figma.
+            </p>
+
+
+            <form onsubmit="guardarNuevaTareaPropietario(event)">
+
+                <input
+                    type="hidden"
+                    id="modalKeyTarea"
+                >
+
+                <input
+                    type="hidden"
+                    id="modalEditId"
+                    value=""
+                >
+
+
+                <div class="form-group-vintage">
+
+                    <label>
+                        Título / Nombre de la Tarea:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="taskTitulo"
+                        placeholder="Ej: Tarea 2: Arquitectura de Software"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group-vintage">
+
+                    <label>
+                        Tipo de Entrega:
+                    </label>
+
+                    <select
+                        id="taskTipo"
+                        onchange="cambiarTipoInputTask()"
+                        required
+                    >
+
+                        <option value="archivo">
+                            📄 Subir Archivo (PDF, DOCX, ZIP, Imagen)
+                        </option>
+
+                        <option value="enlace">
+                            🔗 Enlace Web (GitHub, Drive, Figma, Vercel)
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div
+                    id="boxTaskFile"
+                    class="form-group-vintage"
+                >
+
+                    <label>
+                        Seleccionar Archivo:
+                    </label>
+
+                    <input
+                        type="file"
+                        id="taskFile"
+                    >
+
+                </div>
+
+
+                <div
+                    id="boxTaskUrl"
+                    class="form-group-vintage contenido-oculto"
+                >
+
+                    <label>
+                        URL / Enlace Web:
+                    </label>
+
+                    <input
+                        type="url"
+                        id="taskUrl"
+                        placeholder="https://github.com/tuusuario/proyecto"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="btnGuardarTarea"
+                    class="btn-vintage-gold font-vintage-title"
+                    style="width:100%;"
+                >
+                    Guardar Tarea
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div
+        id="toast"
+        class="toast"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- AQUÍ IRÁ EL CSS Y JAVASCRIPT -->
+
 </body>
 </html>
+```

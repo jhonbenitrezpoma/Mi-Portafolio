@@ -1,22 +1,12 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Portafolio Académico | Jhon Benitrez - UPLA</title>
+    <title>UPLA Portafolio | Jhon Benitrez Poma</title>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@600;700;900&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -24,875 +14,1925 @@
 
 <body>
 
-    <!-- FONDO -->
-    <div class="bg-japan-art">
-        <div class="bg-sun-circle"></div>
+<!-- =========================================================
+     ENCABEZADO
+========================================================= -->
 
-        <div class="kanji-bg"
-            style="top: 10%; left: 5%; font-size: 16rem;">
-            学
+<header class="header">
+
+    <div class="header-left">
+
+        <div class="logo-box">
+            <span>✦</span>
         </div>
 
-        <div class="kanji-bg"
-            style="bottom: 5%; right: 8%; font-size: 20rem;">
-            道
+        <div>
+            <h1>UPLA PORTAFOLIO</h1>
+            <p>Ingeniería de Sistemas</p>
         </div>
-
-        <div class="kanji-bg"
-            style="top: 45%; right: 15%; font-size: 14rem;">
-            UPLA
-        </div>
-    </div>
-
-
-    <!-- AVISO SUPABASE -->
-    <div id="configBanner"
-         class="config-banner contenido-oculto">
-
-        ⚠️ Falta conectar la base de datos Supabase:
-        completa <strong>SUPABASE_URL</strong>,
-        <strong>SUPABASE_ANON_KEY</strong> y
-        <strong>OWNER_EMAIL</strong> en el código.
 
     </div>
 
+    <nav class="nav">
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
+        <button onclick="mostrarSeccion('inicio')">
+            Inicio
+        </button>
 
-    <header class="navbar">
+        <button onclick="mostrarSeccion('cursos')">
+            Cursos
+        </button>
 
-        <div class="nav-left-zone">
+        <button onclick="mostrarSeccion('comentarios')">
+            Comentarios
+        </button>
 
-            <div class="logo-container">
+        <button onclick="abrirLogin()" id="btnLogin">
+            Iniciar sesión
+        </button>
 
-                <div class="logo-wrapper">
+        <button onclick="cerrarSesion()" id="btnLogout" class="hidden">
+            Cerrar sesión
+        </button>
 
-                    <img
-                        id="logoHeaderImg"
-                        src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png"
-                        alt="Logo UPLA"
-                        class="img-upla-header"
-                    >
+    </nav>
 
-                    <label
-                        id="btnCambiarLogo"
-                        class="btn-change-logo contenido-oculto"
-                        title="Cambiar logo institucional"
-                    >
-
-                        📷
-
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onchange="subirImagenAjuste(event, 'logo', 'imagenes')"
-                            style="display:none;"
-                        >
-
-                    </label>
-
-                </div>
-
-                <div>
-
-                    <h1 class="font-vintage-title font-bold">
-                        UPLA PORTAFOLIO
-                    </h1>
-
-                    <span class="sub-logo">
-                        Ingeniería de Sistemas
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
+</header>
 
 
-        <!-- MENÚ -->
+<!-- =========================================================
+     CONTENIDO PRINCIPAL
+========================================================= -->
 
-        <div class="nav-screens">
+<main>
 
-            <button
-                class="nav-screen-btn active"
-                onclick="navegarAPantalla('pantallaInicio')"
-            >
-                PRESENTACIÓN
-            </button>
+<!-- =========================================================
+     INICIO
+========================================================= -->
 
-            <button
-                class="nav-screen-btn"
-                onclick="navegarAPantalla('pantallaCursos')"
-            >
-                CURSOS Y TAREAS
-            </button>
+<section id="inicio" class="section active">
 
-            <button
-                class="nav-screen-btn"
-                onclick="navegarAPantalla('pantallaFeedback')"
-            >
-                SUGERENCIAS
-            </button>
+    <div class="hero">
 
-        </div>
+        <div class="hero-text">
 
-
-        <!-- USUARIO -->
-
-        <div class="user-info">
-
-            <span id="userNameDisplay"
-                  class="user-name">
-                Invitado
+            <span class="tag">
+                PORTAFOLIO ACADÉMICO
             </span>
 
-            <span id="userRoleBadge"
-                  class="badge badge-visitor">
-                👁️ Visitante
-            </span>
-
-            <button
-                id="btnAbrirLoginNav"
-                onclick="abrirModalAuth()"
-                class="btn-login-left"
-            >
-                🔑 INGRESAR
-            </button>
-
-            <button
-                id="btnSalirNav"
-                onclick="cerrarSesion()"
-                class="btn-vintage-outline contenido-oculto"
-            >
-                Cerrar Sesión
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- =========================
-         PANTALLA 1
-         PRESENTACIÓN
-    ========================== -->
-
-    <section
-        id="pantallaInicio"
-        class="pantalla-seccion vintage-presentation-bg"
-    >
-
-        <div class="vintage-container">
-
-            <div class="vintage-badge-top font-vintage-title">
-                ✦ PORTAFOLIO ACADÉMICO OFICIAL • UPLA 2026 ✦
-            </div>
-
-
-            <div class="vintage-hero-grid glass-panel glow-crimson">
-
-
-                <!-- PERFIL -->
-
-                <div class="vintage-profile-card">
-
-                    <div class="vintage-frame">
-
-                        <img
-                            id="fotoPerfilImg"
-                            src=""
-                            alt="Foto de Jhon Benitrez"
-                            class="avatar-vintage"
-                        >
-
-                        <label
-                            id="btnCambiarFoto"
-                            class="btn-change-photo contenido-oculto"
-                        >
-
-                            📷 Cambiar Foto
-
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onchange="subirImagenAjuste(event, 'foto_perfil', 'imagenes')"
-                                style="display:none;"
-                            >
-
-                        </label>
-
-                    </div>
-
-
-                    <h3 class="author-title font-vintage-title">
-                        Jhon Benitrez Poma
-                    </h3>
-
-                    <p class="author-role">
-                        Ingeniería de Sistemas y Cómputo
-                    </p>
-
-                    <div class="author-location">
-                        🏛️ UPLA - Huancayo, Perú
-                    </div>
-
-                </div>
-
-
-                <!-- INFORMACIÓN -->
-
-                <div class="vintage-info-card">
-
-                    <h2
-                        id="saludoBienvenida"
-                        class="font-vintage-title"
-                    >
-                        👋 ¡Bienvenido/a a mi Portafolio!
-                    </h2>
-
-                    <p class="lead-text">
-                        "Plataforma centralizada académica de la Universidad
-                        Peruana Los Andes. Aquí documento mis entregables,
-                        proyectos de software, código fuente y guías prácticas
-                        desarrolladas durante mi formación profesional."
-                    </p>
-
-
-                    <div class="vintage-boxes-container">
-
-                        <div class="v-box v-box-gold">
-
-                            <h4 class="font-vintage-title">
-                                📘 Propósito del Portafolio
-                            </h4>
-
-                            <p>
-                                Espacio donde archivo tareas semanales,
-                                documentación técnica, enlaces a repositorios
-                                (GitHub) y prototipos.
-                            </p>
-
-                        </div>
-
-
-                        <div class="v-box v-box-burgundy">
-
-                            <h4 class="font-vintage-title">
-                                🎯 Objetivos Profesionales
-                            </h4>
-
-                            <p>
-                                Demuestra el dominio técnico de mis competencias,
-                                facilita la revisión docente y consolida mi
-                                perfil como Ingeniero de Sistemas.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="vintage-actions">
-
-                        <button
-                            class="btn-vintage-gold font-vintage-title"
-                            onclick="navegarAPantalla('pantallaCursos')"
-                        >
-
-                            <span>
-                                EXPLORAR CURSOS Y TAREAS ➔
-                            </span>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         PANTALLA 2
-         CURSOS Y TAREAS
-    ========================== -->
-
-    <section
-        id="pantallaCursos"
-        class="pantalla-seccion cursos-bg contenido-oculto"
-    >
-
-        <div class="cursos-main-container">
-
-
-            <!-- CURSOS -->
-
-            <div class="courses-selector-bar">
-
-                <button
-                    class="course-tab-btn active font-vintage-title"
-                    onclick="cambiarCurso('curso1', event)"
-                >
-                    📱 Desarrollo de Aplicaciones 1
-                </button>
-
-                <button
-                    class="course-tab-btn font-vintage-title"
-                    onclick="cambiarCurso('curso2', event)"
-                >
-                    🧮 Algoritmos y Estructura de Datos
-                </button>
-
-            </div>
-
-
-            <!-- CABECERA -->
-
-            <div class="course-header-banner glass-panel">
-
-                <h2
-                    id="tituloCurso"
-                    class="font-vintage-title"
-                >
-                    📱 Desarrollo de Aplicaciones 1
-                </h2>
-
-                <p>
-                    Selecciona cualquiera de las 4 Unidades académicas
-                    para revisar las tareas y avances semanales.
-                </p>
-
-            </div>
-
-
-            <!-- UNIDADES -->
-
-            <div class="unidades-pills">
-
-                <button
-                    class="pill-btn active font-vintage-title"
-                    onclick="mostrarUnidad(1)"
-                >
-
-                    <img
-                        src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=150&auto=format&fit=crop"
-                        class="pill-thumb"
-                        alt="Unidad I"
-                    >
-
-                    Unidad I
-
-                </button>
-
-
-                <button
-                    class="pill-btn font-vintage-title"
-                    onclick="mostrarUnidad(2)"
-                >
-
-                    <img
-                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=150&auto=format&fit=crop"
-                        class="pill-thumb"
-                        alt="Unidad II"
-                    >
-
-                    Unidad II
-
-                </button>
-
-
-                <button
-                    class="pill-btn font-vintage-title"
-                    onclick="mostrarUnidad(3)"
-                >
-
-                    <img
-                        src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=150&auto=format&fit=crop"
-                        class="pill-thumb"
-                        alt="Unidad III"
-                    >
-
-                    Unidad III
-
-                </button>
-
-
-                <button
-                    class="pill-btn font-vintage-title"
-                    onclick="mostrarUnidad(4)"
-                >
-
-                    <img
-                        src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=150&auto=format&fit=crop"
-                        class="pill-thumb"
-                        alt="Unidad IV"
-                    >
-
-                    Unidad IV
-
-                </button>
-
-            </div>
-
-
-            <!-- SEMANAS -->
-
-            <div
-                id="semanasContainer"
-                class="semanas-grid"
-            >
-                <!-- Generación dinámica de semanas -->
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         PANTALLA 3
-         SUGERENCIAS
-    ========================== -->
-
-    <section
-        id="pantallaFeedback"
-        class="pantalla-seccion feedback-bg contenido-oculto"
-    >
-
-        <div class="feedback-card-vintage glass-panel glow-crimson">
-
-            <h3 class="font-vintage-title">
-                💬 Notas y Sugerencias Académicas
+            <h2>
+                Jhon Benitrez Poma
+            </h2>
+
+            <h3>
+                Ingeniería de Sistemas
             </h3>
 
             <p>
-                Deja un comentario, observación o recomendación
-                sobre los proyectos y entregables presentados:
+                Bienvenido a mi portafolio académico de la
+                Universidad Peruana Los Andes.
             </p>
 
+            <p>
+                Aquí se presentan mis cursos, unidades,
+                actividades y trabajos desarrollados durante
+                mi formación profesional.
+            </p>
 
-            <form
-                onsubmit="guardarComentario(event)"
-                class="feedback-form"
-            >
+            <button class="btn-primary"
+                    onclick="mostrarSeccion('cursos')">
+                Ver mis cursos
+            </button>
 
-                <div class="form-row-vintage">
+        </div>
 
-                    <input
-                        type="text"
-                        id="feedbackNombre"
-                        placeholder="Tu nombre..."
-                        maxlength="60"
-                        required
-                    >
+        <div class="profile-card">
 
-                    <input
-                        type="text"
-                        id="feedbackMsg"
-                        placeholder="Escribe tu mensaje o sugerencia..."
-                        maxlength="500"
-                        required
-                    >
+            <div class="profile-image">
+                <img id="profileImage"
+                     src="https://via.placeholder.com/300x300.png?text=UPLA"
+                     alt="Perfil">
+            </div>
+
+            <h3>Jhon Benitrez Poma</h3>
+
+            <p>Ingeniería de Sistemas</p>
+
+            <span class="status">
+                ● Estudiante UPLA
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="info-grid">
+
+        <div class="info-card">
+            <span class="icon">🎓</span>
+            <h3>Universidad</h3>
+            <p>Universidad Peruana Los Andes</p>
+        </div>
+
+        <div class="info-card">
+            <span class="icon">💻</span>
+            <h3>Carrera</h3>
+            <p>Ingeniería de Sistemas y Computación</p>
+        </div>
+
+        <div class="info-card">
+            <span class="icon">📚</span>
+            <h3>Portafolio</h3>
+            <p>Trabajos y actividades académicas</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CURSOS
+========================================================= -->
+
+<section id="cursos" class="section">
+
+    <div class="section-title">
+
+        <span class="tag">
+            FORMACIÓN ACADÉMICA
+        </span>
+
+        <h2>Mis cursos</h2>
+
+        <p>
+            Selecciona un curso para visualizar sus unidades
+            y actividades.
+        </p>
+
+    </div>
+
+
+    <div id="cursosContainer" class="courses-grid">
+
+        <!-- Se cargan desde Supabase -->
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     DETALLE DEL CURSO
+========================================================= -->
+
+<section id="detalleCurso" class="section">
+
+    <button class="back-button"
+            onclick="mostrarSeccion('cursos')">
+        ← Volver a cursos
+    </button>
+
+    <div class="course-header">
+
+        <div>
+
+            <span class="tag">
+                CURSO
+            </span>
+
+            <h2 id="nombreCurso">
+                Curso
+            </h2>
+
+            <p id="descripcionCurso">
+                Descripción del curso
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- UNIDADES -->
+
+    <div class="units">
+
+        <button class="unit-button active"
+                onclick="seleccionarUnidad(1)">
+            Unidad 01
+        </button>
+
+        <button class="unit-button"
+                onclick="seleccionarUnidad(2)">
+            Unidad 02
+        </button>
+
+        <button class="unit-button"
+                onclick="seleccionarUnidad(3)">
+            Unidad 03
+        </button>
+
+        <button class="unit-button"
+                onclick="seleccionarUnidad(4)">
+            Unidad 04
+        </button>
+
+    </div>
+
+
+    <div class="tasks-header">
+
+        <div>
+
+            <h2 id="tituloUnidad">
+                Unidad 01
+            </h2>
+
+            <p>
+                Actividades y trabajos de la unidad.
+            </p>
+
+        </div>
+
+        <button class="btn-primary owner-only hidden"
+                onclick="abrirFormularioTarea()">
+            + Agregar tarea
+        </button>
+
+    </div>
+
+
+    <div id="tasksContainer" class="tasks-grid">
+
+        <!-- Tareas -->
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     COMENTARIOS
+========================================================= -->
+
+<section id="comentarios" class="section">
+
+    <div class="section-title">
+
+        <span class="tag">
+            PARTICIPACIÓN
+        </span>
+
+        <h2>Comentarios y sugerencias</h2>
+
+        <p>
+            Puedes dejar un comentario sobre el portafolio.
+        </p>
+
+    </div>
+
+
+    <div class="comment-form">
+
+        <textarea
+            id="comentarioTexto"
+            placeholder="Escribe tu comentario..."
+            rows="5"></textarea>
+
+        <button class="btn-primary"
+                onclick="guardarComentario()">
+            Publicar comentario
+        </button>
+
+    </div>
+
+
+    <div id="comentariosContainer"
+         class="comments-list">
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     MODAL LOGIN
+========================================================= -->
+
+<div id="loginModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <button class="close"
+                onclick="cerrarLogin()">
+            ×
+        </button>
+
+        <h2 id="authTitle">
+            Iniciar sesión
+        </h2>
+
+        <p id="authDescription">
+            Ingresa a tu cuenta.
+        </p>
+
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Correo electrónico">
+
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Contraseña">
+
+
+        <button class="btn-primary full"
+                onclick="iniciarSesion()">
+            Iniciar sesión
+        </button>
+
+
+        <button class="btn-secondary full"
+                onclick="registrarse()">
+            Crear cuenta
+        </button>
+
+
+        <p id="authMessage"
+           class="auth-message"></p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL TAREA
+========================================================= -->
+
+<div id="taskModal" class="modal hidden">
+
+    <div class="modal-content large">
+
+        <button class="close"
+                onclick="cerrarFormularioTarea()">
+            ×
+        </button>
+
+        <h2 id="taskModalTitle">
+            Nueva tarea
+        </h2>
+
+
+        <input
+            type="hidden"
+            id="taskId">
+
+
+        <label>
+            Título
+        </label>
+
+        <input
+            type="text"
+            id="taskTitle"
+            placeholder="Nombre de la tarea">
+
+
+        <label>
+            Descripción
+        </label>
+
+        <textarea
+            id="taskDescription"
+            rows="5"
+            placeholder="Descripción de la tarea"></textarea>
+
+
+        <label>
+            Enlace
+        </label>
+
+        <input
+            type="url"
+            id="taskUrl"
+            placeholder="https://...">
+
+
+        <label>
+            Unidad
+        </label>
+
+        <select id="taskUnit">
+
+            <option value="1">
+                Unidad 01
+            </option>
+
+            <option value="2">
+                Unidad 02
+            </option>
+
+            <option value="3">
+                Unidad 03
+            </option>
+
+            <option value="4">
+                Unidad 04
+            </option>
+
+        </select>
+
+
+        <button class="btn-primary full"
+                onclick="guardarTarea()">
+            Guardar tarea
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL IMAGEN
+========================================================= -->
+
+<div id="imageModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <button class="close"
+                onclick="cerrarImagenModal()">
+            ×
+        </button>
+
+        <h2>Actualizar imagen</h2>
+
+        <input
+            type="file"
+            id="imageFile"
+            accept="image/*">
+
+
+        <button class="btn-primary full"
+                onclick="subirImagen()">
+            Subir imagen
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NOTIFICACIÓN
+========================================================= -->
+
+<div id="toast"
+     class="toast">
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* ========================================================
+       CONFIGURACIÓN SUPABASE
+    ======================================================== */
+
+    const SUPABASE_URL =
+        "TU_SUPABASE_URL";
+
+    const SUPABASE_ANON_KEY =
+        "TU_SUPABASE_ANON_KEY";
+
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_ANON_KEY
+        );
+
+
+    /* ========================================================
+       CONFIGURACIÓN DEL PROYECTO
+    ======================================================== */
+
+    const OWNER_EMAIL =
+        "TU_CORREO_DE_PROPIETARIO@gmail.com";
+
+    const BUCKET =
+        "portafolio";
+
+
+    let usuarioActual = null;
+
+    let cursoActual = null;
+
+    let unidadActual = 1;
+
+
+    /* ========================================================
+       INICIO
+    ======================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        async function() {
+
+            await comprobarSesion();
+
+            await cargarCursos();
+
+            await cargarComentarios();
+
+            escucharCambios();
+
+        }
+    );
+
+
+    /* ========================================================
+       NAVEGACIÓN
+    ======================================================== */
+
+    function mostrarSeccion(nombre) {
+
+        document
+            .querySelectorAll(".section")
+            .forEach(section => {
+
+                section.classList.remove("active");
+
+            });
+
+
+        const seccion =
+            document.getElementById(nombre);
+
+
+        if (seccion) {
+
+            seccion.classList.add("active");
+
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    /* ========================================================
+       LOGIN
+    ======================================================== */
+
+    function abrirLogin() {
+
+        document
+            .getElementById("loginModal")
+            .classList.remove("hidden");
+
+    }
+
+
+    function cerrarLogin() {
+
+        document
+            .getElementById("loginModal")
+            .classList.add("hidden");
+
+    }
+
+
+    async function iniciarSesion() {
+
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        if (!email || !password) {
+
+            mostrarToast(
+                "Completa todos los campos."
+            );
+
+            return;
+
+        }
+
+
+        const { data, error } =
+            await supabaseClient.auth
+            .signInWithPassword({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+        if (error) {
+
+            mostrarToast(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        usuarioActual =
+            data.user;
+
+
+        cerrarLogin();
+
+        actualizarInterfazUsuario();
+
+        mostrarToast(
+            "Sesión iniciada correctamente."
+        );
+
+    }
+
+
+    async function registrarse() {
+
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        if (!email || !password) {
+
+            mostrarToast(
+                "Completa todos los campos."
+            );
+
+            return;
+
+        }
+
+
+        if (password.length < 6) {
+
+            mostrarToast(
+                "La contraseña debe tener mínimo 6 caracteres."
+            );
+
+            return;
+
+        }
+
+
+        const { error } =
+            await supabaseClient.auth
+            .signUp({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+        if (error) {
+
+            mostrarToast(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        mostrarToast(
+            "Cuenta creada. Revisa tu correo si Supabase solicita confirmación."
+        );
+
+    }
+
+
+    async function cerrarSesion() {
+
+        await supabaseClient.auth.signOut();
+
+        usuarioActual = null;
+
+        actualizarInterfazUsuario();
+
+        mostrarToast(
+            "Sesión cerrada."
+        );
+
+    }
+
+
+    async function comprobarSesion() {
+
+        const { data } =
+            await supabaseClient.auth
+            .getSession();
+
+
+        usuarioActual =
+            data.session?.user || null;
+
+
+        actualizarInterfazUsuario();
+
+    }
+
+
+    function esPropietario() {
+
+        if (!usuarioActual) {
+
+            return false;
+
+        }
+
+
+        return (
+            usuarioActual.email
+            .toLowerCase()
+            ===
+            OWNER_EMAIL.toLowerCase()
+        );
+
+    }
+
+
+    function actualizarInterfazUsuario() {
+
+        const login =
+            document.getElementById("btnLogin");
+
+        const logout =
+            document.getElementById("btnLogout");
+
+
+        if (usuarioActual) {
+
+            login.classList.add("hidden");
+
+            logout.classList.remove("hidden");
+
+        } else {
+
+            login.classList.remove("hidden");
+
+            logout.classList.add("hidden");
+
+        }
+
+
+        document
+            .querySelectorAll(".owner-only")
+            .forEach(element => {
+
+                if (esPropietario()) {
+
+                    element.classList.remove("hidden");
+
+                } else {
+
+                    element.classList.add("hidden");
+
+                }
+
+            });
+
+    }
+
+
+    /* ========================================================
+       CURSOS
+    ======================================================== */
+
+    async function cargarCursos() {
+
+        const container =
+            document.getElementById(
+                "cursosContainer"
+            );
+
+
+        container.innerHTML =
+            `<div class="loading">
+                Cargando cursos...
+             </div>`;
+
+
+        const { data, error } =
+            await supabaseClient
+            .from("temas")
+            .select("*")
+            .order("id", {
+                ascending: true
+            });
+
+
+        if (error) {
+
+            container.innerHTML =
+                `<div class="empty">
+                    <h3>No se pudieron cargar los cursos</h3>
+                    <p>${error.message}</p>
+                 </div>`;
+
+            return;
+
+        }
+
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML =
+                `<div class="empty">
+                    <h3>Aún no hay cursos</h3>
+                    <p>Agrega cursos desde Supabase.</p>
+                 </div>`;
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        data.forEach(curso => {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "course-card";
+
+
+            card.innerHTML = `
+
+                <div class="course-number">
+                    ${curso.numero || "01"}
+                </div>
+
+                <div class="course-content">
+
+                    <span class="course-label">
+                        CURSO
+                    </span>
+
+                    <h3>
+                        ${escapeHtml(
+                            curso.nombre || "Curso"
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escapeHtml(
+                            curso.descripcion || "Curso académico"
+                        )}
+                    </p>
 
                     <button
-                        type="submit"
-                        id="btnEnviarComentario"
-                        class="btn-vintage-gold font-vintage-title"
-                        style="width: auto;"
-                    >
-                        Enviar Sugerencia
+                        class="btn-primary"
+                        onclick="abrirCurso('${curso.id}')">
+
+                        Ver curso →
+
                     </button>
 
                 </div>
 
-            </form>
+            `;
 
 
-            <div
-                id="comentariosList"
-                class="comentarios-list-vintage"
-            >
-                <!-- Comentarios guardados -->
-            </div>
+            container.appendChild(card);
 
-        </div>
+        });
 
-    </section>
+    }
 
 
-    <!-- =========================
-         MODAL LOGIN
-    ========================== -->
+    async function abrirCurso(id) {
 
-    <div id="modalAuthScreen" class="modal">
-
-        <div class="modal-content modal-vintage">
-
-            <button
-                class="close-modal"
-                onclick="cerrarModalAuth()"
-            >
-                ✕
-            </button>
+        const { data, error } =
+            await supabaseClient
+            .from("temas")
+            .select("*")
+            .eq("id", id)
+            .single();
 
 
-            <div class="vintage-card-header">
+        if (error) {
 
-                <img
-                    id="logoLoginImg"
-                    src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png"
-                    alt="Logo UPLA"
-                    class="img-upla-auth"
-                >
+            mostrarToast(
+                error.message
+            );
 
-                <h2
-                    class="font-vintage-title"
-                    style="color:#fff; font-size:1.4rem;"
-                >
-                    Acceso al Portafolio
-                </h2>
+            return;
 
-                <p class="auth-subtitle">
-                    Ingeniería de Sistemas y Cómputo - UPLA
+        }
+
+
+        cursoActual = data;
+
+
+        document
+            .getElementById("nombreCurso")
+            .textContent =
+            cursoActual.nombre;
+
+
+        document
+            .getElementById("descripcionCurso")
+            .textContent =
+            cursoActual.descripcion || "";
+
+
+        unidadActual = 1;
+
+
+        actualizarBotonesUnidad();
+
+
+        await cargarTareas();
+
+
+        mostrarSeccion(
+            "detalleCurso"
+        );
+
+    }
+
+
+    /* ========================================================
+       UNIDADES
+    ======================================================== */
+
+    async function seleccionarUnidad(numero) {
+
+        unidadActual = numero;
+
+        actualizarBotonesUnidad();
+
+        await cargarTareas();
+
+    }
+
+
+    function actualizarBotonesUnidad() {
+
+        document
+            .querySelectorAll(".unit-button")
+            .forEach((button, index) => {
+
+                button.classList.toggle(
+                    "active",
+                    index + 1 === unidadActual
+                );
+
+            });
+
+
+        document
+            .getElementById("tituloUnidad")
+            .textContent =
+            `Unidad ${String(unidadActual).padStart(2, "0")}`;
+
+    }
+
+
+    /* ========================================================
+       TAREAS
+    ======================================================== */
+
+    async function cargarTareas() {
+
+        const container =
+            document.getElementById(
+                "tasksContainer"
+            );
+
+
+        if (!cursoActual) {
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            `<div class="loading">
+                Cargando tareas...
+             </div>`;
+
+
+        const { data, error } =
+            await supabaseClient
+            .from("tareas")
+            .select("*")
+            .eq("tema_id", cursoActual.id)
+            .eq("unidad", unidadActual)
+            .order("created_at", {
+                ascending: true
+            });
+
+
+        if (error) {
+
+            container.innerHTML =
+                `<div class="empty">
+                    ${error.message}
+                 </div>`;
+
+            return;
+
+        }
+
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML =
+                `<div class="empty">
+                    <span>📚</span>
+                    <h3>No hay tareas todavía</h3>
+                    <p>
+                        En esta unidad todavía no se
+                        han agregado actividades.
+                    </p>
+                 </div>`;
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        data.forEach(tarea => {
+
+            const card =
+                document.createElement("article");
+
+
+            card.className =
+                "task-card";
+
+
+            card.innerHTML = `
+
+                <div class="task-top">
+
+                    <span class="task-unit">
+                        Unidad ${String(tarea.unidad)
+                            .padStart(2, "0")}
+                    </span>
+
+                    <span class="task-date">
+                        ${formatearFecha(
+                            tarea.created_at
+                        )}
+                    </span>
+
+                </div>
+
+
+                <h3>
+                    ${escapeHtml(
+                        tarea.titulo
+                    )}
+                </h3>
+
+
+                <p>
+                    ${escapeHtml(
+                        tarea.descripcion || ""
+                    )}
                 </p>
 
-            </div>
+
+                <div class="task-actions">
+
+                    ${
+                        tarea.url
+                        ?
+                        `<a
+                            href="${escapeAttribute(tarea.url)}"
+                            target="_blank"
+                            rel="noopener"
+                            class="btn-secondary">
+                            Abrir tarea
+                         </a>`
+                        :
+                        ""
+                    }
 
 
-            <!-- TABS -->
-
-            <div class="auth-tabs">
-
-                <button
-                    id="tabLoginBtn"
-                    class="auth-tab-btn active font-vintage-title"
-                    onclick="mostrarTabAuth('login')"
-                >
-                    Ingresar
-                </button>
-
-                <button
-                    id="tabRegisterBtn"
-                    class="auth-tab-btn font-vintage-title"
-                    onclick="mostrarTabAuth('register')"
-                >
-                    Registrarse
-                </button>
-
-            </div>
-
-
-            <!-- LOGIN -->
-
-            <form
-                id="formLogin"
-                onsubmit="procesarLogin(event)"
-                autocomplete="off"
-            >
-
-                <div class="form-group-vintage">
-
-                    <label>
-                        Usuario / Estudiante:
-                    </label>
-
-                    <input
-                        type="text"
-                        id="loginUsuario"
-                        placeholder="Ej: Jhon Benitrez"
-                        required
-                        autocomplete="off"
-                    >
-
-                </div>
-
-
-                <div class="form-group-vintage">
-
-                    <label>
-                        Contraseña:
-                    </label>
-
-                    <div class="password-input-wrapper">
-
-                        <input
-                            type="password"
-                            id="loginPass"
-                            placeholder="Propietario clave / Visitante vacío"
-                            autocomplete="new-password"
-                        >
-
+                    ${
+                        esPropietario()
+                        ?
+                        `
                         <button
-                            type="button"
-                            class="btn-toggle-password"
-                            onclick="togglePasswordVisibility('loginPass', this)"
-                            title="Ver / Ocultar"
-                        >
-                            👁️
+                            class="btn-edit"
+                            onclick="editarTarea('${tarea.id}')">
+                            Editar
                         </button>
 
-                    </div>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    id="btnLoginSubmit"
-                    class="btn-vintage-gold font-vintage-title"
-                    style="width:100%;"
-                >
-                    Ingresar al Sistema
-                </button>
-
-            </form>
-
-
-            <!-- REGISTRO -->
-
-            <form
-                id="formRegister"
-                class="contenido-oculto"
-                onsubmit="procesarRegistro(event)"
-                autocomplete="off"
-            >
-
-                <div class="form-group-vintage">
-
-                    <label>
-                        Nombre Completo:
-                    </label>
-
-                    <input
-                        type="text"
-                        id="regUsuario"
-                        placeholder="Ej: María López"
-                        required
-                        autocomplete="off"
-                    >
-
-                </div>
-
-
-                <div class="form-group-vintage">
-
-                    <label>
-                        Contraseña:
-                    </label>
-
-                    <div class="password-input-wrapper">
-
-                        <input
-                            type="password"
-                            id="regPass"
-                            placeholder="Crea una contraseña"
-                            required
-                            autocomplete="new-password"
-                        >
-
                         <button
-                            type="button"
-                            class="btn-toggle-password"
-                            onclick="togglePasswordVisibility('regPass', this)"
-                            title="Ver / Ocultar"
-                        >
-                            👁️
+                            class="btn-delete"
+                            onclick="eliminarTarea('${tarea.id}')">
+                            Eliminar
                         </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-group-vintage">
-
-                    <label>
-                        Correo Electrónico (Opcional):
-                    </label>
-
-                    <input
-                        type="email"
-                        id="regCorreo"
-                        placeholder="correo@ejemplo.com"
-                        autocomplete="off"
-                    >
+                        `
+                        :
+                        ""
+                    }
 
                 </div>
 
-
-                <button
-                    type="submit"
-                    class="btn-vintage-gold font-vintage-title"
-                    style="width:100%;"
-                >
-                    Crear Cuenta e Ingresar
-                </button>
-
-            </form>
-
-        </div>
-
-    </div>
+            `;
 
 
-    <!-- =========================
-         MODAL TAREAS
-    ========================== -->
+            container.appendChild(card);
 
-    <div id="modalSubirTarea" class="modal">
+        });
 
-        <div class="modal-content modal-vintage">
-
-            <button
-                class="close-modal"
-                onclick="cerrarModalSubirTarea()"
-            >
-                ✕
-            </button>
+    }
 
 
-            <h3
-                class="font-vintage-title"
-                id="modalTareaTituloAccion"
-                style="color:#fff; font-size:1.3rem; margin-bottom:0.4rem;"
-            >
-                📤 Agregar Tarea
-            </h3>
+    /* ========================================================
+       CREAR TAREA
+    ======================================================== */
+
+    function abrirFormularioTarea() {
+
+        if (!esPropietario()) {
+
+            mostrarToast(
+                "Solo el propietario puede agregar tareas."
+            );
+
+            return;
+
+        }
 
 
-            <p
-                style="color:var(--text-sub); font-size:0.85rem; margin-bottom:1.2rem;"
-            >
-                Adjunta un archivo o ingresa enlace a tu proyecto
-                en GitHub, Drive o Figma.
-            </p>
+        document
+            .getElementById("taskId")
+            .value = "";
 
 
-            <form onsubmit="guardarNuevaTareaPropietario(event)">
-
-                <input
-                    type="hidden"
-                    id="modalKeyTarea"
-                >
-
-                <input
-                    type="hidden"
-                    id="modalEditId"
-                    value=""
-                >
+        document
+            .getElementById("taskTitle")
+            .value = "";
 
 
-                <div class="form-group-vintage">
+        document
+            .getElementById("taskDescription")
+            .value = "";
 
-                    <label>
-                        Título / Nombre de la Tarea:
-                    </label>
 
-                    <input
-                        type="text"
-                        id="taskTitulo"
-                        placeholder="Ej: Tarea 2: Arquitectura de Software"
-                        required
-                    >
+        document
+            .getElementById("taskUrl")
+            .value = "";
+
+
+        document
+            .getElementById("taskUnit")
+            .value = unidadActual;
+
+
+        document
+            .getElementById("taskModalTitle")
+            .textContent =
+            "Nueva tarea";
+
+
+        document
+            .getElementById("taskModal")
+            .classList.remove("hidden");
+
+    }
+
+
+    function cerrarFormularioTarea() {
+
+        document
+            .getElementById("taskModal")
+            .classList.add("hidden");
+
+    }
+
+
+    async function guardarTarea() {
+
+        if (!esPropietario()) {
+
+            return;
+
+        }
+
+
+        const id =
+            document
+            .getElementById("taskId")
+            .value;
+
+
+        const titulo =
+            document
+            .getElementById("taskTitle")
+            .value
+            .trim();
+
+
+        const descripcion =
+            document
+            .getElementById("taskDescription")
+            .value
+            .trim();
+
+
+        const url =
+            document
+            .getElementById("taskUrl")
+            .value
+            .trim();
+
+
+        const unidad =
+            Number(
+                document
+                .getElementById("taskUnit")
+                .value
+            );
+
+
+        if (!titulo) {
+
+            mostrarToast(
+                "Escribe el título de la tarea."
+            );
+
+            return;
+
+        }
+
+
+        const datos = {
+
+            titulo,
+
+            descripcion,
+
+            url,
+
+            unidad,
+
+            tema_id: cursoActual.id
+
+        };
+
+
+        let resultado;
+
+
+        if (id) {
+
+            resultado =
+                await supabaseClient
+                .from("tareas")
+                .update(datos)
+                .eq("id", id);
+
+        } else {
+
+            resultado =
+                await supabaseClient
+                .from("tareas")
+                .insert(datos);
+
+        }
+
+
+        if (resultado.error) {
+
+            mostrarToast(
+                resultado.error.message
+            );
+
+            return;
+
+        }
+
+
+        cerrarFormularioTarea();
+
+        await cargarTareas();
+
+        mostrarToast(
+            "Tarea guardada correctamente."
+        );
+
+    }
+
+
+    /* ========================================================
+       EDITAR TAREA
+    ======================================================== */
+
+    async function editarTarea(id) {
+
+        if (!esPropietario()) {
+
+            return;
+
+        }
+
+
+        const { data, error } =
+            await supabaseClient
+            .from("tareas")
+            .select("*")
+            .eq("id", id)
+            .single();
+
+
+        if (error) {
+
+            mostrarToast(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("taskId")
+            .value = data.id;
+
+
+        document
+            .getElementById("taskTitle")
+            .value = data.titulo;
+
+
+        document
+            .getElementById("taskDescription")
+            .value =
+            data.descripcion || "";
+
+
+        document
+            .getElementById("taskUrl")
+            .value =
+            data.url || "";
+
+
+        document
+            .getElementById("taskUnit")
+            .value =
+            data.unidad;
+
+
+        document
+            .getElementById("taskModalTitle")
+            .textContent =
+            "Editar tarea";
+
+
+        document
+            .getElementById("taskModal")
+            .classList.remove("hidden");
+
+    }
+
+
+    /* ========================================================
+       ELIMINAR TAREA
+    ======================================================== */
+
+    async function eliminarTarea(id) {
+
+        if (!esPropietario()) {
+
+            return;
+
+        }
+
+
+        const confirmar =
+            confirm(
+                "¿Seguro que deseas eliminar esta tarea?"
+            );
+
+
+        if (!confirmar) {
+
+            return;
+
+        }
+
+
+        const { error } =
+            await supabaseClient
+            .from("tareas")
+            .delete()
+            .eq("id", id);
+
+
+        if (error) {
+
+            mostrarToast(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        await cargarTareas();
+
+
+        mostrarToast(
+            "Tarea eliminada."
+        );
+
+    }
+
+
+    /* ========================================================
+       COMENTARIOS
+    ======================================================== */
+
+    async function guardarComentario() {
+
+        if (!usuarioActual) {
+
+            mostrarToast(
+                "Debes iniciar sesión para comentar."
+            );
+
+            abrirLogin();
+
+            return;
+
+        }
+
+
+        const texto =
+            document
+            .getElementById("comentarioTexto")
+            .value
+            .trim();
+
+
+        if (!texto) {
+
+            mostrarToast(
+                "Escribe un comentario."
+            );
+
+            return;
+
+        }
+
+
+        const { error } =
+            await supabaseClient
+            .from("comentarios")
+            .insert({
+
+                usuario_id:
+                    usuarioActual.id,
+
+                nombre:
+                    usuarioActual.email,
+
+                contenido:
+                    texto
+
+            });
+
+
+        if (error) {
+
+            mostrarToast(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("comentarioTexto")
+            .value = "";
+
+
+        await cargarComentarios();
+
+
+        mostrarToast(
+            "Comentario publicado."
+        );
+
+    }
+
+
+    async function cargarComentarios() {
+
+        const container =
+            document.getElementById(
+                "comentariosContainer"
+            );
+
+
+        const { data, error } =
+            await supabaseClient
+            .from("comentarios")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+
+        if (error) {
+
+            container.innerHTML =
+                `<div class="empty">
+                    No se pudieron cargar los comentarios.
+                 </div>`;
+
+            return;
+
+        }
+
+
+        if (!data || data.length === 0) {
+
+            container.innerHTML =
+                `<div class="empty">
+                    <h3>Aún no hay comentarios</h3>
+                    <p>Sé el primero en comentar.</p>
+                 </div>`;
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        data.forEach(comentario => {
+
+            const div =
+                document.createElement("div");
+
+
+            div.className =
+                "comment-card";
+
+
+            div.innerHTML = `
+
+                <div class="comment-header">
+
+                    <strong>
+                        ${escapeHtml(
+                            comentario.nombre ||
+                            "Usuario"
+                        )}
+                    </strong>
+
+                    <span>
+                        ${formatearFecha(
+                            comentario.created_at
+                        )}
+                    </span>
 
                 </div>
 
+                <p>
+                    ${escapeHtml(
+                        comentario.contenido
+                    )}
+                </p>
 
-                <div class="form-group-vintage">
-
-                    <label>
-                        Tipo de Entrega:
-                    </label>
-
-                    <select
-                        id="taskTipo"
-                        onchange="cambiarTipoInputTask()"
-                        required
-                    >
-
-                        <option value="archivo">
-                            📄 Subir Archivo (PDF, DOCX, ZIP, Imagen)
-                        </option>
-
-                        <option value="enlace">
-                            🔗 Enlace Web (GitHub, Drive, Figma, Vercel)
-                        </option>
-
-                    </select>
-
-                </div>
+            `;
 
 
-                <div
-                    id="boxTaskFile"
-                    class="form-group-vintage"
-                >
+            container.appendChild(div);
 
-                    <label>
-                        Seleccionar Archivo:
-                    </label>
+        });
 
-                    <input
-                        type="file"
-                        id="taskFile"
-                    >
-
-                </div>
+    }
 
 
-                <div
-                    id="boxTaskUrl"
-                    class="form-group-vintage contenido-oculto"
-                >
+    /* ========================================================
+       IMAGEN DE PERFIL
+    ======================================================== */
 
-                    <label>
-                        URL / Enlace Web:
-                    </label>
+    function abrirImagen() {
 
-                    <input
-                        type="url"
-                        id="taskUrl"
-                        placeholder="https://github.com/tuusuario/proyecto"
-                    >
+        if (!esPropietario()) {
 
-                </div>
+            mostrarToast(
+                "Solo el propietario puede cambiar la imagen."
+            );
 
+            return;
 
-                <button
-                    type="submit"
-                    id="btnGuardarTarea"
-                    class="btn-vintage-gold font-vintage-title"
-                    style="width:100%;"
-                >
-                    Guardar Tarea
-                </button>
-
-            </form>
-
-        </div>
-
-    </div>
+        }
 
 
-    <!-- TOAST -->
+        document
+            .getElementById("imageModal")
+            .classList.remove("hidden");
 
-    <div
-        id="toast"
-        class="toast"
-        role="status"
-        aria-live="polite"
-    ></div>
+    }
 
 
-    <!-- AQUÍ IRÁ EL CSS Y JAVASCRIPT -->
+    function cerrarImagenModal() {
+
+        document
+            .getElementById("imageModal")
+            .classList.add("hidden");
+
+    }
+
+
+    async function subirImagen() {
+
+        if (!esPropietario()) {
+
+            return;
+
+        }
+
+
+        const file =
+            document
+            .getElementById("imageFile")
+            .files[0];
+
+
+        if (!file) {
+
+            mostrarToast(
+                "Selecciona una imagen."
+            );
+
+            return;
+
+        }
+
+
+        const extension =
+            file.name
+            .split(".")
+            .pop();
+
+
+        const nombreArchivo =
+            `perfil-${Date.now()}.${extension}`;
+
+
+        const { error } =
+            await supabaseClient
+            .storage
+            .from(BUCKET)
+            .upload(
+                nombreArchivo,
+                file,
+                {
+                    upsert: true
+                }
+            );
+
+
+        if (error) {
+
+            mostrarToast(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        const { data } =
+            supabaseClient
+            .storage
+            .from(BUCKET)
+            .getPublicUrl(
+                nombreArchivo
+            );
+
+
+        document
+            .getElementById("profileImage")
+            .src =
+            data.publicUrl;
+
+
+        cerrarImagenModal();
+
+
+        mostrarToast(
+            "Imagen actualizada."
+        );
+
+    }
+
+
+    /* ========================================================
+       REALTIME
+    ======================================================== */
+
+    function escucharCambios() {
+
+        supabaseClient
+            .channel("cambios-portafolio")
+
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: "tareas"
+                },
+                function() {
+
+                    if (cursoActual) {
+
+                        cargarTareas();
+
+                    }
+
+                }
+            )
+
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: "comentarios"
+                },
+                function() {
+
+                    cargarComentarios();
+
+                }
+            )
+
+            .subscribe();
+
+    }
+
+
+    /* ========================================================
+       UTILIDADES
+    ======================================================== */
+
+    function formatearFecha(fecha) {
+
+        if (!fecha) {
+
+            return "";
+
+        }
+
+
+        return new Date(fecha)
+            .toLocaleDateString(
+                "es-PE",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }
+            );
+
+    }
+
+
+    function escapeHtml(text) {
+
+        if (text === null ||
+            text === undefined) {
+
+            return "";
+
+        }
+
+
+        return String(text)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
+
+
+    function escapeAttribute(text) {
+
+        return escapeHtml(text);
+
+    }
+
+
+    function mostrarToast(mensaje) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.textContent =
+            mensaje;
+
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+    }
+
+
+    /* ========================================================
+       CAMBIO DE SESIÓN
+    ======================================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+        function(event, session) {
+
+            usuarioActual =
+                session?.user || null;
+
+            actualizarInterfazUsuario();
+
+        }
+    );
+
+</script>
 
 </body>
 </html>
-```

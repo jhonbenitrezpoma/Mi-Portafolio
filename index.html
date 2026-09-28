@@ -8,17 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Base de datos compartida (Supabase) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-
-    <!-- AVISO SI AÚN NO CONFIGURASTE SUPABASE -->
     <div id="configBanner" class="config-banner contenido-oculto">
-        ⚠️ Falta conectar la base de datos: abre <strong>index.html</strong> y completa SUPABASE_URL, SUPABASE_ANON_KEY y OWNER_EMAIL. Mientras tanto, nada se guardará para los visitantes.
+        ⚠️ Falta conectar la base de datos: abre <strong>index.html</strong> y completa SUPABASE_URL, SUPABASE_ANON_KEY y OWNER_EMAIL.
     </div>
 
-    <!-- NAVBAR PRINCIPAL CON INICIO DE SESIÓN A LA IZQUIERDA -->
     <header class="navbar">
         <div class="nav-left-zone">
             <button id="btnAbrirLoginNav" onclick="abrirModalAuth()" class="btn-login-left">🔑 Iniciar Sesión / Ingresar</button>
@@ -28,9 +24,9 @@
         <div class="logo-container">
             <div class="logo-wrapper">
                 <img id="logoHeaderImg" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA" class="img-upla-header">
-                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar logo desde tu PC">
+                <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar logo">
                     📷
-                    <input type="file" accept="image/*" onchange="subirImagenAjuste(event, 'logo', 'imagenes')" style="display:none;">
+                    <input type="file" accept="image/*" onchange="subirImagenAjuste(event, 'logo', 'imagenes')" style="display:none">
                 </label>
             </div>
             <div>
@@ -39,7 +35,6 @@
             </div>
         </div>
 
-        <!-- MENÚ DE NAVEGACIÓN LIBRE PARA VISITANTES Y PROPIETARIO -->
         <nav id="navScreens" class="nav-screens">
             <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏛️ Presentación</button>
             <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
@@ -52,20 +47,17 @@
         </div>
     </header>
 
-
-    <!-- PANTALLA 1: PRESENTACIÓN -->
     <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
         <div class="vintage-container">
             <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
 
             <div class="vintage-hero-grid">
-                <!-- Columna Foto de Perfil -->
                 <div class="vintage-profile-card">
                     <div class="vintage-frame">
                         <img id="fotoPerfilImg" src="" alt="Foto de Jhon Benitrez" class="avatar-vintage">
                         <label id="btnCambiarFoto" class="btn-change-photo contenido-oculto">
                             📷 Cambiar Foto
-                            <input type="file" accept="image/*" onchange="subirImagenAjuste(event, 'foto_perfil', 'imagenes')" style="display:none;">
+                            <input type="file" accept="image/*" onchange="subirImagenAjuste(event, 'foto_perfil', 'imagenes')" style="display:none">
                         </label>
                     </div>
                     <h3 class="author-title">Jhon Benitrez Poma</h3>
@@ -73,7 +65,6 @@
                     <div class="author-location">🏛️ UPLA - Huancayo, Perú</div>
                 </div>
 
-                <!-- Columna Información y Propósito -->
                 <div class="vintage-info-card">
                     <h2 id="saludoBienvenida" class="font-vintage-title">👋 ¡Bienvenido/a a mi Portafolio!</h2>
                     <p class="lead-text">
@@ -91,16 +82,12 @@
                         </div>
                     </div>
 
-                    <div class="vintage-actions">
-                        <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Tareas</button>
-                    </div>
+                    <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">📂 Explorar Cursos y Tareas</button>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <!-- PANTALLA 2: CURSOS Y TAREAS -->
     <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
         <div class="cursos-main-container">
             <div class="courses-selector-bar">
@@ -110,7 +97,7 @@
 
             <div class="course-header-banner">
                 <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
-                <p>Selecciona cualquiera de las 4 Unidades para revisar o descargar las tareas semanales.</p>
+                <p>Selecciona cualquiera de las cuatro unidades para revisar o descargar las tareas semanales.</p>
             </div>
 
             <div class="unidades-pills">
@@ -120,14 +107,10 @@
                 <button class="pill-btn" onclick="mostrarUnidad(4)">Unidad IV</button>
             </div>
 
-            <div id="semanasContainer" class="semanas-grid">
-                <!-- Carga dinámica -->
-            </div>
+            <div id="semanasContainer" class="semanas-grid"></div>
         </div>
     </section>
 
-
-    <!-- PANTALLA 3: SUGERENCIAS -->
     <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
         <div class="feedback-card-vintage">
             <h3 class="font-vintage-title">💬 Notas y Sugerencias de Visitantes</h3>
@@ -141,14 +124,10 @@
                 </div>
             </form>
 
-            <div id="comentariosList" class="comentarios-list-vintage">
-                <!-- Comentarios guardados -->
-            </div>
+            <div id="comentariosList" class="comentarios-list-vintage"></div>
         </div>
     </section>
 
-
-    <!-- MODAL LOGIN / REGISTRO -->
     <div id="modalAuthScreen" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalAuth()">✕</button>
@@ -164,51 +143,42 @@
                 <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
             </div>
 
-            <!-- Formulario Login -->
             <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Usuario / Estudiante:</label>
                     <input type="text" id="loginUsuario" placeholder="Ej: Jhon Benitrez" required autocomplete="off">
                 </div>
-
                 <div class="form-group-vintage">
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
                         <input type="password" id="loginPass" placeholder="Propietario usa clave / Visitante vacío" autocomplete="new-password">
-                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass', this)">👁️</button>
                     </div>
                 </div>
-
                 <button type="submit" id="btnLoginSubmit" class="btn-vintage-gold">Ingresar al Portafolio</button>
             </form>
 
-            <!-- Formulario Registro -->
             <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
                 <div class="form-group-vintage">
                     <label>Nombre Completo:</label>
                     <input type="text" id="regUsuario" placeholder="Ej: Maria López" required autocomplete="off">
                 </div>
-
                 <div class="form-group-vintage">
                     <label>Contraseña:</label>
                     <div class="password-input-wrapper">
                         <input type="password" id="regPass" placeholder="Crea una contraseña" required autocomplete="new-password">
-                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)" title="Ver / Ocultar Contraseña">👁️</button>
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass', this)">👁️</button>
                     </div>
                 </div>
-
                 <div class="form-group-vintage">
                     <label>Correo Electrónico (Opcional):</label>
                     <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" autocomplete="off">
                 </div>
-
                 <button type="submit" class="btn-vintage-gold">Crear Cuenta e Ingresar</button>
             </form>
         </div>
     </div>
 
-
-    <!-- MODAL PARA SUBIR Y EDITAR TAREAS (PROPIETARIO) -->
     <div id="modalSubirTarea" class="modal">
         <div class="modal-content modal-vintage">
             <button class="close-modal" onclick="cerrarModalSubirTarea()">✕</button>
@@ -242,28 +212,22 @@
                     <input type="url" id="taskUrl" placeholder="https://github.com/tuusuario/tu-proyecto">
                 </div>
 
-                <button type="submit" id="btnGuardarTarea" class="btn-vintage-gold btn-block">Guardar Tarea</button>
+                <button type="submit" id="btnGuardarTarea" class="btn-vintage-gold">Guardar Tarea</button>
             </form>
         </div>
     </div>
 
-    <!-- AVISOS EMERGENTES -->
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-
     <script>
-        /* =====================================================================
-           CONFIGURACIÓN  →  completa estos 3 datos (los ves en Supabase)
-           ===================================================================== */
-        const SUPABASE_URL      = "https://pxjqwdmccnfxfpuccqgn.supabase.co";     // Project Settings > API > Project URL
-        const SUPABASE_ANON_KEY = "sb_publishable_6rodUeO0xzlqrwXTw1i0cQ_S7BOiRq4";        // Project Settings > API > anon public key
-        const OWNER_EMAIL       = "tuhermana1591q@gmail.com";          // el mismo correo que pusiste en el SQL
+        /* CONEXIÓN ORIGINAL: NO MODIFICADA */
+        const SUPABASE_URL = "https://pxjqwdmccnfxfpuccqgn.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_6rodUeO0xzlqrwXTw1i0cQ_S7BOiRq4";
+        const OWNER_EMAIL = "tuhermana1591q@gmail.com";
 
-        // Nombres con los que el propietario puede escribir su usuario al ingresar
         const NOMBRES_PROPIETARIO = ["jhon benitrez", "jhon benitres", "jhon benitrez poma"];
-
         const BUCKET = "portafolio";
-        const SESSION_KEY = "sesion_portafolio_upla";   // solo para nombre de visitante en este navegador
+        const SESSION_KEY = "sesion_portafolio_upla";
         const LOGO_POR_DEFECTO = "https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png";
         const AVATAR_POR_DEFECTO = "data:image/svg+xml;utf8," + encodeURIComponent(
             '<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">' +
@@ -279,10 +243,8 @@
         let db = null;
         let usuarioActual = "Invitado";
         let esPropietario = false;
-        let cursoActual = 'curso1';
+        let cursoActual = "curso1";
         let unidadActual = 1;
-
-        // Datos compartidos (vienen de la base de datos)
         let tareasPorClave = {};
         let temasPorClave = {};
         let comentarios = [];
@@ -293,12 +255,18 @@
             curso2: "🧮 Algoritmos y Estructuras de Datos"
         };
 
-        /* ---------- Utilidades ---------- */
         function esc(s) {
-            return String(s ?? "").replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+            return String(s ?? "").replace(/[&<>"']/g, c => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[c]));
         }
 
         let toastTimer;
+
         function toast(msg) {
             const t = document.getElementById("toast");
             t.textContent = msg;
@@ -309,7 +277,7 @@
 
         function requiereConfig() {
             if (!configurado) {
-                alert("Primero conecta la base de datos: completa SUPABASE_URL, SUPABASE_ANON_KEY y OWNER_EMAIL en index.html.");
+                alert("Primero conecta la base de datos en index.html.");
                 return false;
             }
             return true;
@@ -330,13 +298,17 @@
         }
 
         async function subirArchivoStorage(file, carpeta) {
-            const ext = ((file.name.split('.').pop() || 'bin').toLowerCase()).replace(/[^a-z0-9]/g, '') || 'bin';
+            const ext = ((file.name.split(".").pop() || "bin").toLowerCase())
+                .replace(/[^a-z0-9]/g, "") || "bin";
+
             const ruta = `${carpeta}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
             const { error } = await db.storage.from(BUCKET).upload(ruta, file, {
                 cacheControl: "3600",
                 upsert: false,
                 contentType: file.type || undefined
             });
+
             if (error) throw error;
             const { data } = db.storage.from(BUCKET).getPublicUrl(ruta);
             return data.publicUrl;
@@ -348,10 +320,9 @@
             return base + (m ? "." + m[1] : "");
         }
 
-        /* ---------- Arranque ---------- */
         document.addEventListener("DOMContentLoaded", async () => {
             limpiarFormulariosAuth();
-            navegarAPantalla('pantallaInicio');
+            navegarAPantalla("pantallaInicio");
             aplicarAjustes();
 
             if (!configurado) {
@@ -366,7 +337,6 @@
             await cargarTodo();
             suscribirseTiempoReal();
 
-            // Respaldo: si el tiempo real se corta, se actualiza solo cada 45 s y al volver a la pestaña
             setInterval(cargarTodo, 45000);
             document.addEventListener("visibilitychange", () => {
                 if (!document.hidden) cargarTodo();
@@ -376,6 +346,7 @@
         async function restaurarSesion() {
             const { data } = await db.auth.getSession();
             const sesion = data && data.session;
+
             if (sesion && (sesion.user.email || "").toLowerCase() === OWNER_EMAIL.toLowerCase()) {
                 esPropietario = true;
                 usuarioActual = "Jhon Benitrez";
@@ -383,10 +354,10 @@
                 const guardada = JSON.parse(localStorage.getItem(SESSION_KEY) || "null");
                 if (guardada && !guardada.esAdmin) usuarioActual = guardada.nombre;
             }
+
             actualizarInterfazUsuario();
         }
 
-        /* ---------- Carga de datos compartidos ---------- */
         async function cargarAjustes() {
             const { data, error } = await db.from("ajustes").select("clave, valor");
             if (error) return console.error(error);
@@ -396,13 +367,18 @@
         }
 
         async function cargarTareas() {
-            const { data, error } = await db.from("tareas").select("*").order("creado_en", { ascending: true });
+            const { data, error } = await db.from("tareas")
+                .select("*")
+                .order("creado_en", { ascending: true });
+
             if (error) return console.error(error);
             tareasPorClave = {};
+
             data.forEach(t => {
                 if (!tareasPorClave[t.clave]) tareasPorClave[t.clave] = [];
                 tareasPorClave[t.clave].push(t);
             });
+
             renderizarUnidad();
         }
 
@@ -415,27 +391,45 @@
         }
 
         async function cargarComentarios() {
-            const { data, error } = await db.from("comentarios").select("*").order("creado_en", { ascending: false });
+            const { data, error } = await db.from("comentarios")
+                .select("*")
+                .order("creado_en", { ascending: false });
+
             if (error) return console.error(error);
             comentarios = data;
             renderizarComentarios();
         }
 
         async function cargarTodo() {
-            await Promise.all([cargarAjustes(), cargarTareas(), cargarTemas(), cargarComentarios()]);
+            await Promise.all([
+                cargarAjustes(),
+                cargarTareas(),
+                cargarTemas(),
+                cargarComentarios()
+            ]);
         }
 
         function suscribirseTiempoReal() {
-            const avisar = () => { if (!esPropietario) toast("🔄 El propietario actualizó el contenido"); };
+            const avisar = () => {
+                if (!esPropietario) toast("🔄 El propietario actualizó el contenido");
+            };
+
             db.channel("portafolio-cambios")
-                .on("postgres_changes", { event: "*", schema: "public", table: "ajustes" }, () => { cargarAjustes(); avisar(); })
-                .on("postgres_changes", { event: "*", schema: "public", table: "tareas" }, () => { cargarTareas(); avisar(); })
-                .on("postgres_changes", { event: "*", schema: "public", table: "temas" }, () => { cargarTemas(); avisar(); })
-                .on("postgres_changes", { event: "*", schema: "public", table: "comentarios" }, () => cargarComentarios())
+                .on("postgres_changes", { event: "*", schema: "public", table: "ajustes" }, () => {
+                    cargarAjustes(); avisar();
+                })
+                .on("postgres_changes", { event: "*", schema: "public", table: "tareas" }, () => {
+                    cargarTareas(); avisar();
+                })
+                .on("postgres_changes", { event: "*", schema: "public", table: "temas" }, () => {
+                    cargarTemas(); avisar();
+                })
+                .on("postgres_changes", { event: "*", schema: "public", table: "comentarios" }, () => {
+                    cargarComentarios();
+                })
                 .subscribe();
         }
 
-        /* ---------- Imágenes (logo y foto de perfil) ---------- */
         function aplicarAjustes() {
             const foto = ajustes.foto_perfil || AVATAR_POR_DEFECTO;
             const logo = ajustes.logo || LOGO_POR_DEFECTO;
@@ -447,26 +441,27 @@
         async function subirImagenAjuste(event, clave, carpeta) {
             const archivo = event.target.files[0];
             event.target.value = "";
-            if (!archivo) return;
-            if (!esPropietario || !requiereConfig()) return;
 
-            if (!archivo.type.startsWith("image/")) return alert("Selecciona un archivo de imagen.");
-            if (archivo.size > 5 * 1024 * 1024) return alert("La imagen pesa más de 5 MB. Elige una más liviana.");
+            if (!archivo || !esPropietario || !requiereConfig()) return;
+            if (!archivo.type.startsWith("image/")) return alert("Selecciona una imagen.");
+            if (archivo.size > 5 * 1024 * 1024) return alert("La imagen pesa más de 5 MB.");
 
             toast("⏳ Subiendo imagen...");
+
             try {
                 const urlAnterior = ajustes[clave];
                 const url = await subirArchivoStorage(archivo, carpeta);
 
                 const { error } = await db.from("ajustes").upsert({
-                    clave: clave,
+                    clave,
                     valor: url,
                     updated_at: new Date().toISOString()
                 });
-                if (error) throw error;
 
+                if (error) throw error;
                 ajustes[clave] = url;
                 aplicarAjustes();
+
                 if (urlAnterior) borrarArchivoStorage(urlAnterior);
                 toast("✅ Imagen guardada para todos los visitantes");
             } catch (err) {
@@ -475,7 +470,6 @@
             }
         }
 
-        /* ---------- Autenticación ---------- */
         function abrirModalAuth() {
             limpiarFormulariosAuth();
             document.getElementById("modalAuthScreen").style.display = "flex";
@@ -486,12 +480,13 @@
         }
 
         function togglePasswordVisibility(inputId, btn) {
-            const passInput = document.getElementById(inputId);
-            if (passInput.type === "password") {
-                passInput.type = "text";
+            const input = document.getElementById(inputId);
+
+            if (input.type === "password") {
+                input.type = "text";
                 btn.innerText = "🙈";
             } else {
-                passInput.type = "password";
+                input.type = "password";
                 btn.innerText = "👁️";
             }
         }
@@ -502,33 +497,45 @@
         }
 
         function navegarAPantalla(idPantalla) {
-            document.querySelectorAll(".pantalla-seccion").forEach(sec => sec.classList.add("contenido-oculto"));
+            document.querySelectorAll(".pantalla-seccion").forEach(sec => {
+                sec.classList.add("contenido-oculto");
+            });
+
             document.getElementById(idPantalla).classList.remove("contenido-oculto");
+            document.querySelectorAll(".nav-screen-btn").forEach(btn => {
+                btn.classList.remove("active");
+            });
 
-            document.querySelectorAll(".nav-screen-btn").forEach(btn => btn.classList.remove("active"));
-
-            if (idPantalla === 'pantallaInicio') document.querySelectorAll(".nav-screen-btn")[0]?.classList.add("active");
-            if (idPantalla === 'pantallaCursos') document.querySelectorAll(".nav-screen-btn")[1]?.classList.add("active");
-            if (idPantalla === 'pantallaFeedback') document.querySelectorAll(".nav-screen-btn")[2]?.classList.add("active");
+            if (idPantalla === "pantallaInicio") {
+                document.querySelectorAll(".nav-screen-btn")[0]?.classList.add("active");
+            }
+            if (idPantalla === "pantallaCursos") {
+                document.querySelectorAll(".nav-screen-btn")[1]?.classList.add("active");
+            }
+            if (idPantalla === "pantallaFeedback") {
+                document.querySelectorAll(".nav-screen-btn")[2]?.classList.add("active");
+            }
         }
 
         function mostrarTabAuth(tab) {
             limpiarFormulariosAuth();
-            if (tab === 'login') {
-                document.getElementById('formLogin').classList.remove('contenido-oculto');
-                document.getElementById('formRegister').classList.add('contenido-oculto');
-                document.getElementById('tabLoginBtn').classList.add('active');
-                document.getElementById('tabRegisterBtn').classList.remove('active');
+
+            if (tab === "login") {
+                document.getElementById("formLogin").classList.remove("contenido-oculto");
+                document.getElementById("formRegister").classList.add("contenido-oculto");
+                document.getElementById("tabLoginBtn").classList.add("active");
+                document.getElementById("tabRegisterBtn").classList.remove("active");
             } else {
-                document.getElementById('formLogin').classList.add('contenido-oculto');
-                document.getElementById('formRegister').classList.remove('contenido-oculto');
-                document.getElementById('tabRegisterBtn').classList.add('active');
-                document.getElementById('tabLoginBtn').classList.remove('active');
+                document.getElementById("formLogin").classList.add("contenido-oculto");
+                document.getElementById("formRegister").classList.remove("contenido-oculto");
+                document.getElementById("tabRegisterBtn").classList.add("active");
+                document.getElementById("tabLoginBtn").classList.remove("active");
             }
         }
 
         async function procesarLogin(e) {
             e.preventDefault();
+
             const nombreEscrito = document.getElementById("loginUsuario").value.trim();
             const pass = document.getElementById("loginPass").value;
 
@@ -538,9 +545,13 @@
 
                 const btn = document.getElementById("btnLoginSubmit");
                 btn.disabled = true;
-                const { error } = await db.auth.signInWithPassword({ email: OWNER_EMAIL, password: pass });
-                btn.disabled = false;
 
+                const { error } = await db.auth.signInWithPassword({
+                    email: OWNER_EMAIL,
+                    password: pass
+                });
+
+                btn.disabled = false;
                 if (error) return alert("Contraseña incorrecta.");
 
                 esPropietario = true;
@@ -549,7 +560,10 @@
             } else {
                 esPropietario = false;
                 usuarioActual = nombreEscrito;
-                localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre: usuarioActual, esAdmin: false }));
+                localStorage.setItem(SESSION_KEY, JSON.stringify({
+                    nombre: usuarioActual,
+                    esAdmin: false
+                }));
             }
 
             limpiarFormulariosAuth();
@@ -567,7 +581,10 @@
 
             esPropietario = false;
             usuarioActual = nombre;
-            localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre: usuarioActual, esAdmin: false }));
+            localStorage.setItem(SESSION_KEY, JSON.stringify({
+                nombre: usuarioActual,
+                esAdmin: false
+            }));
 
             limpiarFormulariosAuth();
             cerrarModalAuth();
@@ -576,19 +593,21 @@
 
         async function cerrarSesion() {
             if (db) await db.auth.signOut();
+
             localStorage.removeItem(SESSION_KEY);
             usuarioActual = "Invitado";
             esPropietario = false;
             limpiarFormulariosAuth();
             actualizarInterfazUsuario();
-            navegarAPantalla('pantallaInicio');
+            navegarAPantalla("pantallaInicio");
         }
 
         function actualizarInterfazUsuario() {
             document.getElementById("userNameDisplay").innerText = usuarioActual;
-            document.getElementById("saludoBienvenida").innerText = usuarioActual === "Invitado"
-                ? "👋 ¡Bienvenido/a a mi Portafolio!"
-                : `👋 ¡Hola, ${usuarioActual}! Bienvenid@ a mi Portafolio`;
+            document.getElementById("saludoBienvenida").innerText =
+                usuarioActual === "Invitado"
+                    ? "👋 ¡Bienvenido/a a mi Portafolio!"
+                    : `👋 ¡Hola, ${usuarioActual}! Bienvenid@ a mi Portafolio`;
 
             const badge = document.getElementById("userRoleBadge");
             const btnLogin = document.getElementById("btnAbrirLoginNav");
@@ -623,34 +642,47 @@
             renderizarComentarios();
         }
 
-        /* ---------- Cursos y unidades ---------- */
         function cambiarCurso(idCurso, ev) {
             cursoActual = idCurso;
             document.getElementById("tituloCurso").innerText = nombresCursos[idCurso];
-            document.querySelectorAll(".course-tab-btn").forEach(btn => btn.classList.remove("active"));
+
+            document.querySelectorAll(".course-tab-btn").forEach(btn => {
+                btn.classList.remove("active");
+            });
+
             if (ev) ev.target.classList.add("active");
             mostrarUnidad(1);
         }
 
         function mostrarUnidad(numUnidad) {
             unidadActual = numUnidad;
+
             document.querySelectorAll(".pill-btn").forEach((btn, index) => {
                 btn.classList.toggle("active", index + 1 === numUnidad);
             });
+
             renderizarUnidad();
+        }
+
+        /* DESCRIPCIÓN AUTOMÁTICA SIN CAMBIAR LA BASE DE DATOS */
+        function descripcionAutomatica(task, tema) {
+            const titulo = String(task.nombre || "").trim();
+            const contexto = tema ? `, correspondiente al tema «${tema}»` : "";
+            const clase = task.tipo === "archivo" ? "Archivo" : "Enlace";
+
+            return `${clase} de la actividad «${titulo}»${contexto}. Ábrelo para revisar el contenido completo.`;
         }
 
         function renderizarUnidad() {
             const container = document.getElementById("semanasContainer");
             if (!container) return;
-            container.innerHTML = "";
 
+            container.innerHTML = "";
             const semanaInicio = (unidadActual - 1) * 4 + 1;
 
             for (let i = 0; i < 4; i++) {
                 const numSemana = semanaInicio + i;
                 const keyTarea = `${cursoActual}_U${unidadActual}_S${numSemana}`;
-
                 const tituloClase = temasPorClave[keyTarea] || "";
                 const tareas = tareasPorClave[keyTarea] || [];
 
@@ -659,34 +691,69 @@
 
                 let html = `
                     <div class="semana-card-header">
+                        <div class="semana-image" aria-hidden="true">
+                            <span>0${i + 1}</span>
+                        </div>
                         <div class="semana-title">Semana ${numSemana}</div>
-                        ${tituloClase ? `<div class="clase-tema">📘 ${esc(tituloClase)}</div>` : `<div class="clase-tema-vacio">Sin tema asignado</div>`}
-                        ${esPropietario ? `<button class="btn-xs-edit" onclick="editarTituloClase('${keyTarea}')">✏️ Tema</button>` : ''}
+                        ${
+                            tituloClase
+                                ? `<div class="clase-tema">📘 ${esc(tituloClase)}</div>`
+                                : `<div class="clase-tema-vacio">Sin tema asignado</div>`
+                        }
+                        ${
+                            esPropietario
+                                ? `<button class="btn-xs-edit" onclick="editarTituloClase('${keyTarea}')">✏️ Tema</button>`
+                                : ""
+                        }
                     </div>
                     <div class="semana-card-body">
                 `;
 
                 if (tareas.length > 0) {
-                    html += `<div class="task-count-tag">✔ ${tareas.length} Tarea(s) disponible(s)</div><div class="task-items-list">`;
+                    html += `
+                        <div class="task-count-tag">✔ ${tareas.length} Tarea(s) disponible(s)</div>
+                        <div class="task-items-list">
+                    `;
 
                     tareas.forEach(task => {
-                        const esArchivo = task.tipo === 'archivo';
+                        const esArchivo = task.tipo === "archivo";
                         const urlDescarga = esArchivo
                             ? `${task.url}?download=${encodeURIComponent(nombreDescarga(task))}`
                             : "";
 
                         html += `
                             <div class="task-row-item">
-                                <span class="task-row-title">${esArchivo ? '📄' : '🔗'} <strong>${esc(task.nombre)}</strong></span>
+                                <span class="task-row-title">
+                                    ${esArchivo ? "📄" : "🔗"}
+                                    <strong>${esc(task.nombre)}</strong>
+                                </span>
+
+                                <p class="task-row-description">
+                                    ${esc(descripcionAutomatica(task, tituloClase))}
+                                </p>
 
                                 <div class="task-action-buttons-group">
-                                    <a href="${esc(task.url)}" target="_blank" rel="noopener noreferrer" class="btn-task-open">👁️ Ver / Abrir</a>
-                                    ${esArchivo ? `<a href="${esc(urlDescarga)}" class="btn-task-download">📥 Descargar</a>` : ''}
+                                    <a href="${esc(task.url)}"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="btn-task-open">👁️ Ver / Abrir</a>
 
-                                    ${esPropietario ? `
-                                        <button class="btn-action-edit" onclick="abrirModalEditarTarea('${keyTarea}','${task.id}')">✏️</button>
-                                        <button class="btn-action-del" onclick="eliminarTareaPropietario('${keyTarea}','${task.id}')">🗑️</button>
-                                    ` : ''}
+                                    ${
+                                        esArchivo
+                                            ? `<a href="${esc(urlDescarga)}" class="btn-task-download">📥 Descargar</a>`
+                                            : ""
+                                    }
+
+                                    ${
+                                        esPropietario
+                                            ? `
+                                                <button class="btn-action-edit"
+                                                    onclick="abrirModalEditarTarea('${keyTarea}','${task.id}')">✏️</button>
+                                                <button class="btn-action-del"
+                                                    onclick="eliminarTareaPropietario('${keyTarea}','${task.id}')">🗑️</button>
+                                              `
+                                            : ""
+                                    }
                                 </div>
                             </div>
                         `;
@@ -698,7 +765,12 @@
                 }
 
                 if (esPropietario) {
-                    html += `<button class="btn-add-task-propietario" onclick="abrirModalSubirTarea('${keyTarea}')">➕ Agregar Tarea Nueva</button>`;
+                    html += `
+                        <button class="btn-add-task-propietario"
+                            onclick="abrirModalSubirTarea('${keyTarea}')">
+                            ➕ Agregar Tarea Nueva
+                        </button>
+                    `;
                 }
 
                 html += `</div>`;
@@ -707,7 +779,6 @@
             }
         }
 
-        /* ---------- Tareas (solo propietario) ---------- */
         function abrirModalSubirTarea(keyTarea) {
             document.getElementById("modalKeyTarea").value = keyTarea;
             document.getElementById("modalEditId").value = "";
@@ -730,7 +801,7 @@
             document.getElementById("taskTitulo").value = task.nombre;
             document.getElementById("taskFile").value = "";
             document.getElementById("taskTipo").value = task.tipo;
-            document.getElementById("taskUrl").value = task.tipo === 'enlace' ? task.url : "";
+            document.getElementById("taskUrl").value = task.tipo === "enlace" ? task.url : "";
             cambiarTipoInputTask();
             document.getElementById("modalSubirTarea").style.display = "flex";
         }
@@ -741,8 +812,8 @@
 
         function cambiarTipoInputTask() {
             const tipo = document.getElementById("taskTipo").value;
-            document.getElementById("boxTaskFile").classList.toggle("contenido-oculto", tipo !== 'archivo');
-            document.getElementById("boxTaskUrl").classList.toggle("contenido-oculto", tipo !== 'enlace');
+            document.getElementById("boxTaskFile").classList.toggle("contenido-oculto", tipo !== "archivo");
+            document.getElementById("boxTaskUrl").classList.toggle("contenido-oculto", tipo !== "enlace");
         }
 
         async function guardarNuevaTareaPropietario(e) {
@@ -753,7 +824,9 @@
             const editId = document.getElementById("modalEditId").value;
             const titulo = document.getElementById("taskTitulo").value.trim();
             const tipo = document.getElementById("taskTipo").value;
-            const existente = editId ? (tareasPorClave[keyTarea] || []).find(t => t.id === editId) : null;
+            const existente = editId
+                ? (tareasPorClave[keyTarea] || []).find(t => t.id === editId)
+                : null;
 
             const payload = { clave: keyTarea, nombre: titulo, tipo: tipo };
             const btn = document.getElementById("btnGuardarTarea");
@@ -762,25 +835,30 @@
                 btn.disabled = true;
                 btn.innerText = "⏳ Guardando...";
 
-                if (tipo === 'enlace') {
+                if (tipo === "enlace") {
                     const url = document.getElementById("taskUrl").value.trim();
                     if (!url) throw new Error("Ingresa el enlace.");
                     payload.url = url;
                 } else {
                     const archivo = document.getElementById("taskFile").files[0];
+
                     if (archivo) {
                         payload.url = await subirArchivoStorage(archivo, "tareas");
-                    } else if (existente && existente.tipo === 'archivo') {
-                        payload.url = existente.url;   // se mantiene el archivo actual
+                    } else if (existente && existente.tipo === "archivo") {
+                        payload.url = existente.url;
                     } else {
                         throw new Error("Por favor selecciona un archivo.");
                     }
                 }
 
                 if (existente) {
-                    const { error } = await db.from("tareas").update(payload).eq("id", existente.id);
+                    const { error } = await db.from("tareas")
+                        .update(payload)
+                        .eq("id", existente.id);
+
                     if (error) throw error;
-                    if (existente.tipo === 'archivo' && existente.url !== payload.url) {
+
+                    if (existente.tipo === "archivo" && existente.url !== payload.url) {
                         borrarArchivoStorage(existente.url);
                     }
                 } else {
@@ -806,20 +884,26 @@
 
             const task = (tareasPorClave[keyTarea] || []).find(t => t.id === id);
             const { error } = await db.from("tareas").delete().eq("id", id);
-            if (error) return alert("No se pudo eliminar: " + error.message);
 
-            if (task && task.tipo === 'archivo') borrarArchivoStorage(task.url);
+            if (error) return alert("No se pudo eliminar: " + error.message);
+            if (task && task.tipo === "archivo") borrarArchivoStorage(task.url);
+
             await cargarTareas();
             toast("🗑️ Tarea eliminada");
         }
 
         async function editarTituloClase(keyTarea) {
             if (!esPropietario || !requiereConfig()) return;
+
             const actual = temasPorClave[keyTarea] || "";
             const nuevo = prompt("Ingresa el tema o título de esta clase:", actual);
             if (nuevo === null) return;
 
-            const { error } = await db.from("temas").upsert({ clave: keyTarea, titulo: nuevo.trim() });
+            const { error } = await db.from("temas").upsert({
+                clave: keyTarea,
+                titulo: nuevo.trim()
+            });
+
             if (error) return alert("No se pudo guardar el tema: " + error.message);
 
             temasPorClave[keyTarea] = nuevo.trim();
@@ -827,7 +911,6 @@
             toast("✅ Tema guardado");
         }
 
-        /* ---------- Sugerencias (visibles para todos) ---------- */
         async function guardarComentario(e) {
             e.preventDefault();
             if (!requiereConfig()) return;
@@ -838,9 +921,13 @@
 
             const btn = document.getElementById("btnEnviarComentario");
             btn.disabled = true;
-            const { error } = await db.from("comentarios").insert({ nombre, mensaje });
-            btn.disabled = false;
 
+            const { error } = await db.from("comentarios").insert({
+                nombre,
+                mensaje
+            });
+
+            btn.disabled = false;
             if (error) return alert("No se pudo enviar la sugerencia: " + error.message);
 
             document.getElementById("feedbackMsg").value = "";
@@ -860,9 +947,20 @@
             list.innerHTML = comentarios.map(c => `
                 <div class="comment-item-vintage">
                     <div class="comment-head">
-                        <p class="c-author">👤 <strong>${esc(c.nombre)}</strong> <span class="c-date">(${new Date(c.creado_en).toLocaleDateString('es-PE')})</span></p>
-                        ${esPropietario ? `<button class="btn-comment-del" onclick="eliminarComentario('${c.id}')" title="Eliminar sugerencia">🗑️</button>` : ''}
+                        <p class="c-author">
+                            👤 <strong>${esc(c.nombre)}</strong>
+                            <span class="c-date">
+                                (${new Date(c.creado_en).toLocaleDateString("es-PE")})
+                            </span>
+                        </p>
+
+                        ${
+                            esPropietario
+                                ? `<button class="btn-comment-del" onclick="eliminarComentario('${c.id}')" title="Eliminar sugerencia">🗑️</button>`
+                                : ""
+                        }
                     </div>
+
                     <p class="c-text">"${esc(c.mensaje)}"</p>
                 </div>
             `).join("");
@@ -871,6 +969,7 @@
         async function eliminarComentario(id) {
             if (!esPropietario || !requiereConfig()) return;
             if (!confirm("¿Eliminar esta sugerencia?")) return;
+
             const { error } = await db.from("comentarios").delete().eq("id", id);
             if (error) return alert("No se pudo eliminar: " + error.message);
             await cargarComentarios();

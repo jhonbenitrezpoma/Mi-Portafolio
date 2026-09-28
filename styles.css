@@ -15,8 +15,10 @@ html { scroll-behavior: smooth; }
 
 body {
     min-height: 100vh;
-    background: radial-gradient(ellipse at 76% 18%, #38405b 0, transparent 33%),
-                radial-gradient(ellipse at 9% 76%, #283c50 0, transparent 35%), var(--night);
+    background:
+        radial-gradient(ellipse at 76% 18%, #38405b 0, transparent 33%),
+        radial-gradient(ellipse at 9% 76%, #283c50 0, transparent 35%),
+        var(--night);
     color: var(--cream);
     font: 400 16px/1.65 'DM Sans', sans-serif;
 }
@@ -24,7 +26,8 @@ body {
 button, input, select { font: inherit; }
 button { cursor: pointer; }
 
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+button:focus-visible, a:focus-visible,
+input:focus-visible, select:focus-visible {
     outline: 3px solid #ffb4c4;
     outline-offset: 3px;
 }
@@ -45,7 +48,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     border-bottom: 3px solid #e9ad41;
 }
 
-/* BARRA SUPERIOR */
+/* BARRA DE NAVEGACIÓN */
 .navbar {
     position: relative;
     z-index: 100;
@@ -64,7 +67,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     box-shadow: 0 25px 70px #050d1880;
 }
 
-.nav-left-zone, .logo-container, .nav-screens, .user-info {
+.nav-left-zone, .logo-container,
+.nav-screens, .user-info {
     display: flex;
     align-items: center;
     gap: .7rem;
@@ -78,7 +82,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     width: 49px;
     object-fit: contain;
     padding: 4px;
-    background: #fff;
+    background: white;
     border-radius: 50%;
 }
 
@@ -120,7 +124,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     border-bottom: 2px solid transparent;
 }
 
-.nav-screen-btn:hover, .nav-screen-btn.active {
+.nav-screen-btn:hover,
+.nav-screen-btn.active {
     color: white;
     border-color: var(--coral);
 }
@@ -138,10 +143,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     transition: transform .2s, background .2s;
 }
 
-.btn-login-left {
-    font-size: .71rem;
-    max-width: 170px;
-}
+.btn-login-left { font-size: .71rem; max-width: 170px; }
 
 .btn-login-left:hover, .btn-vintage-gold:hover {
     background: #d83b61;
@@ -189,7 +191,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .vintage-presentation-bg {
     position: relative;
     isolation: isolate;
-    padding: 6rem max(4%, 32px) 5rem;
+    padding: 6rem max(4%,32px) 5rem;
     display: flex;
     align-items: center;
     background:
@@ -200,13 +202,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
         #27364d;
 }
 
-.vintage-presentation-bg:after {
+.vintage-presentation-bg::after {
     content: '日本';
     position: absolute;
     z-index: -1;
     right: 5%;
     bottom: 5%;
-    font-size: clamp(6rem, 16vw, 15rem);
+    font-size: clamp(6rem,16vw,15rem);
     font-weight: 800;
     color: #fff1;
     line-height: 1;
@@ -229,7 +231,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     text-transform: uppercase;
 }
 
-.vintage-badge-top:before {
+.vintage-badge-top::before {
     content: '';
     display: inline-block;
     width: 35px;
@@ -241,7 +243,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .vintage-hero-grid {
     display: flex;
     align-items: stretch;
-    gap: clamp(1.5rem, 4vw, 4rem);
+    gap: clamp(1.5rem,4vw,4rem);
     max-width: 1050px;
 }
 
@@ -304,7 +306,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     font-family: 'Barlow Condensed', sans-serif;
     color: white;
     text-transform: uppercase;
-    font-size: clamp(3.5rem, 8vw, 7.4rem);
+    font-size: clamp(3.5rem,8vw,7.4rem);
     line-height: .87;
     letter-spacing: .04em;
     margin: .2rem 0 1.5rem;
@@ -324,7 +326,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 .vintage-boxes-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2,minmax(0,1fr));
     gap: 1rem;
     margin-bottom: 1.6rem;
 }
@@ -341,61 +343,136 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .v-box-burgundy { border-top-color: #e6b892; }
 .v-box h4 { color: white; font-size: .92rem; margin-bottom: .3rem; }
 .v-box p { color: #d2deea; font-size: .82rem; line-height: 1.55; }
-.vintage-info-card > .btn-vintage-gold { width: auto; min-width: 190px; }
 
-/* CURSOS Y TAREAS */
-.cursos-bg, .feedback-bg {
-    padding: 4rem max(4%, 24px) 5rem;
-    background: linear-gradient(155deg, #17273a, #101d2e);
+/* CURSOS: FONDO JAPONÉS */
+.cursos-bg {
+    position: relative;
+    isolation: isolate;
+    padding: 4rem max(4%,24px) 5rem;
+    background:
+        linear-gradient(180deg,#102037d9 0%,#142337ed 53%,#101b2c 100%),
+        url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1800&q=85')
+        center top / cover fixed,
+        #142337;
+}
+
+.cursos-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle at 83% 18%,#ec54743a,transparent 32%);
 }
 
 .cursos-main-container { max-width: 1220px; margin: auto; }
 
-.courses-selector-bar, .unidades-pills {
+.courses-selector-bar {
     display: flex;
-    gap: .75rem;
+    justify-content: center;
+    gap: 1.1rem;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-.course-tab-btn, .pill-btn {
+.course-tab-btn {
     border: 1px solid var(--line);
-    background: #253750;
-    color: #dce5ed;
     border-radius: 30px;
-    padding: .7rem 1.2rem;
+    padding: .85rem 1.5rem;
+    background: #142235c9;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 24px #09132355;
+    color: #dce5ed;
     font-size: .83rem;
     font-weight: 700;
-    transition: background .2s;
 }
 
-.course-tab-btn:hover, .course-tab-btn.active,
-.pill-btn:hover, .pill-btn.active {
+.course-tab-btn:hover, .course-tab-btn.active {
     background: var(--coral);
-    color: white;
     border-color: var(--coral);
+    color: white;
 }
 
 .course-header-banner {
-    padding: 1.7rem 2rem;
-    margin-bottom: 1.5rem;
-    background: #23344b;
+    background: #101d2dd1;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
     border-left: 4px solid var(--coral);
     border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .course-header-banner h2 {
-    font: 700 clamp(1.8rem, 4vw, 2.5rem)/1.1 'Barlow Condensed', sans-serif;
+    font: 700 clamp(1.8rem,4vw,2.5rem)/1.1 'Barlow Condensed',sans-serif;
     letter-spacing: .06em;
     text-transform: uppercase;
 }
 
 .course-header-banner p { color: var(--muted); font-size: .92rem; }
 
+/* BURBUJAS DE LAS CUATRO UNIDADES */
+.unidades-pills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(.7rem,3vw,2.5rem);
+    margin: 2.4rem 0 3rem;
+}
+
+.pill-btn {
+    position: relative;
+    display: grid;
+    place-items: end center;
+    flex: none;
+    width: clamp(112px,15vw,176px);
+    height: clamp(112px,15vw,176px);
+    padding: 0 1rem 1.2rem;
+    border-radius: 50%;
+    border: 2px dashed #e7d5cdba;
+    background:
+        linear-gradient(0deg,#101e31e8,#16253a40 62%),
+        url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=420&q=75')
+        center / cover;
+    color: white;
+    box-shadow: 0 0 0 6px #14263ad9, 0 16px 30px #08152299;
+    text-shadow: 0 2px 5px #09121a;
+    font: 800 clamp(1.05rem,2vw,1.55rem)/1 'Barlow Condensed',sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.pill-btn:nth-child(2) {
+    background-image:
+        linear-gradient(0deg,#101e31e8,#16253a40 62%),
+        url('https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=420&q=75');
+}
+
+.pill-btn:nth-child(3) {
+    background-image:
+        linear-gradient(0deg,#101e31e8,#16253a40 62%),
+        url('https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=420&q=75');
+}
+
+.pill-btn:nth-child(4) {
+    background-image:
+        linear-gradient(0deg,#101e31e8,#16253a40 62%),
+        url('https://images.unsplash.com/photo-1493780474015-ba834fd0ce2f?w=420&q=75');
+}
+
+.pill-btn:hover, .pill-btn.active {
+    transform: translateY(-8px) scale(1.04);
+    border-color: #ffabbc;
+    box-shadow: 0 0 0 7px #ec54746b, 0 18px 32px #07101caa;
+}
+
+/* TARJETAS SEMANALES CON IMAGEN */
 .semanas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-    gap: 1.3rem;
+    grid-template-columns: repeat(auto-fit,minmax(min(100%,250px),1fr));
+    align-items: stretch;
+    gap: 1.5rem;
 }
 
 .semana-card-vintage {
@@ -403,22 +480,67 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     flex-direction: column;
     justify-content: space-between;
     min-height: 255px;
-    padding: 1.5rem;
-    background: #23344b;
-    border: 1px solid var(--line);
+    overflow: hidden;
+    padding: 0;
+    background: #172a40e8;
+    backdrop-filter: blur(7px);
+    border: 1px solid #ffffff30;
     border-radius: 12px;
-    box-shadow: 0 10px 25px #07132240;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.semana-card-vintage:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 32px #08132099;
 }
 
 .semana-card-header {
+    padding: 0 1.25rem 1rem;
     border-bottom: 1px solid var(--line);
-    padding-bottom: .85rem;
-    margin-bottom: 1rem;
+}
+
+.semana-image {
+    height: 145px;
+    margin: 0 -1.25rem 1.1rem;
+    position: relative;
+    background:
+        linear-gradient(0deg,#15243da8,transparent 70%),
+        url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80')
+        center / cover;
+}
+
+.semana-card-vintage:nth-child(2) .semana-image {
+    background-image:
+        linear-gradient(0deg,#15243da8,transparent 70%),
+        url('https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=600&q=80');
+}
+
+.semana-card-vintage:nth-child(3) .semana-image {
+    background-image:
+        linear-gradient(0deg,#15243da8,transparent 70%),
+        url('https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=600&q=80');
+}
+
+.semana-card-vintage:nth-child(4) .semana-image {
+    background-image:
+        linear-gradient(0deg,#15243da8,transparent 70%),
+        url('https://images.unsplash.com/photo-1493780474015-ba834fd0ce2f?w=600&q=80');
+}
+
+.semana-image span {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    padding: .15rem .55rem;
+    border-radius: 20px;
+    background: #ec5474e8;
+    color: white;
+    font: 800 1.15rem 'Barlow Condensed',sans-serif;
 }
 
 .semana-title {
     color: #ff9cb0;
-    font: 700 1.35rem 'Barlow Condensed', sans-serif;
+    font: 700 1.35rem 'Barlow Condensed',sans-serif;
     text-transform: uppercase;
     letter-spacing: .08em;
 }
@@ -439,6 +561,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     border-radius: 5px;
     font-size: .74rem;
 }
+
+.semana-card-body { padding: 1.1rem 1.25rem 1.25rem; }
 
 .task-count-tag {
     color: #a9e8c5;
@@ -466,13 +590,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 .task-row-title { font-size: .9rem; overflow-wrap: anywhere; }
 
+.task-row-description {
+    font-size: .78rem;
+    line-height: 1.5;
+    color: #bfd0de;
+    overflow-wrap: anywhere;
+}
+
 .task-action-buttons-group {
     display: flex;
     gap: .45rem;
     flex-wrap: wrap;
 }
 
-.btn-task-open, .btn-task-download, .btn-action-edit, .btn-action-del {
+.btn-task-open, .btn-task-download,
+.btn-action-edit, .btn-action-del {
     display: inline-block;
     border: 0;
     border-radius: 5px;
@@ -500,10 +632,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 
 /* SUGERENCIAS */
+.feedback-bg {
+    padding: 4rem max(4%,24px) 5rem;
+    background: linear-gradient(155deg,#17273a,#101d2e);
+}
+
 .feedback-card-vintage {
     max-width: 1000px;
     margin: auto;
-    padding: clamp(1.4rem, 4vw, 3rem);
+    padding: clamp(1.4rem,4vw,3rem);
     background: #23344b;
     border: 1px solid var(--line);
     border-radius: 14px;
@@ -511,7 +648,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .feedback-card-vintage h3 {
-    font: 700 2.4rem 'Barlow Condensed', sans-serif;
+    font: 700 2.4rem 'Barlow Condensed',sans-serif;
     letter-spacing: .06em;
     text-transform: uppercase;
 }
@@ -529,7 +666,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     margin-bottom: 1.7rem;
 }
 
-.feedback-form input, .form-group-vintage input, .form-group-vintage select {
+.feedback-form input,
+.form-group-vintage input,
+.form-group-vintage select {
     background: #142438;
     color: white;
     border: 1px solid #54708b;
@@ -537,9 +676,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     padding: .75rem;
 }
 
-.feedback-form input::placeholder, .form-group-vintage input::placeholder {
-    color: #a3b5c6;
-}
+.feedback-form input::placeholder,
+.form-group-vintage input::placeholder { color: #a3b5c6; }
 
 .feedback-form input[type=text]:first-child { width: 220px; }
 .feedback-form input[type=text]:nth-child(2) { flex: 1; min-width: 220px; }
@@ -585,7 +723,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     margin-top: .4rem;
 }
 
-/* VENTANAS EMERGENTES */
+/* MODALES */
 .modal {
     display: none;
     position: fixed;
@@ -653,8 +791,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     font-size: .83rem;
 }
 
-.form-group-vintage input, .form-group-vintage select { width: 100%; }
-.password-input-wrapper { display: flex; align-items: center; position: relative; }
+.form-group-vintage input,
+.form-group-vintage select { width: 100%; }
+
+.password-input-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
 .password-input-wrapper input { padding-right: 2.8rem; }
 
 .btn-toggle-password {
@@ -669,7 +814,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     position: fixed;
     bottom: 1.5rem;
     left: 50%;
-    transform: translate(-50%, 20px);
+    transform: translate(-50%,20px);
     z-index: 2000;
     max-width: 90vw;
     padding: .75rem 1.3rem;
@@ -686,10 +831,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     transition: opacity .3s, transform .3s;
 }
 
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%,0);
+}
+
 .contenido-oculto { display: none !important; }
 
-/* CELULARES Y TABLETAS */
+/* ADAPTACIÓN A CELULARES */
 @media (max-width: 1000px) {
     .navbar { margin: 15px 15px 0; }
     .pantalla-seccion { margin: 0 15px; }
@@ -702,7 +851,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     .nav-left-zone { order: 3; }
     .user-info { order: 4; }
     .logo-container { width: 100%; }
-    .nav-screens { justify-content: flex-start; overflow-x: auto; white-space: nowrap; }
+    .nav-screens {
+        justify-content: flex-start;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 
     .vintage-presentation-bg {
         padding: 3rem 1.3rem;
@@ -725,9 +878,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     .vintage-frame { margin: 0; }
     .avatar-vintage { width: 86px; height: 86px; }
     .btn-change-photo { font-size: .64rem; }
-    .vintage-info-card h2 { font-size: clamp(3.6rem, 17vw, 6rem); }
+    .vintage-info-card h2 { font-size: clamp(3.6rem,17vw,6rem); }
     .vintage-boxes-container { grid-template-columns: 1fr; }
-    .cursos-bg, .feedback-bg { padding: 2rem 1rem; }
+
+    .cursos-bg {
+        padding: 2rem 1rem;
+        background-attachment: scroll;
+    }
+
+    .feedback-bg { padding: 2rem 1rem; }
+
+    .unidades-pills {
+        gap: 1rem;
+        margin: 1.8rem 0 2.3rem;
+    }
+
+    .pill-btn {
+        width: clamp(110px,39vw,160px);
+        height: clamp(110px,39vw,160px);
+    }
+
+    .courses-selector-bar { justify-content: stretch; }
+    .course-tab-btn { flex: 1; }
 
     .feedback-form input[type=text]:first-child,
     .feedback-form input[type=text]:nth-child(2),
@@ -738,7 +910,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *, *:before, *:after {
+    *, *::before, *::after {
         scroll-behavior: auto !important;
         transition: none !important;
     }

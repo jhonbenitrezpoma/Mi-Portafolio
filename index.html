@@ -3,1936 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>UPLA Portafolio | Jhon Benitrez Poma</title>
-
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Supabase -->
+    <title>Jhon Benitrez | Portafolio Académico</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-
-<!-- =========================================================
-     ENCABEZADO
-========================================================= -->
-
-<header class="header">
-
-    <div class="header-left">
-
-        <div class="logo-box">
-            <span>✦</span>
-        </div>
-
-        <div>
-            <h1>UPLA PORTAFOLIO</h1>
-            <p>Ingeniería de Sistemas</p>
-        </div>
-
+    <!-- Fondo Animado / Estética Crepúsculo Japonés -->
+    <div class="sky-background">
+        <div class="sun-glow"></div>
+        <div class="mountains-silhouette"></div>
     </div>
 
-    <nav class="nav">
-
-        <button onclick="mostrarSeccion('inicio')">
-            Inicio
-        </button>
-
-        <button onclick="mostrarSeccion('cursos')">
-            Cursos
-        </button>
-
-        <button onclick="mostrarSeccion('comentarios')">
-            Comentarios
-        </button>
-
-        <button onclick="abrirLogin()" id="btnLogin">
-            Iniciar sesión
-        </button>
-
-        <button onclick="cerrarSesion()" id="btnLogout" class="hidden">
-            Cerrar sesión
-        </button>
-
-    </nav>
-
-</header>
-
-
-<!-- =========================================================
-     CONTENIDO PRINCIPAL
-========================================================= -->
-
-<main>
-
-<!-- =========================================================
-     INICIO
-========================================================= -->
-
-<section id="inicio" class="section active">
-
-    <div class="hero">
-
-        <div class="hero-text">
-
-            <span class="tag">
-                PORTAFOLIO ACADÉMICO
-            </span>
-
-            <h2>
-                Jhon Benitrez Poma
-            </h2>
-
-            <h3>
-                Ingeniería de Sistemas
-            </h3>
-
-            <p>
-                Bienvenido a mi portafolio académico de la
-                Universidad Peruana Los Andes.
-            </p>
-
-            <p>
-                Aquí se presentan mis cursos, unidades,
-                actividades y trabajos desarrollados durante
-                mi formación profesional.
-            </p>
-
-            <button class="btn-primary"
-                    onclick="mostrarSeccion('cursos')">
-                Ver mis cursos
-            </button>
-
-        </div>
-
-        <div class="profile-card">
-
-            <div class="profile-image">
-                <img id="profileImage"
-                     src="https://via.placeholder.com/300x300.png?text=UPLA"
-                     alt="Perfil">
+    <!-- Barra de Navegación -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo-area">
+                <div class="avatar-container" id="avatarPreviewContainer">
+                    <img id="userAvatarImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar">
+                    <label for="avatarUploadInput" class="upload-overlay" title="Cambiar logo/avatar">
+                        <i class="fa-solid fa-camera"></i>
+                    </label>
+                    <input type="file" id="avatarUploadInput" accept="image/*" style="display: none;">
+                </div>
+                <span class="brand-name" id="profileNameDisplay">Jhon Benitrez</span>
             </div>
-
-            <h3>Jhon Benitrez Poma</h3>
-
-            <p>Ingeniería de Sistemas</p>
-
-            <span class="status">
-                ● Estudiante UPLA
-            </span>
-
+            <nav class="nav-links">
+                <a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a href="#proyectos"><i class="fa-solid fa-code"></i> Proyectos</a>
+                <a href="#tareas"><i class="fa-solid fa-list-check"></i> Tareas</a>
+                <a href="#feedback"><i class="fa-solid fa-comments"></i> Feedback</a>
+            </nav>
+            <div class="nav-actions">
+                <button id="supabaseConfigBtn" class="btn-config" title="Configurar Supabase"><i class="fa-solid fa-database"></i></button>
+            </div>
         </div>
-
-    </div>
-
-
-    <div class="info-grid">
-
-        <div class="info-card">
-            <span class="icon">🎓</span>
-            <h3>Universidad</h3>
-            <p>Universidad Peruana Los Andes</p>
-        </div>
-
-        <div class="info-card">
-            <span class="icon">💻</span>
-            <h3>Carrera</h3>
-            <p>Ingeniería de Sistemas y Computación</p>
-        </div>
-
-        <div class="info-card">
-            <span class="icon">📚</span>
-            <h3>Portafolio</h3>
-            <p>Trabajos y actividades académicas</p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     CURSOS
-========================================================= -->
-
-<section id="cursos" class="section">
-
-    <div class="section-title">
-
-        <span class="tag">
-            FORMACIÓN ACADÉMICA
-        </span>
-
-        <h2>Mis cursos</h2>
-
-        <p>
-            Selecciona un curso para visualizar sus unidades
-            y actividades.
-        </p>
-
-    </div>
-
-
-    <div id="cursosContainer" class="courses-grid">
-
-        <!-- Se cargan desde Supabase -->
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     DETALLE DEL CURSO
-========================================================= -->
-
-<section id="detalleCurso" class="section">
-
-    <button class="back-button"
-            onclick="mostrarSeccion('cursos')">
-        ← Volver a cursos
-    </button>
-
-    <div class="course-header">
-
-        <div>
-
-            <span class="tag">
-                CURSO
-            </span>
-
-            <h2 id="nombreCurso">
-                Curso
-            </h2>
-
-            <p id="descripcionCurso">
-                Descripción del curso
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- UNIDADES -->
-
-    <div class="units">
-
-        <button class="unit-button active"
-                onclick="seleccionarUnidad(1)">
-            Unidad 01
-        </button>
-
-        <button class="unit-button"
-                onclick="seleccionarUnidad(2)">
-            Unidad 02
-        </button>
-
-        <button class="unit-button"
-                onclick="seleccionarUnidad(3)">
-            Unidad 03
-        </button>
-
-        <button class="unit-button"
-                onclick="seleccionarUnidad(4)">
-            Unidad 04
-        </button>
-
-    </div>
-
-
-    <div class="tasks-header">
-
-        <div>
-
-            <h2 id="tituloUnidad">
-                Unidad 01
-            </h2>
-
-            <p>
-                Actividades y trabajos de la unidad.
-            </p>
-
-        </div>
-
-        <button class="btn-primary owner-only hidden"
-                onclick="abrirFormularioTarea()">
-            + Agregar tarea
-        </button>
-
-    </div>
-
-
-    <div id="tasksContainer" class="tasks-grid">
-
-        <!-- Tareas -->
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     COMENTARIOS
-========================================================= -->
-
-<section id="comentarios" class="section">
-
-    <div class="section-title">
-
-        <span class="tag">
-            PARTICIPACIÓN
-        </span>
-
-        <h2>Comentarios y sugerencias</h2>
-
-        <p>
-            Puedes dejar un comentario sobre el portafolio.
-        </p>
-
-    </div>
-
-
-    <div class="comment-form">
-
-        <textarea
-            id="comentarioTexto"
-            placeholder="Escribe tu comentario..."
-            rows="5"></textarea>
-
-        <button class="btn-primary"
-                onclick="guardarComentario()">
-            Publicar comentario
-        </button>
-
-    </div>
-
-
-    <div id="comentariosContainer"
-         class="comments-list">
-
-    </div>
-
-</section>
-
-</main>
-
-
-<!-- =========================================================
-     MODAL LOGIN
-========================================================= -->
-
-<div id="loginModal" class="modal hidden">
-
-    <div class="modal-content">
-
-        <button class="close"
-                onclick="cerrarLogin()">
-            ×
-        </button>
-
-        <h2 id="authTitle">
-            Iniciar sesión
-        </h2>
-
-        <p id="authDescription">
-            Ingresa a tu cuenta.
-        </p>
-
-
-        <input
-            type="email"
-            id="email"
-            placeholder="Correo electrónico">
-
-
-        <input
-            type="password"
-            id="password"
-            placeholder="Contraseña">
-
-
-        <button class="btn-primary full"
-                onclick="iniciarSesion()">
-            Iniciar sesión
-        </button>
-
-
-        <button class="btn-secondary full"
-                onclick="registrarse()">
-            Crear cuenta
-        </button>
-
-
-        <p id="authMessage"
-           class="auth-message"></p>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     MODAL TAREA
-========================================================= -->
-
-<div id="taskModal" class="modal hidden">
-
-    <div class="modal-content large">
-
-        <button class="close"
-                onclick="cerrarFormularioTarea()">
-            ×
-        </button>
-
-        <h2 id="taskModalTitle">
-            Nueva tarea
-        </h2>
-
-
-        <input
-            type="hidden"
-            id="taskId">
-
-
-        <label>
-            Título
-        </label>
-
-        <input
-            type="text"
-            id="taskTitle"
-            placeholder="Nombre de la tarea">
-
-
-        <label>
-            Descripción
-        </label>
-
-        <textarea
-            id="taskDescription"
-            rows="5"
-            placeholder="Descripción de la tarea"></textarea>
-
-
-        <label>
-            Enlace
-        </label>
-
-        <input
-            type="url"
-            id="taskUrl"
-            placeholder="https://...">
-
-
-        <label>
-            Unidad
-        </label>
-
-        <select id="taskUnit">
-
-            <option value="1">
-                Unidad 01
-            </option>
-
-            <option value="2">
-                Unidad 02
-            </option>
-
-            <option value="3">
-                Unidad 03
-            </option>
-
-            <option value="4">
-                Unidad 04
-            </option>
-
-        </select>
-
-
-        <button class="btn-primary full"
-                onclick="guardarTarea()">
-            Guardar tarea
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     MODAL IMAGEN
-========================================================= -->
-
-<div id="imageModal" class="modal hidden">
-
-    <div class="modal-content">
-
-        <button class="close"
-                onclick="cerrarImagenModal()">
-            ×
-        </button>
-
-        <h2>Actualizar imagen</h2>
-
-        <input
-            type="file"
-            id="imageFile"
-            accept="image/*">
-
-
-        <button class="btn-primary full"
-                onclick="subirImagen()">
-            Subir imagen
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     NOTIFICACIÓN
-========================================================= -->
-
-<div id="toast"
-     class="toast">
-</div>
-
-
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
-<script>
-
-    /* ========================================================
-       CONFIGURACIÓN SUPABASE
-    ======================================================== */
-
-    const SUPABASE_URL =
-        "TU_SUPABASE_URL";
-
-    const SUPABASE_ANON_KEY =
-        "TU_SUPABASE_ANON_KEY";
-
-
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_ANON_KEY
-        );
-
-
-    /* ========================================================
-       CONFIGURACIÓN DEL PROYECTO
-    ======================================================== */
-
-    const OWNER_EMAIL =
-        "TU_CORREO_DE_PROPIETARIO@gmail.com";
-
-    const BUCKET =
-        "portafolio";
-
-
-    let usuarioActual = null;
-
-    let cursoActual = null;
-
-    let unidadActual = 1;
-
-
-    /* ========================================================
-       INICIO
-    ======================================================== */
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        async function() {
-
-            await comprobarSesion();
-
-            await cargarCursos();
-
-            await cargarComentarios();
-
-            escucharCambios();
-
-        }
-    );
-
-
-    /* ========================================================
-       NAVEGACIÓN
-    ======================================================== */
-
-    function mostrarSeccion(nombre) {
-
-        document
-            .querySelectorAll(".section")
-            .forEach(section => {
-
-                section.classList.remove("active");
-
-            });
-
-
-        const seccion =
-            document.getElementById(nombre);
-
-
-        if (seccion) {
-
-            seccion.classList.add("active");
-
-        }
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }
-
-
-    /* ========================================================
-       LOGIN
-    ======================================================== */
-
-    function abrirLogin() {
-
-        document
-            .getElementById("loginModal")
-            .classList.remove("hidden");
-
-    }
-
-
-    function cerrarLogin() {
-
-        document
-            .getElementById("loginModal")
-            .classList.add("hidden");
-
-    }
-
-
-    async function iniciarSesion() {
-
-        const email =
-            document
-            .getElementById("email")
-            .value
-            .trim();
-
-        const password =
-            document
-            .getElementById("password")
-            .value;
-
-
-        if (!email || !password) {
-
-            mostrarToast(
-                "Completa todos los campos."
-            );
-
-            return;
-
-        }
-
-
-        const { data, error } =
-            await supabaseClient.auth
-            .signInWithPassword({
-
-                email: email,
-
-                password: password
-
-            });
-
-
-        if (error) {
-
-            mostrarToast(
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        usuarioActual =
-            data.user;
-
-
-        cerrarLogin();
-
-        actualizarInterfazUsuario();
-
-        mostrarToast(
-            "Sesión iniciada correctamente."
-        );
-
-    }
-
-
-    async function registrarse() {
-
-        const email =
-            document
-            .getElementById("email")
-            .value
-            .trim();
-
-        const password =
-            document
-            .getElementById("password")
-            .value;
-
-
-        if (!email || !password) {
-
-            mostrarToast(
-                "Completa todos los campos."
-            );
-
-            return;
-
-        }
-
-
-        if (password.length < 6) {
-
-            mostrarToast(
-                "La contraseña debe tener mínimo 6 caracteres."
-            );
-
-            return;
-
-        }
-
-
-        const { error } =
-            await supabaseClient.auth
-            .signUp({
-
-                email: email,
-
-                password: password
-
-            });
-
-
-        if (error) {
-
-            mostrarToast(
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        mostrarToast(
-            "Cuenta creada. Revisa tu correo si Supabase solicita confirmación."
-        );
-
-    }
-
-
-    async function cerrarSesion() {
-
-        await supabaseClient.auth.signOut();
-
-        usuarioActual = null;
-
-        actualizarInterfazUsuario();
-
-        mostrarToast(
-            "Sesión cerrada."
-        );
-
-    }
-
-
-    async function comprobarSesion() {
-
-        const { data } =
-            await supabaseClient.auth
-            .getSession();
-
-
-        usuarioActual =
-            data.session?.user || null;
-
-
-        actualizarInterfazUsuario();
-
-    }
-
-
-    function esPropietario() {
-
-        if (!usuarioActual) {
-
-            return false;
-
-        }
-
-
-        return (
-            usuarioActual.email
-            .toLowerCase()
-            ===
-            OWNER_EMAIL.toLowerCase()
-        );
-
-    }
-
-
-    function actualizarInterfazUsuario() {
-
-        const login =
-            document.getElementById("btnLogin");
-
-        const logout =
-            document.getElementById("btnLogout");
-
-
-        if (usuarioActual) {
-
-            login.classList.add("hidden");
-
-            logout.classList.remove("hidden");
-
-        } else {
-
-            login.classList.remove("hidden");
-
-            logout.classList.add("hidden");
-
-        }
-
-
-        document
-            .querySelectorAll(".owner-only")
-            .forEach(element => {
-
-                if (esPropietario()) {
-
-                    element.classList.remove("hidden");
-
-                } else {
-
-                    element.classList.add("hidden");
-
-                }
-
-            });
-
-    }
-
-
-    /* ========================================================
-       CURSOS
-    ======================================================== */
-
-    async function cargarCursos() {
-
-        const container =
-            document.getElementById(
-                "cursosContainer"
-            );
-
-
-        container.innerHTML =
-            `<div class="loading">
-                Cargando cursos...
-             </div>`;
-
-
-        const { data, error } =
-            await supabaseClient
-            .from("temas")
-            .select("*")
-            .order("id", {
-                ascending: true
-            });
-
-
-        if (error) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    <h3>No se pudieron cargar los cursos</h3>
-                    <p>${error.message}</p>
-                 </div>`;
-
-            return;
-
-        }
-
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    <h3>Aún no hay cursos</h3>
-                    <p>Agrega cursos desde Supabase.</p>
-                 </div>`;
-
-            return;
-
-        }
-
-
-        container.innerHTML = "";
-
-
-        data.forEach(curso => {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "course-card";
-
-
-            card.innerHTML = `
-
-                <div class="course-number">
-                    ${curso.numero || "01"}
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Sección Inicio -->
+        <section id="inicio" class="hero-section">
+            <div class="hero-badge"><i class="fa-solid fa-graduation-cap"></i> Ingeniería de Sistemas y Computación - UPLA</div>
+            <h1>Desarrollo & Innovación Académica</h1>
+            <p>Portafolio personal enfocado en arquitectura de software, automatización de flujos con Power Platform, bases de datos y aplicaciones web modernas.</p>
+            <div class="hero-buttons">
+                <a href="#proyectos" class="btn-primary">Ver Proyectos <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#tareas" class="btn-secondary">Gestionar Tareas</a>
+            </div>
+        </section>
+
+        <!-- Sección Proyectos -->
+        <section id="proyectos" class="content-section">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-folder-open"></i> Proyectos Destacados</h2>
+                <p>Sistemas desarrollados en ciclos académicos recientes.</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-tag">Power Platform</div>
+                    <h3>NEXORA</h3>
+                    <p>Sistema de gestión de flujos documentales integrado con Power Apps, listas de SharePoint y flujos automatizados de aprobación.</p>
+                    <div class="project-tech"><span>Power Apps</span><span>SharePoint</span><span>Power Automate</span></div>
                 </div>
-
-                <div class="course-content">
-
-                    <span class="course-label">
-                        CURSO
-                    </span>
-
-                    <h3>
-                        ${escapeHtml(
-                            curso.nombre || "Curso"
-                        )}
-                    </h3>
-
-                    <p>
-                        ${escapeHtml(
-                            curso.descripcion || "Curso académico"
-                        )}
-                    </p>
-
-                    <button
-                        class="btn-primary"
-                        onclick="abrirCurso('${curso.id}')">
-
-                        Ver curso →
-
-                    </button>
-
+                <div class="project-card">
+                    <div class="project-tag">Web FullStack</div>
+                    <h3>ClanFiber</h3>
+                    <p>Tienda virtual académica para productos de internet de fibra óptica con panel de administración y conexión MySQL/PHP.</p>
+                    <div class="project-tech"><span>HTML/CSS</span><span>JavaScript</span><span>PHP & MySQL</span></div>
                 </div>
-
-            `;
-
-
-            container.appendChild(card);
-
-        });
-
-    }
-
-
-    async function abrirCurso(id) {
-
-        const { data, error } =
-            await supabaseClient
-            .from("temas")
-            .select("*")
-            .eq("id", id)
-            .single();
-
-
-        if (error) {
-
-            mostrarToast(
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        cursoActual = data;
-
-
-        document
-            .getElementById("nombreCurso")
-            .textContent =
-            cursoActual.nombre;
-
-
-        document
-            .getElementById("descripcionCurso")
-            .textContent =
-            cursoActual.descripcion || "";
-
-
-        unidadActual = 1;
-
-
-        actualizarBotonesUnidad();
-
-
-        await cargarTareas();
-
-
-        mostrarSeccion(
-            "detalleCurso"
-        );
-
-    }
-
-
-    /* ========================================================
-       UNIDADES
-    ======================================================== */
-
-    async function seleccionarUnidad(numero) {
-
-        unidadActual = numero;
-
-        actualizarBotonesUnidad();
-
-        await cargarTareas();
-
-    }
-
-
-    function actualizarBotonesUnidad() {
-
-        document
-            .querySelectorAll(".unit-button")
-            .forEach((button, index) => {
-
-                button.classList.toggle(
-                    "active",
-                    index + 1 === unidadActual
-                );
-
-            });
-
-
-        document
-            .getElementById("tituloUnidad")
-            .textContent =
-            `Unidad ${String(unidadActual).padStart(2, "0")}`;
-
-    }
-
-
-    /* ========================================================
-       TAREAS
-    ======================================================== */
-
-    async function cargarTareas() {
-
-        const container =
-            document.getElementById(
-                "tasksContainer"
-            );
-
-
-        if (!cursoActual) {
-
-            return;
-
-        }
-
-
-        container.innerHTML =
-            `<div class="loading">
-                Cargando tareas...
-             </div>`;
-
-
-        const { data, error } =
-            await supabaseClient
-            .from("tareas")
-            .select("*")
-            .eq("tema_id", cursoActual.id)
-            .eq("unidad", unidadActual)
-            .order("created_at", {
-                ascending: true
-            });
-
-
-        if (error) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    ${error.message}
-                 </div>`;
-
-            return;
-
-        }
-
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    <span>📚</span>
-                    <h3>No hay tareas todavía</h3>
-                    <p>
-                        En esta unidad todavía no se
-                        han agregado actividades.
-                    </p>
-                 </div>`;
-
-            return;
-
-        }
-
-
-        container.innerHTML = "";
-
-
-        data.forEach(tarea => {
-
-            const card =
-                document.createElement("article");
-
-
-            card.className =
-                "task-card";
-
-
-            card.innerHTML = `
-
-                <div class="task-top">
-
-                    <span class="task-unit">
-                        Unidad ${String(tarea.unidad)
-                            .padStart(2, "0")}
-                    </span>
-
-                    <span class="task-date">
-                        ${formatearFecha(
-                            tarea.created_at
-                        )}
-                    </span>
-
+                <div class="project-card">
+                    <div class="project-tag">Gestión de Investigación</div>
+                    <h3>SIGPI</h3>
+                    <p>Propuesta de sistema para la gestión de proyectos de investigación e innovación con seguimiento de presupuestos y notificaciones.</p>
+                    <div class="project-tech"><span>Arquitectura</span><span>Base de Datos</span><span>UI/UX Figma</span></div>
                 </div>
+            </div>
+        </section>
 
-
-                <h3>
-                    ${escapeHtml(
-                        tarea.titulo
-                    )}
-                </h3>
-
-
-                <p>
-                    ${escapeHtml(
-                        tarea.descripcion || ""
-                    )}
-                </p>
-
-
-                <div class="task-actions">
-
-                    ${
-                        tarea.url
-                        ?
-                        `<a
-                            href="${escapeAttribute(tarea.url)}"
-                            target="_blank"
-                            rel="noopener"
-                            class="btn-secondary">
-                            Abrir tarea
-                         </a>`
-                        :
-                        ""
-                    }
-
-
-                    ${
-                        esPropietario()
-                        ?
-                        `
-                        <button
-                            class="btn-edit"
-                            onclick="editarTarea('${tarea.id}')">
-                            Editar
-                        </button>
-
-                        <button
-                            class="btn-delete"
-                            onclick="eliminarTarea('${tarea.id}')">
-                            Eliminar
-                        </button>
-                        `
-                        :
-                        ""
-                    }
-
+        <!-- Sección Tareas Semanales -->
+        <section id="tareas" class="content-section">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-calendar-check"></i> Gestión de Tareas Semanales</h2>
+                <p>Organiza tus entregas y actividades sincronizadas en tiempo real.</p>
+            </div>
+            <div class="task-card-container">
+                <form id="taskForm" class="task-form">
+                    <input type="text" id="taskTitle" placeholder="Nueva tarea o entregable..." required>
+                    <select id="taskDay">
+                        <option value="Lunes">Lunes</option>
+                        <option value="Martes">Martes</option>
+                        <option value="Miércoles">Miércoles</option>
+                        <option value="Jueves">Jueves</option>
+                        <option value="Viernes">Viernes</option>
+                        <option value="Sábado">Sábado</option>
+                    </select>
+                    <button type="submit" class="btn-primary"><i class="fa-solid fa-plus"></i> Añadir</button>
+                </form>
+                <div class="tasks-list" id="tasksListContainer">
+                    <!-- Se inyectan dinámicamente -->
                 </div>
+            </div>
+        </section>
 
-            `;
+        <!-- Sección Feedback / Comentarios -->
+        <section id="feedback" class="content-section">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-message"></i> Muro de Feedback</h2>
+                <p>Deja tus impresiones o valoraciones sobre el portafolio.</p>
+            </div>
+            <div class="feedback-container">
+                <form id="feedbackForm" class="feedback-form">
+                    <input type="text" id="feedbackAuthor" placeholder="Tu nombre..." required>
+                    <textarea id="feedbackMessage" placeholder="Escribe tu comentario..." rows="3" required></textarea>
+                    <button type="submit" class="btn-primary">Enviar Comentario</button>
+                </form>
+                <div class="feedback-list" id="feedbackListContainer">
+                    <!-- Se inyectan dinámicamente -->
+                </div>
+            </div>
+        </section>
+    </main>
 
+    <!-- Modal Configuración Supabase -->
+    <div id="supabaseModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3><i class="fa-solid fa-database"></i> Configuración de Supabase</h3>
+            <p>Ingresa tus credenciales para habilitar la base de datos en la nube.</p>
+            <input type="text" id="supabaseUrlInput" placeholder="URL del proyecto (https://...).">
+            <input type="text" id="supabaseKeyInput" placeholder="Anon Key (Pública).">
+            <button id="saveSupabaseConfig" class="btn-primary">Guardar y Conectar</button>
+        </div>
+    </div>
 
-            container.appendChild(card);
+    <!-- Script Principal -->
+    <script>
+        // Lógica de UI, Avatar y Supabase
+        let supabaseClient = null;
 
-        });
-
-    }
-
-
-    /* ========================================================
-       CREAR TAREA
-    ======================================================== */
-
-    function abrirFormularioTarea() {
-
-        if (!esPropietario()) {
-
-            mostrarToast(
-                "Solo el propietario puede agregar tareas."
-            );
-
-            return;
-
+        // Cargar credenciales guardadas
+        const savedUrl = localStorage.getItem('sb_url');
+        const savedKey = localStorage.getItem('sb_key');
+        if (savedUrl && savedKey) {
+            supabaseClient = supabase.createClient(savedUrl, savedKey);
+            initApp();
         }
 
-
-        document
-            .getElementById("taskId")
-            .value = "";
-
-
-        document
-            .getElementById("taskTitle")
-            .value = "";
-
-
-        document
-            .getElementById("taskDescription")
-            .value = "";
-
-
-        document
-            .getElementById("taskUrl")
-            .value = "";
-
-
-        document
-            .getElementById("taskUnit")
-            .value = unidadActual;
-
-
-        document
-            .getElementById("taskModalTitle")
-            .textContent =
-            "Nueva tarea";
-
-
-        document
-            .getElementById("taskModal")
-            .classList.remove("hidden");
-
-    }
-
-
-    function cerrarFormularioTarea() {
-
-        document
-            .getElementById("taskModal")
-            .classList.add("hidden");
-
-    }
-
-
-    async function guardarTarea() {
-
-        if (!esPropietario()) {
-
-            return;
-
-        }
-
-
-        const id =
-            document
-            .getElementById("taskId")
-            .value;
-
-
-        const titulo =
-            document
-            .getElementById("taskTitle")
-            .value
-            .trim();
-
-
-        const descripcion =
-            document
-            .getElementById("taskDescription")
-            .value
-            .trim();
-
-
-        const url =
-            document
-            .getElementById("taskUrl")
-            .value
-            .trim();
-
-
-        const unidad =
-            Number(
-                document
-                .getElementById("taskUnit")
-                .value
-            );
-
-
-        if (!titulo) {
-
-            mostrarToast(
-                "Escribe el título de la tarea."
-            );
-
-            return;
-
-        }
-
-
-        const datos = {
-
-            titulo,
-
-            descripcion,
-
-            url,
-
-            unidad,
-
-            tema_id: cursoActual.id
-
+        // Modal Supabase
+        const modal = document.getElementById('supabaseModal');
+        document.getElementById('supabaseConfigBtn').onclick = () => {
+            document.getElementById('supabaseUrlInput').value = savedUrl || '';
+            document.getElementById('supabaseKeyInput').value = savedKey || '';
+            modal.style.display = 'flex';
+        };
+        document.querySelector('.close-modal').onclick = () => modal.style.display = 'none';
+        document.getElementById('saveSupabaseConfig').onclick = () => {
+            const url = document.getElementById('supabaseUrlInput').value.trim();
+            const key = document.getElementById('supabaseKeyInput').value.trim();
+            if (url && key) {
+                localStorage.setItem('sb_url', url);
+                localStorage.setItem('sb_key', key);
+                location.reload();
+            } else {
+                alert('Por favor completa ambos campos.');
+            }
         };
 
+        // Cambio de Avatar / Logo
+        const avatarInput = document.getElementById('avatarUploadInput');
+        const userAvatarImg = document.getElementById('userAvatarImg');
+        const savedAvatar = localStorage.getItem('profile_avatar');
+        if (savedAvatar) userAvatarImg.src = savedAvatar;
 
-        let resultado;
+        avatarInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    userAvatarImg.src = event.target.result;
+                    localStorage.setItem('profile_avatar', event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
 
-
-        if (id) {
-
-            resultado =
-                await supabaseClient
-                .from("tareas")
-                .update(datos)
-                .eq("id", id);
-
-        } else {
-
-            resultado =
-                await supabaseClient
-                .from("tareas")
-                .insert(datos);
-
+        // Inicializar datos locales o de Supabase
+        function initApp() {
+            loadTasks();
+            loadFeedback();
         }
 
+        // Tareas Mock / Supabase
+        const taskForm = document.getElementById('taskForm');
+        const tasksListContainer = document.getElementById('tasksListContainer');
+        
+        taskForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('taskTitle').value;
+            const day = document.getElementById('taskDay').value;
+            
+            if (supabaseClient) {
+                await supabaseClient.from('tasks').insert([{ title, day, completed: false }]);
+                loadTasks();
+            } else {
+                let tasks = JSON.parse(localStorage.getItem('local_tasks') || '[]');
+                tasks.push({ id: Date.now(), title, day, completed: false });
+                localStorage.setItem('local_tasks', JSON.stringify(tasks));
+                renderLocalTasks();
+            }
+            taskForm.reset();
+        };
 
-        if (resultado.error) {
-
-            mostrarToast(
-                resultado.error.message
-            );
-
-            return;
-
+        async function loadTasks() {
+            if (supabaseClient) {
+                const { data, error } = await supabaseClient.from('tasks').select('*').order('id', { ascending: false });
+                if (data) renderTasks(data);
+            } else {
+                renderLocalTasks();
+            }
         }
 
-
-        cerrarFormularioTarea();
-
-        await cargarTareas();
-
-        mostrarToast(
-            "Tarea guardada correctamente."
-        );
-
-    }
-
-
-    /* ========================================================
-       EDITAR TAREA
-    ======================================================== */
-
-    async function editarTarea(id) {
-
-        if (!esPropietario()) {
-
-            return;
-
+        function renderLocalTasks() {
+            let tasks = JSON.parse(localStorage.getItem('local_tasks') || '[]');
+            renderTasks(tasks);
         }
 
-
-        const { data, error } =
-            await supabaseClient
-            .from("tareas")
-            .select("*")
-            .eq("id", id)
-            .single();
-
-
-        if (error) {
-
-            mostrarToast(
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        document
-            .getElementById("taskId")
-            .value = data.id;
-
-
-        document
-            .getElementById("taskTitle")
-            .value = data.titulo;
-
-
-        document
-            .getElementById("taskDescription")
-            .value =
-            data.descripcion || "";
-
-
-        document
-            .getElementById("taskUrl")
-            .value =
-            data.url || "";
-
-
-        document
-            .getElementById("taskUnit")
-            .value =
-            data.unidad;
-
-
-        document
-            .getElementById("taskModalTitle")
-            .textContent =
-            "Editar tarea";
-
-
-        document
-            .getElementById("taskModal")
-            .classList.remove("hidden");
-
-    }
-
-
-    /* ========================================================
-       ELIMINAR TAREA
-    ======================================================== */
-
-    async function eliminarTarea(id) {
-
-        if (!esPropietario()) {
-
-            return;
-
-        }
-
-
-        const confirmar =
-            confirm(
-                "¿Seguro que deseas eliminar esta tarea?"
-            );
-
-
-        if (!confirmar) {
-
-            return;
-
-        }
-
-
-        const { error } =
-            await supabaseClient
-            .from("tareas")
-            .delete()
-            .eq("id", id);
-
-
-        if (error) {
-
-            mostrarToast(
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        await cargarTareas();
-
-
-        mostrarToast(
-            "Tarea eliminada."
-        );
-
-    }
-
-
-    /* ========================================================
-       COMENTARIOS
-    ======================================================== */
-
-    async function guardarComentario() {
-
-        if (!usuarioActual) {
-
-            mostrarToast(
-                "Debes iniciar sesión para comentar."
-            );
-
-            abrirLogin();
-
-            return;
-
-        }
-
-
-        const texto =
-            document
-            .getElementById("comentarioTexto")
-            .value
-            .trim();
-
-
-        if (!texto) {
-
-            mostrarToast(
-                "Escribe un comentario."
-            );
-
-            return;
-
-        }
-
-
-        const { error } =
-            await supabaseClient
-            .from("comentarios")
-            .insert({
-
-                usuario_id:
-                    usuarioActual.id,
-
-                nombre:
-                    usuarioActual.email,
-
-                contenido:
-                    texto
-
+        function renderTasks(tasks) {
+            tasksListContainer.innerHTML = tasks.length === 0 ? '<p class="empty-text">No hay tareas registradas.</p>' : '';
+            tasks.forEach(t => {
+                const div = document.createElement('div');
+                div.className = `task-item ${t.completed ? 'completed' : ''}`;
+                div.innerHTML = `
+                    <div>
+                        <span class="task-day-badge">${t.day}</span>
+                        <span class="task-text">${t.title}</span>
+                    </div>
+                    <div>
+                        <button onclick="toggleTask(${t.id}, ${t.completed})" class="btn-icon"><i class="fa-solid fa-check"></i></button>
+                        <button onclick="deleteTask(${t.id})" class="btn-icon delete"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                tasksListContainer.appendChild(div);
             });
-
-
-        if (error) {
-
-            mostrarToast(
-                error.message
-            );
-
-            return;
-
         }
 
+        window.toggleTask = async (id, currentStatus) => {
+            if (supabaseClient) {
+                await supabaseClient.from('tasks').update({ completed: !currentStatus }).eq('id', id);
+                loadTasks();
+            } else {
+                let tasks = JSON.parse(localStorage.getItem('local_tasks') || '[]');
+                tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+                localStorage.setItem('local_tasks', JSON.stringify(tasks));
+                renderLocalTasks();
+            }
+        };
 
-        document
-            .getElementById("comentarioTexto")
-            .value = "";
+        window.deleteTask = async (id) => {
+            if (supabaseClient) {
+                await supabaseClient.from('tasks').delete().eq('id', id);
+                loadTasks();
+            } else {
+                let tasks = JSON.parse(localStorage.getItem('local_tasks') || '[]');
+                tasks = tasks.filter(t => t.id !== id);
+                localStorage.setItem('local_tasks', JSON.stringify(tasks));
+                renderLocalTasks();
+            }
+        };
 
+        // Feedback / Comentarios
+        const feedbackForm = document.getElementById('feedbackForm');
+        const feedbackListContainer = document.getElementById('feedbackListContainer');
 
-        await cargarComentarios();
+        feedbackForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const author = document.getElementById('feedbackAuthor').value;
+            const message = document.getElementById('feedbackMessage').value;
 
+            if (supabaseClient) {
+                await supabaseClient.from('feedback').insert([{ author, message }]);
+                loadFeedback();
+            } else {
+                let fb = JSON.parse(localStorage.getItem('local_feedback') || '[]');
+                fb.push({ id: Date.now(), author, message });
+                localStorage.setItem('local_feedback', JSON.stringify(fb));
+                renderLocalFeedback();
+            }
+            feedbackForm.reset();
+        };
 
-        mostrarToast(
-            "Comentario publicado."
-        );
+        async function loadFeedback() {
+            if (supabaseClient) {
+                const { data } = await supabaseClient.from('feedback').select('*').order('id', { ascending: false });
+                if (data) renderFeedback(data);
+            } else {
+                renderLocalFeedback();
+            }
+        }
 
-    }
+        function renderLocalFeedback() {
+            let fb = JSON.parse(localStorage.getItem('local_feedback') || '[]');
+            renderFeedback(fb);
+        }
 
-
-    async function cargarComentarios() {
-
-        const container =
-            document.getElementById(
-                "comentariosContainer"
-            );
-
-
-        const { data, error } =
-            await supabaseClient
-            .from("comentarios")
-            .select("*")
-            .order("created_at", {
-                ascending: false
+        function renderFeedback(feedbackList) {
+            feedbackListContainer.innerHTML = feedbackList.length === 0 ? '<p class="empty-text">Sé el primero en dejar un comentario.</p>' : '';
+            feedbackList.forEach(f => {
+                const div = document.createElement('div');
+                div.className = 'feedback-item';
+                div.innerHTML = `<strong>${f.author}</strong><p>${f.message}</p>`;
+                feedbackListContainer.appendChild(div);
             });
-
-
-        if (error) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    No se pudieron cargar los comentarios.
-                 </div>`;
-
-            return;
-
         }
 
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    <h3>Aún no hay comentarios</h3>
-                    <p>Sé el primero en comentar.</p>
-                 </div>`;
-
-            return;
-
+        // Carga inicial local si no hay Supabase configurado
+        if (!supabaseClient) {
+            renderLocalTasks();
+            renderLocalFeedback();
         }
-
-
-        container.innerHTML = "";
-
-
-        data.forEach(comentario => {
-
-            const div =
-                document.createElement("div");
-
-
-            div.className =
-                "comment-card";
-
-
-            div.innerHTML = `
-
-                <div class="comment-header">
-
-                    <strong>
-                        ${escapeHtml(
-                            comentario.nombre ||
-                            "Usuario"
-                        )}
-                    </strong>
-
-                    <span>
-                        ${formatearFecha(
-                            comentario.created_at
-                        )}
-                    </span>
-
-                </div>
-
-                <p>
-                    ${escapeHtml(
-                        comentario.contenido
-                    )}
-                </p>
-
-            `;
-
-
-            container.appendChild(div);
-
-        });
-
-    }
-
-
-    /* ========================================================
-       IMAGEN DE PERFIL
-    ======================================================== */
-
-    function abrirImagen() {
-
-        if (!esPropietario()) {
-
-            mostrarToast(
-                "Solo el propietario puede cambiar la imagen."
-            );
-
-            return;
-
-        }
-
-
-        document
-            .getElementById("imageModal")
-            .classList.remove("hidden");
-
-    }
-
-
-    function cerrarImagenModal() {
-
-        document
-            .getElementById("imageModal")
-            .classList.add("hidden");
-
-    }
-
-
-    async function subirImagen() {
-
-        if (!esPropietario()) {
-
-            return;
-
-        }
-
-
-        const file =
-            document
-            .getElementById("imageFile")
-            .files[0];
-
-
-        if (!file) {
-
-            mostrarToast(
-                "Selecciona una imagen."
-            );
-
-            return;
-
-        }
-
-
-        const extension =
-            file.name
-            .split(".")
-            .pop();
-
-
-        const nombreArchivo =
-            `perfil-${Date.now()}.${extension}`;
-
-
-        const { error } =
-            await supabaseClient
-            .storage
-            .from(BUCKET)
-            .upload(
-                nombreArchivo,
-                file,
-                {
-                    upsert: true
-                }
-            );
-
-
-        if (error) {
-
-            mostrarToast(
-                error.message
-            );
-
-            return;
-
-        }
-
-
-        const { data } =
-            supabaseClient
-            .storage
-            .from(BUCKET)
-            .getPublicUrl(
-                nombreArchivo
-            );
-
-
-        document
-            .getElementById("profileImage")
-            .src =
-            data.publicUrl;
-
-
-        cerrarImagenModal();
-
-
-        mostrarToast(
-            "Imagen actualizada."
-        );
-
-    }
-
-
-    /* ========================================================
-       REALTIME
-    ======================================================== */
-
-    function escucharCambios() {
-
-        supabaseClient
-            .channel("cambios-portafolio")
-
-            .on(
-                "postgres_changes",
-                {
-                    event: "*",
-                    schema: "public",
-                    table: "tareas"
-                },
-                function() {
-
-                    if (cursoActual) {
-
-                        cargarTareas();
-
-                    }
-
-                }
-            )
-
-            .on(
-                "postgres_changes",
-                {
-                    event: "*",
-                    schema: "public",
-                    table: "comentarios"
-                },
-                function() {
-
-                    cargarComentarios();
-
-                }
-            )
-
-            .subscribe();
-
-    }
-
-
-    /* ========================================================
-       UTILIDADES
-    ======================================================== */
-
-    function formatearFecha(fecha) {
-
-        if (!fecha) {
-
-            return "";
-
-        }
-
-
-        return new Date(fecha)
-            .toLocaleDateString(
-                "es-PE",
-                {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric"
-                }
-            );
-
-    }
-
-
-    function escapeHtml(text) {
-
-        if (text === null ||
-            text === undefined) {
-
-            return "";
-
-        }
-
-
-        return String(text)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-
-    }
-
-
-    function escapeAttribute(text) {
-
-        return escapeHtml(text);
-
-    }
-
-
-    function mostrarToast(mensaje) {
-
-        const toast =
-            document.getElementById(
-                "toast"
-            );
-
-
-        toast.textContent =
-            mensaje;
-
-
-        toast.classList.add(
-            "show"
-        );
-
-
-        setTimeout(
-            () => {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            3000
-        );
-
-    }
-
-
-    /* ========================================================
-       CAMBIO DE SESIÓN
-    ======================================================== */
-
-    supabaseClient.auth.onAuthStateChange(
-        function(event, session) {
-
-            usuarioActual =
-                session?.user || null;
-
-            actualizarInterfazUsuario();
-
-        }
-    );
-
-</script>
-
+    </script>
 </body>
 </html>

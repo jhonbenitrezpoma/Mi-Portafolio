@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portafolio Académico | Jhon Benitrez</title>
-
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -90,7 +89,6 @@
       <button class="activo" onclick="cambiarCurso('curso1',this)">
         📱 Desarrollo de Aplicaciones 1
       </button>
-
       <button onclick="cambiarCurso('curso2',this)">
         🧮 Algoritmos y Estructuras de Datos
       </button>
@@ -98,7 +96,7 @@
 
     <div class="curso-titulo">
       <h2 id="tituloCurso">📱 Desarrollo de Aplicaciones 1</h2>
-      <p>Elige una unidad, abre una semana y selecciona la burbuja de la tarea.</p>
+      <p>Elige una unidad, abre una semana y selecciona una burbuja para previsualizar la tarea.</p>
     </div>
 
     <div class="unidades">
@@ -129,9 +127,10 @@
   </div>
 </section>
 
-<div id="modalAcceso" class="modal">
+<!-- INICIO DE SESIÓN -->
+<div id="modalAcceso" class="modal" onclick="cerrarSiFondo(event,'modalAcceso')">
   <div class="ventana">
-    <button class="cerrar" onclick="cerrarModal('modalAcceso')">×</button>
+    <button class="cerrar" onclick="cerrarModal('modalAcceso')" aria-label="Cerrar">×</button>
     <h2>Acceso al portafolio</h2>
 
     <div class="pestanias">
@@ -141,12 +140,12 @@
 
     <form id="formEntrar" onsubmit="iniciarSesion(event)">
       <div class="campo">
-        <label>Usuario</label>
+        <label for="usuarioAcceso">Usuario</label>
         <input id="usuarioAcceso" required placeholder="Ej: Jhon Benitrez">
       </div>
 
       <div class="campo">
-        <label>Contraseña del propietario</label>
+        <label for="claveAcceso">Contraseña del propietario</label>
         <input id="claveAcceso" type="password" placeholder="Visitante: dejar vacío">
       </div>
 
@@ -155,17 +154,17 @@
 
     <form id="formRegistro" class="oculto" onsubmit="registrarVisitante(event)">
       <div class="campo">
-        <label>Nombre completo</label>
+        <label for="nombreRegistro">Nombre completo</label>
         <input id="nombreRegistro" required>
       </div>
 
       <div class="campo">
-        <label>Contraseña</label>
+        <label for="claveRegistro">Contraseña</label>
         <input id="claveRegistro" type="password" required>
       </div>
 
       <div class="campo">
-        <label>Correo opcional</label>
+        <label for="correoRegistro">Correo opcional</label>
         <input id="correoRegistro" type="email">
       </div>
 
@@ -174,9 +173,10 @@
   </div>
 </div>
 
-<div id="modalTarea" class="modal">
+<!-- AGREGAR O EDITAR TAREA -->
+<div id="modalTarea" class="modal" onclick="cerrarSiFondo(event,'modalTarea')">
   <div class="ventana">
-    <button class="cerrar" onclick="cerrarModal('modalTarea')">×</button>
+    <button class="cerrar" onclick="cerrarModal('modalTarea')" aria-label="Cerrar">×</button>
     <h2 id="tituloModalTarea">Agregar tarea</h2>
 
     <form onsubmit="guardarTarea(event)">
@@ -184,12 +184,12 @@
       <input id="idEdicion" type="hidden">
 
       <div class="campo">
-        <label>Nombre de la tarea</label>
+        <label for="nombreTarea">Nombre de la tarea</label>
         <input id="nombreTarea" required>
       </div>
 
       <div class="campo">
-        <label>Tipo de entrega</label>
+        <label for="tipoTarea">Tipo de entrega</label>
         <select id="tipoTarea" onchange="cambiarTipoTarea()">
           <option value="archivo">📄 Archivo</option>
           <option value="enlace">🔗 Enlace</option>
@@ -197,12 +197,12 @@
       </div>
 
       <div id="campoArchivo" class="campo">
-        <label>Seleccionar archivo</label>
+        <label for="archivoTarea">Seleccionar archivo</label>
         <input id="archivoTarea" type="file">
       </div>
 
       <div id="campoEnlace" class="campo oculto">
-        <label>URL</label>
+        <label for="enlaceTarea">URL</label>
         <input id="enlaceTarea" type="url" placeholder="https://...">
       </div>
 
@@ -210,6 +210,22 @@
     </form>
   </div>
 </div>
+
+<!-- PREVISUALIZACIÓN DE TAREA -->
+<div id="modalVista" class="modal" role="dialog" aria-modal="true"
+     aria-labelledby="tituloVista" onclick="cerrarSiFondo(event,'modalVista')">
+  <div class="ventana ventana-vista">
+    <button class="cerrar" onclick="cerrarVista()" aria-label="Cerrar previsualización">×</button>
+    <div class="etiqueta-vista">VISTA PREVIA DE LA TAREA</div>
+    <h2 id="tituloVista"></h2>
+    <p id="descripcionVista"></p>
+    <div id="contenidoVista" class="contenido-vista"></div>
+    <div id="accionesVista" class="acciones"></div>
+  </div>
+</div>
+
+<!-- ANIMACIÓN DEL CORTE DE ESPADA -->
+<div id="efectoEspada" class="efecto-espada" aria-hidden="true"></div>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -221,6 +237,7 @@ const OWNER_EMAIL = "tuhermana1591q@gmail.com";
 
 const BUCKET = "portafolio";
 const SESSION_KEY = "sesion_portafolio_upla";
+
 const NOMBRES_PROPIETARIO = [
   "jhon benitrez",
   "jhon benitres",
@@ -278,10 +295,10 @@ function aviso(texto) {
   caja.classList.add("visible");
 
   clearTimeout(window.timerAviso);
-
-  window.timerAviso = setTimeout(() => {
-    caja.classList.remove("visible");
-  }, 3200);
+  window.timerAviso = setTimeout(
+    () => caja.classList.remove("visible"),
+    3200
+  );
 }
 
 function abrirModal(id) {
@@ -292,16 +309,23 @@ function cerrarModal(id) {
   elemento(id).classList.remove("abierto");
 }
 
+function cerrarSiFondo(evento, id) {
+  if (evento.target === elemento(id)) {
+    if (id === "modalVista") cerrarVista();
+    else cerrarModal(id);
+  }
+}
+
 function mostrarPantalla(id, boton) {
-  document.querySelectorAll(".pantalla").forEach(x => {
-    x.classList.add("oculto");
-  });
+  document.querySelectorAll(".pantalla").forEach(
+    x => x.classList.add("oculto")
+  );
 
   elemento(id).classList.remove("oculto");
 
-  document.querySelectorAll(".menu button").forEach(x => {
-    x.classList.remove("activo");
-  });
+  document.querySelectorAll(".menu button").forEach(
+    x => x.classList.remove("activo")
+  );
 
   if (boton) boton.classList.add("activo");
 }
@@ -336,29 +360,14 @@ function actualizarUsuario() {
 }
 
 function cambiarTab(tab) {
-  elemento("formEntrar").classList.toggle(
-    "oculto",
-    tab !== "entrar"
-  );
-
-  elemento("formRegistro").classList.toggle(
-    "oculto",
-    tab !== "registro"
-  );
-
-  elemento("tabEntrar").classList.toggle(
-    "activo",
-    tab === "entrar"
-  );
-
-  elemento("tabRegistro").classList.toggle(
-    "activo",
-    tab === "registro"
-  );
+  elemento("formEntrar").classList.toggle("oculto", tab !== "entrar");
+  elemento("formRegistro").classList.toggle("oculto", tab !== "registro");
+  elemento("tabEntrar").classList.toggle("activo", tab === "entrar");
+  elemento("tabRegistro").classList.toggle("activo", tab === "registro");
 }
 
-async function iniciarSesion(e) {
-  e.preventDefault();
+async function iniciarSesion(evento) {
+  evento.preventDefault();
 
   const nombre = elemento("usuarioAcceso").value.trim();
   const clave = elemento("claveAcceso").value;
@@ -377,15 +386,10 @@ async function iniciarSesion(e) {
     propietario = true;
     nombreUsuario = "Jhon Benitrez";
     localStorage.removeItem(SESSION_KEY);
-
   } else {
     propietario = false;
     nombreUsuario = nombre;
-
-    localStorage.setItem(
-      SESSION_KEY,
-      JSON.stringify({ nombre })
-    );
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre }));
   }
 
   elemento("formEntrar").reset();
@@ -393,9 +397,8 @@ async function iniciarSesion(e) {
   actualizarUsuario();
 }
 
-function registrarVisitante(e) {
-  e.preventDefault();
-
+function registrarVisitante(evento) {
+  evento.preventDefault();
   const nombre = elemento("nombreRegistro").value.trim();
 
   if (NOMBRES_PROPIETARIO.includes(nombre.toLowerCase())) {
@@ -404,11 +407,7 @@ function registrarVisitante(e) {
 
   propietario = false;
   nombreUsuario = nombre;
-
-  localStorage.setItem(
-    SESSION_KEY,
-    JSON.stringify({ nombre })
-  );
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre }));
 
   elemento("formRegistro").reset();
   cerrarModal("modalAcceso");
@@ -421,7 +420,6 @@ async function cerrarSesion() {
   localStorage.removeItem(SESSION_KEY);
   propietario = false;
   nombreUsuario = "Invitado";
-
   actualizarUsuario();
 
   mostrarPantalla(
@@ -433,13 +431,11 @@ async function cerrarSesion() {
 function cambiarCurso(nuevoCurso, boton) {
   curso = nuevoCurso;
   semanaAbierta = null;
+  elemento("tituloCurso").textContent = nombresCursos[nuevoCurso];
 
-  elemento("tituloCurso").textContent =
-    nombresCursos[nuevoCurso];
-
-  document.querySelectorAll(".lista-cursos button").forEach(x => {
-    x.classList.remove("activo");
-  });
+  document.querySelectorAll(".lista-cursos button").forEach(
+    x => x.classList.remove("activo")
+  );
 
   boton.classList.add("activo");
   elegirUnidad(1);
@@ -450,41 +446,42 @@ function elegirUnidad(numero) {
   semanaAbierta = null;
 
   document.querySelectorAll(".unidad").forEach((boton, indice) => {
-    boton.classList.toggle(
-      "activo",
-      indice + 1 === numero
-    );
+    boton.classList.toggle("activo", indice + 1 === numero);
   });
 
   mostrarSemanas();
 }
 
 function elegirSemana(clave) {
-  semanaAbierta =
-    semanaAbierta === clave ? null : clave;
-
+  semanaAbierta = semanaAbierta === clave ? null : clave;
   mostrarSemanas();
-
-  document.querySelector(
-    `[data-semana="${clave}"]`
-  )?.focus();
+  document.querySelector(`[data-semana="${clave}"]`)?.focus();
 }
 
 function elegirTarea(clave, indice) {
+  const tarea = (tareas[clave] || [])[indice];
+  if (!tarea) return;
+
   tareaElegida[clave] = indice;
   mostrarSemanas();
 
-  document.querySelector(
-    `[data-tarea="${clave}-${indice}"]`
-  )?.focus();
+  /* Reinicia y reproduce el efecto de la espada. */
+  const efecto = elemento("efectoEspada");
+  efecto.classList.remove("cortar");
+  void efecto.offsetWidth;
+  efecto.classList.add("cortar");
+
+  /* La ventana aparece después del corte. */
+  window.setTimeout(() => {
+    efecto.classList.remove("cortar");
+    abrirVista(clave, indice);
+  }, 480);
 }
 
-/* Se genera con los datos de la tarea.
-   No lee el interior del archivo. */
+/* La descripción usa los datos de la tarea.
+   No lee el contenido interno del archivo. */
 function descripcionAutomatica(tarea, tema) {
-  const tipo =
-    tarea.tipo === "archivo" ? "Archivo" : "Enlace";
-
+  const tipo = tarea.tipo === "archivo" ? "Archivo" : "Enlace";
   const contexto = tema
     ? `, correspondiente al tema «${tema}»`
     : "";
@@ -506,8 +503,8 @@ function nombreDescarga(tarea) {
 
 function mostrarSemanas() {
   const contenedor = elemento("semanas");
-
   if (!contenedor) return;
+
   contenedor.innerHTML = "";
 
   for (let i = 0; i < 4; i++) {
@@ -516,19 +513,9 @@ function mostrarSemanas() {
     const tema = temas[clave] || "";
     const lista = tareas[clave] || [];
     const abierta = semanaAbierta === clave;
-    const seleccion = tareaElegida[clave];
-
-    const indiceActivo =
-      Number.isInteger(seleccion) &&
-      seleccion >= 0 &&
-      seleccion < lista.length
-        ? seleccion
-        : -1;
 
     let html = `
-      <button
-        type="button"
-        class="abrir-semana"
+      <button type="button" class="abrir-semana"
         data-semana="${clave}"
         onclick="elegirSemana('${clave}')"
         aria-expanded="${abierta}">
@@ -554,35 +541,21 @@ function mostrarSemanas() {
       html += `<div class="cuerpo-semana">`;
 
       if (lista.length === 0) {
-        html += `
-          <p class="ayuda">
-            Todavía no hay tareas publicadas.
-          </p>
-        `;
-
+        html += `<p class="ayuda">Todavía no hay tareas publicadas.</p>`;
       } else {
         html += `
-          <div class="contador">
-            ✔ ${lista.length} tarea(s) disponible(s)
-          </div>
-
-          <p class="ayuda">
-            Pulsa una burbuja para seleccionar la tarea.
-          </p>
-
-          <div
-            class="burbujas"
-            role="group"
-            aria-label="Tareas de la semana ${numero}">
+          <div class="contador">✔ ${lista.length} tarea(s) disponible(s)</div>
+          <p class="ayuda">Pulsa una burbuja para previsualizar la tarea.</p>
+          <div class="burbujas" role="group" aria-label="Tareas de la semana ${numero}">
         `;
 
         lista.forEach((tarea, indice) => {
+          const activa = tareaElegida[clave] === indice;
+
           html += `
-            <button
-              type="button"
-              class="burbuja ${indice === indiceActivo ? "activo" : ""}"
-              data-tarea="${clave}-${indice}"
-              aria-pressed="${indice === indiceActivo}"
+            <button type="button"
+              class="burbuja ${activa ? "activo" : ""}"
+              aria-pressed="${activa}"
               title="${escapar(tarea.nombre)}"
               onclick="elegirTarea('${clave}',${indice})">
 
@@ -599,70 +572,31 @@ function mostrarSemanas() {
 
         html += `</div>`;
 
-        if (indiceActivo !== -1) {
-          const tarea = lista[indiceActivo];
-          const esArchivo = tarea.tipo === "archivo";
+        if (propietario && Number.isInteger(tareaElegida[clave])) {
+          const indice = tareaElegida[clave];
+          const seleccionada = lista[indice];
 
-          const descarga =
-            `${tarea.url}?download=${
-              encodeURIComponent(nombreDescarga(tarea))
-            }`;
+          if (seleccionada) {
+            html += `
+              <div class="acciones acciones-propietario">
+                <button class="naranja"
+                  onclick="editarTarea('${clave}',${indice})">
+                  ✏️ Editar selección
+                </button>
 
-          html += `
-            <div class="detalle">
-              <h4>
-                ${esArchivo ? "📄" : "🔗"}
-                ${escapar(tarea.nombre)}
-              </h4>
-
-              <p>
-                ${escapar(
-                  descripcionAutomatica(tarea, tema)
-                )}
-              </p>
-
-              <div class="acciones">
-                <a
-                  class="azul"
-                  href="${escapar(tarea.url)}"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  👁️ Ver / Abrir
-                </a>
-
-                ${
-                  esArchivo
-                    ? `<a class="verde" href="${escapar(descarga)}">📥 Descargar</a>`
-                    : ""
-                }
-
-                ${
-                  propietario
-                    ? `
-                      <button
-                        class="naranja"
-                        onclick="editarTarea('${clave}',${indiceActivo})">
-                        ✏️ Editar
-                      </button>
-
-                      <button
-                        class="rojo"
-                        onclick="eliminarTarea('${clave}',${indiceActivo})">
-                        🗑️ Eliminar
-                      </button>
-                    `
-                    : ""
-                }
+                <button class="rojo"
+                  onclick="eliminarTarea('${clave}',${indice})">
+                  🗑️ Eliminar selección
+                </button>
               </div>
-            </div>
-          `;
+            `;
+          }
         }
       }
 
       if (propietario) {
         html += `
-          <button
-            class="agregar"
+          <button class="agregar"
             onclick="nuevaTarea('${clave}')">
             ➕ Agregar nueva tarea
           </button>
@@ -675,24 +609,106 @@ function mostrarSemanas() {
     const tarjeta = document.createElement("article");
     tarjeta.className = "semana";
     tarjeta.innerHTML = html;
-
     contenedor.appendChild(tarjeta);
   }
 }
 
+/* VENTANA PEQUEÑA DE PREVISUALIZACIÓN */
+function abrirVista(clave, indice) {
+  const tarea = (tareas[clave] || [])[indice];
+  if (!tarea) return;
+
+  elemento("tituloVista").textContent = tarea.nombre;
+  elemento("descripcionVista").textContent =
+    descripcionAutomatica(tarea, temas[clave] || "");
+
+  const contenido = elemento("contenidoVista");
+  const acciones = elemento("accionesVista");
+
+  contenido.replaceChildren();
+  acciones.replaceChildren();
+
+  let url;
+
+  try {
+    url = new URL(tarea.url);
+  } catch {
+    url = null;
+  }
+
+  if (!url || !["http:", "https:"].includes(url.protocol)) {
+    contenido.textContent = "No se puede previsualizar este enlace.";
+    abrirModal("modalVista");
+    return;
+  }
+
+  const extension = url.pathname.split(".").pop().toLowerCase();
+
+  if (["png", "jpg", "jpeg", "gif", "webp", "svg"].includes(extension)) {
+    const imagen = document.createElement("img");
+    imagen.src = url.href;
+    imagen.alt = "Vista previa de " + tarea.nombre;
+    contenido.appendChild(imagen);
+
+  } else if (extension === "pdf") {
+    const marco = document.createElement("iframe");
+    marco.src = url.href;
+    marco.title = "Vista previa de " + tarea.nombre;
+    marco.setAttribute("loading", "lazy");
+    contenido.appendChild(marco);
+
+  } else {
+    contenido.textContent =
+      "Este formato no tiene una vista previa dentro de la página. Usa «Abrir tarea» para verlo.";
+  }
+
+  const abrir = document.createElement("a");
+  abrir.href = url.href;
+  abrir.target = "_blank";
+  abrir.rel = "noopener noreferrer";
+  abrir.className = "azul";
+  abrir.textContent = "👁️ Abrir tarea";
+  acciones.appendChild(abrir);
+
+  if (tarea.tipo === "archivo") {
+    const descargar = document.createElement("a");
+    const urlDescarga = new URL(url.href);
+
+    urlDescarga.searchParams.set(
+      "download",
+      nombreDescarga(tarea)
+    );
+
+    descargar.href = urlDescarga.href;
+    descargar.className = "verde";
+    descargar.textContent = "📥 Descargar";
+    acciones.appendChild(descargar);
+  }
+
+  abrirModal("modalVista");
+  elemento("modalVista").querySelector(".cerrar").focus();
+}
+
+function cerrarVista() {
+  cerrarModal("modalVista");
+
+  /* Detiene el PDF o la imagen al cerrar la ventana. */
+  elemento("contenidoVista").replaceChildren();
+}
+
+document.addEventListener("keydown", evento => {
+  if (
+    evento.key === "Escape" &&
+    elemento("modalVista").classList.contains("abierto")
+  ) {
+    cerrarVista();
+  }
+});
+
 function cambiarTipoTarea() {
-  const enlace =
-    elemento("tipoTarea").value === "enlace";
-
-  elemento("campoArchivo").classList.toggle(
-    "oculto",
-    enlace
-  );
-
-  elemento("campoEnlace").classList.toggle(
-    "oculto",
-    !enlace
-  );
+  const enlace = elemento("tipoTarea").value === "enlace";
+  elemento("campoArchivo").classList.toggle("oculto", enlace);
+  elemento("campoEnlace").classList.toggle("oculto", !enlace);
 }
 
 function nuevaTarea(clave) {
@@ -700,9 +716,7 @@ function nuevaTarea(clave) {
 
   elemento("claveSemana").value = clave;
   elemento("idEdicion").value = "";
-  elemento("tituloModalTarea").textContent =
-    "Agregar tarea";
-
+  elemento("tituloModalTarea").textContent = "Agregar tarea";
   elemento("nombreTarea").value = "";
   elemento("archivoTarea").value = "";
   elemento("enlaceTarea").value = "";
@@ -720,15 +734,11 @@ function editarTarea(clave, indice) {
 
   elemento("claveSemana").value = clave;
   elemento("idEdicion").value = tarea.id;
-  elemento("tituloModalTarea").textContent =
-    "Editar tarea";
-
+  elemento("tituloModalTarea").textContent = "Editar tarea";
   elemento("nombreTarea").value = tarea.nombre;
   elemento("tipoTarea").value = tarea.tipo;
-
   elemento("enlaceTarea").value =
     tarea.tipo === "enlace" ? tarea.url : "";
-
   elemento("archivoTarea").value = "";
 
   cambiarTipoTarea();
@@ -738,21 +748,16 @@ function editarTarea(clave, indice) {
 function rutaStorage(url) {
   const marca = `/${BUCKET}/`;
   const indice = (url || "").indexOf(marca);
-
   if (indice === -1) return null;
 
   return decodeURIComponent(
-    url.substring(indice + marca.length)
-      .split("?")[0]
+    url.substring(indice + marca.length).split("?")[0]
   );
 }
 
 async function quitarArchivo(url) {
   const ruta = rutaStorage(url);
-
-  if (ruta) {
-    await db.storage.from(BUCKET).remove([ruta]);
-  }
+  if (ruta) await db.storage.from(BUCKET).remove([ruta]);
 }
 
 async function subirArchivo(archivo, carpeta) {
@@ -762,38 +767,32 @@ async function subirArchivo(archivo, carpeta) {
       .replace(/[^a-z0-9]/g, "") || "bin";
 
   const ruta =
-    `${carpeta}/${Date.now()}-${
-      Math.random().toString(36).slice(2, 8)
-    }.${extension}`;
+    `${carpeta}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${extension}`;
 
-  const { error } = await db.storage
-    .from(BUCKET)
-    .upload(ruta, archivo, {
+  const { error } = await db.storage.from(BUCKET).upload(
+    ruta,
+    archivo,
+    {
       cacheControl: "3600",
       upsert: false,
       contentType: archivo.type || undefined
-    });
+    }
+  );
 
   if (error) throw error;
 
-  return db.storage
-    .from(BUCKET)
-    .getPublicUrl(ruta)
-    .data.publicUrl;
+  return db.storage.from(BUCKET).getPublicUrl(ruta).data.publicUrl;
 }
 
-async function guardarTarea(e) {
-  e.preventDefault();
-
+async function guardarTarea(evento) {
+  evento.preventDefault();
   if (!propietario || !db) return;
 
   const clave = elemento("claveSemana").value;
   const id = elemento("idEdicion").value;
 
   const anterior = id
-    ? (tareas[clave] || []).find(
-        x => String(x.id) === id
-      )
+    ? (tareas[clave] || []).find(x => String(x.id) === id)
     : null;
 
   const tipo = elemento("tipoTarea").value;
@@ -811,43 +810,25 @@ async function guardarTarea(e) {
     boton.textContent = "Guardando...";
 
     if (tipo === "enlace") {
-      payload.url =
-        elemento("enlaceTarea").value.trim();
-
-      if (!payload.url) {
-        throw new Error("Ingresa el enlace.");
-      }
-
+      payload.url = elemento("enlaceTarea").value.trim();
+      if (!payload.url) throw new Error("Ingresa el enlace.");
     } else {
-      const archivo =
-        elemento("archivoTarea").files[0];
+      const archivo = elemento("archivoTarea").files[0];
 
       if (archivo) {
-        payload.url =
-          await subirArchivo(archivo, "tareas");
-
-      } else if (
-        anterior &&
-        anterior.tipo === "archivo"
-      ) {
+        payload.url = await subirArchivo(archivo, "tareas");
+      } else if (anterior && anterior.tipo === "archivo") {
         payload.url = anterior.url;
-
       } else {
-        throw new Error(
-          "Selecciona un archivo."
-        );
+        throw new Error("Selecciona un archivo.");
       }
     }
 
     const consulta = anterior
-      ? db.from("tareas")
-          .update(payload)
-          .eq("id", anterior.id)
-      : db.from("tareas")
-          .insert(payload);
+      ? db.from("tareas").update(payload).eq("id", anterior.id)
+      : db.from("tareas").insert(payload);
 
     const { error } = await consulta;
-
     if (error) throw error;
 
     if (
@@ -863,10 +844,7 @@ async function guardarTarea(e) {
     aviso("✅ Tarea publicada");
 
   } catch (error) {
-    alert(
-      "No se pudo guardar: " +
-      error.message
-    );
+    alert("No se pudo guardar: " + error.message);
 
   } finally {
     boton.disabled = false;
@@ -875,14 +853,9 @@ async function guardarTarea(e) {
 }
 
 async function eliminarTarea(clave, indice) {
-  if (
-    !propietario ||
-    !confirm("¿Eliminar esta tarea?")
-  ) return;
+  if (!propietario || !confirm("¿Eliminar esta tarea?")) return;
 
-  const tarea =
-    (tareas[clave] || [])[indice];
-
+  const tarea = (tareas[clave] || [])[indice];
   if (!tarea) return;
 
   const { error } = await db.from("tareas")
@@ -891,12 +864,9 @@ async function eliminarTarea(clave, indice) {
 
   if (error) return alert(error.message);
 
-  if (tarea.tipo === "archivo") {
-    quitarArchivo(tarea.url);
-  }
+  if (tarea.tipo === "archivo") quitarArchivo(tarea.url);
 
   delete tareaElegida[clave];
-
   await cargarTareas();
   aviso("🗑️ Tarea eliminada");
 }
@@ -904,18 +874,11 @@ async function eliminarTarea(clave, indice) {
 async function editarTema(clave) {
   if (!propietario) return;
 
-  const nuevo = prompt(
-    "Tema de la semana:",
-    temas[clave] || ""
-  );
-
+  const nuevo = prompt("Tema de la semana:", temas[clave] || "");
   if (nuevo === null) return;
 
   const { error } = await db.from("temas")
-    .upsert({
-      clave,
-      titulo: nuevo.trim()
-    });
+    .upsert({ clave, titulo: nuevo.trim() });
 
   if (error) return alert(error.message);
 
@@ -923,56 +886,35 @@ async function editarTema(clave) {
   mostrarSemanas();
 }
 
-async function guardarComentario(e) {
-  e.preventDefault();
+async function guardarComentario(evento) {
+  evento.preventDefault();
+  if (!db) return alert("No hay conexión con Supabase.");
 
-  if (!db) {
-    return alert(
-      "No hay conexión con Supabase."
-    );
-  }
+  const nombre = elemento("nombreComentario").value.trim();
+  const mensaje = elemento("mensajeComentario").value.trim();
 
-  const nombre =
-    elemento("nombreComentario").value.trim();
-
-  const mensaje =
-    elemento("mensajeComentario").value.trim();
-
-  const { error } =
-    await db.from("comentarios")
-      .insert({ nombre, mensaje });
+  const { error } = await db.from("comentarios")
+    .insert({ nombre, mensaje });
 
   if (error) return alert(error.message);
 
   elemento("mensajeComentario").value = "";
-
   await cargarComentarios();
   aviso("✅ Gracias por tu sugerencia");
 }
 
 function mostrarComentarios() {
-  const zona =
-    elemento("listaComentarios");
+  const zona = elemento("listaComentarios");
 
   if (comentarios.length === 0) {
-    zona.innerHTML =
-      '<p class="ayuda">Aún no hay sugerencias.</p>';
+    zona.innerHTML = '<p class="ayuda">Aún no hay sugerencias.</p>';
     return;
   }
 
   zona.innerHTML = comentarios.map(c => `
     <div class="comentario">
-      <strong>
-        👤 ${escapar(c.nombre)}
-      </strong>
-
-      <small>
-        ${
-          new Date(c.creado_en)
-            .toLocaleDateString("es-PE")
-        }
-      </small>
-
+      <strong>👤 ${escapar(c.nombre)}</strong>
+      <small>${new Date(c.creado_en).toLocaleDateString("es-PE")}</small>
       <p>${escapar(c.mensaje)}</p>
 
       ${
@@ -985,15 +927,11 @@ function mostrarComentarios() {
 }
 
 async function eliminarComentario(id) {
-  if (
-    !propietario ||
-    !confirm("¿Eliminar sugerencia?")
-  ) return;
+  if (!propietario || !confirm("¿Eliminar sugerencia?")) return;
 
-  const { error } =
-    await db.from("comentarios")
-      .delete()
-      .eq("id", id);
+  const { error } = await db.from("comentarios")
+    .delete()
+    .eq("id", id);
 
   if (error) return alert(error.message);
 
@@ -1001,64 +939,40 @@ async function eliminarComentario(id) {
 }
 
 function actualizarImagenes() {
-  elemento("logo").src =
-    ajustes.logo || LOGO_DEFECTO;
-
-  elemento("fotoPerfil").src =
-    ajustes.foto_perfil || FOTO_DEFECTO;
+  elemento("logo").src = ajustes.logo || LOGO_DEFECTO;
+  elemento("fotoPerfil").src = ajustes.foto_perfil || FOTO_DEFECTO;
 }
 
 async function subirImagen(evento, clave) {
-  const archivo =
-    evento.target.files[0];
-
+  const archivo = evento.target.files[0];
   evento.target.value = "";
 
-  if (!archivo || !propietario || !db) {
-    return;
-  }
+  if (!archivo || !propietario || !db) return;
 
   if (!archivo.type.startsWith("image/")) {
-    return alert(
-      "Selecciona una imagen."
-    );
+    return alert("Selecciona una imagen.");
   }
 
-  if (
-    archivo.size >
-    5 * 1024 * 1024
-  ) {
-    return alert(
-      "La imagen no debe superar 5 MB."
-    );
+  if (archivo.size > 5 * 1024 * 1024) {
+    return alert("La imagen no debe superar 5 MB.");
   }
 
   try {
     const anterior = ajustes[clave];
+    const url = await subirArchivo(archivo, "imagenes");
 
-    const url =
-      await subirArchivo(
-        archivo,
-        "imagenes"
-      );
-
-    const { error } =
-      await db.from("ajustes")
-        .upsert({
-          clave,
-          valor: url,
-          updated_at:
-            new Date().toISOString()
-        });
+    const { error } = await db.from("ajustes").upsert({
+      clave,
+      valor: url,
+      updated_at: new Date().toISOString()
+    });
 
     if (error) throw error;
 
     ajustes[clave] = url;
     actualizarImagenes();
 
-    if (anterior) {
-      quitarArchivo(anterior);
-    }
+    if (anterior) quitarArchivo(anterior);
 
     aviso("✅ Imagen guardada");
 
@@ -1068,25 +982,16 @@ async function subirImagen(evento, clave) {
 }
 
 async function cargarTareas() {
-  const { data, error } =
-    await db.from("tareas")
-      .select("*")
-      .order(
-        "creado_en",
-        { ascending: true }
-      );
+  const { data, error } = await db.from("tareas")
+    .select("*")
+    .order("creado_en", { ascending: true });
 
-  if (error) {
-    return console.error(error);
-  }
+  if (error) return console.error(error);
 
   tareas = {};
 
   (data || []).forEach(t => {
-    if (!tareas[t.clave]) {
-      tareas[t.clave] = [];
-    }
-
+    if (!tareas[t.clave]) tareas[t.clave] = [];
     tareas[t.clave].push(t);
   });
 
@@ -1094,13 +999,10 @@ async function cargarTareas() {
 }
 
 async function cargarTemas() {
-  const { data, error } =
-    await db.from("temas")
-      .select("clave,titulo");
+  const { data, error } = await db.from("temas")
+    .select("clave,titulo");
 
-  if (error) {
-    return console.error(error);
-  }
+  if (error) return console.error(error);
 
   temas = {};
 
@@ -1112,30 +1014,21 @@ async function cargarTemas() {
 }
 
 async function cargarComentarios() {
-  const { data, error } =
-    await db.from("comentarios")
-      .select("*")
-      .order(
-        "creado_en",
-        { ascending: false }
-      );
+  const { data, error } = await db.from("comentarios")
+    .select("*")
+    .order("creado_en", { ascending: false });
 
-  if (error) {
-    return console.error(error);
-  }
+  if (error) return console.error(error);
 
   comentarios = data || [];
   mostrarComentarios();
 }
 
 async function cargarAjustes() {
-  const { data, error } =
-    await db.from("ajustes")
-      .select("clave,valor");
+  const { data, error } = await db.from("ajustes")
+    .select("clave,valor");
 
-  if (error) {
-    return console.error(error);
-  }
+  if (error) return console.error(error);
 
   ajustes = {};
 
@@ -1155,124 +1048,70 @@ async function cargarTodo() {
   ]);
 }
 
-document.addEventListener(
-  "DOMContentLoaded",
-  async () => {
-    actualizarImagenes();
-    actualizarUsuario();
+document.addEventListener("DOMContentLoaded", async () => {
+  actualizarImagenes();
+  actualizarUsuario();
 
-    if (!window.supabase) {
-      alert(
-        "No se pudo cargar Supabase. Revisa tu conexión."
-      );
-      return;
-    }
-
-    db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
-
-    try {
-      const { data } =
-        await db.auth.getSession();
-
-      const sesion =
-        data && data.session;
-
-      if (
-        sesion &&
-        (sesion.user.email || "")
-          .toLowerCase() ===
-          OWNER_EMAIL.toLowerCase()
-      ) {
-        propietario = true;
-        nombreUsuario =
-          "Jhon Benitrez";
-
-      } else {
-        const guardado =
-          JSON.parse(
-            localStorage.getItem(
-              SESSION_KEY
-            ) || "null"
-          );
-
-        if (
-          guardado &&
-          guardado.nombre
-        ) {
-          nombreUsuario =
-            guardado.nombre;
-        }
-      }
-
-      actualizarUsuario();
-      await cargarTodo();
-
-      db.channel(
-        "portafolio-cambios"
-      )
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "tareas"
-          },
-          cargarTareas
-        )
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "temas"
-          },
-          cargarTemas
-        )
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "ajustes"
-          },
-          cargarAjustes
-        )
-        .on(
-          "postgres_changes",
-          {
-            event: "*",
-            schema: "public",
-            table: "comentarios"
-          },
-          cargarComentarios
-        )
-        .subscribe();
-
-      setInterval(
-        cargarTodo,
-        45000
-      );
-
-      document.addEventListener(
-        "visibilitychange",
-        () => {
-          if (!document.hidden) {
-            cargarTodo();
-          }
-        }
-      );
-
-    } catch (error) {
-      console.error(error);
-      aviso(
-        "No se pudieron cargar los datos."
-      );
-    }
+  if (!window.supabase) {
+    alert("No se pudo cargar Supabase. Revisa tu conexión.");
+    return;
   }
-);
+
+  db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  try {
+    const { data } = await db.auth.getSession();
+    const sesion = data && data.session;
+
+    if (
+      sesion &&
+      (sesion.user.email || "").toLowerCase() ===
+      OWNER_EMAIL.toLowerCase()
+    ) {
+      propietario = true;
+      nombreUsuario = "Jhon Benitrez";
+    } else {
+      const guardado = JSON.parse(
+        localStorage.getItem(SESSION_KEY) || "null"
+      );
+
+      if (guardado && guardado.nombre) {
+        nombreUsuario = guardado.nombre;
+      }
+    }
+
+    actualizarUsuario();
+    await cargarTodo();
+
+    db.channel("portafolio-cambios")
+      .on("postgres_changes",
+        { event: "*", schema: "public", table: "tareas" },
+        cargarTareas)
+      .on("postgres_changes",
+        { event: "*", schema: "public", table: "temas" },
+        cargarTemas)
+      .on("postgres_changes",
+        { event: "*", schema: "public", table: "ajustes" },
+        cargarAjustes)
+      .on("postgres_changes",
+        { event: "*", schema: "public", table: "comentarios" },
+        cargarComentarios)
+      .subscribe();
+
+    setInterval(cargarTodo, 45000);
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) cargarTodo();
+    });
+
+  } catch (error) {
+    console.error(error);
+    aviso("No se pudieron cargar los datos.");
+  }
+});
 </script>
 </body>
 </html>

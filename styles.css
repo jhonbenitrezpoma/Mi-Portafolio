@@ -303,7 +303,7 @@ input:focus-visible {
   font-size: 13px;
 }
 
-/* UNIDADES CIRCULARES */
+/* BURBUJAS DE LAS UNIDADES */
 .unidades {
   gap: clamp(14px, 3vw, 35px);
   margin: 30px 0 44px;
@@ -508,29 +508,12 @@ input:focus-visible {
   text-align: center;
 }
 
-/* DESCRIPCIÓN Y ACCIONES */
-.detalle {
-  background: #101f32;
-  border: 1px solid #ec54748c;
-  border-radius: 9px;
-  padding: 13px;
-  overflow-wrap: anywhere;
-}
-
-.detalle h4 {
-  margin: 0 0 7px;
-}
-
-.detalle p {
-  font-size: 12px;
-  line-height: 1.5;
-  color: #bfd0de;
-}
-
-.acciones {
+.acciones,
+.acciones-propietario {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 7px;
+  margin-top: 12px;
 }
 
 .acciones a,
@@ -539,7 +522,7 @@ input:focus-visible {
   border: 0;
   border-radius: 5px;
   color: white;
-  padding: 7px 9px;
+  padding: 8px 10px;
   font-size: 11px;
   font-weight: 700;
   text-decoration: none;
@@ -644,7 +627,7 @@ input::placeholder {
   margin: 6px 0;
 }
 
-/* MODALES */
+/* VENTANAS */
 .modal {
   position: fixed;
   inset: 0;
@@ -738,6 +721,140 @@ input::placeholder {
   display: block;
 }
 
+/* PREVISUALIZACIÓN */
+.ventana-vista {
+  width: min(100%, 680px);
+}
+
+.etiqueta-vista {
+  color: #ffb6c5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.ventana-vista h2 {
+  padding-right: 25px;
+  overflow-wrap: anywhere;
+}
+
+#descripcionVista {
+  color: #c9d7e5;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.contenido-vista {
+  min-height: 150px;
+  max-height: 55vh;
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  background: #101d2e;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 15px;
+  color: #c7d4e0;
+  text-align: center;
+  font-size: 13px;
+}
+
+.contenido-vista img {
+  max-width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+}
+
+.contenido-vista iframe {
+  display: block;
+  width: 100%;
+  height: 50vh;
+  border: 0;
+  background: white;
+}
+
+/* TAJADA DE ESPADA */
+.efecto-espada {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  overflow: hidden;
+  pointer-events: none;
+  display: none;
+}
+
+.efecto-espada.cortar {
+  display: block;
+}
+
+.efecto-espada::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -25%;
+  width: 150%;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ff83a0 18%,
+    white 50%,
+    #ff83a0 82%,
+    transparent
+  );
+  box-shadow:
+    0 0 12px white,
+    0 0 28px var(--rosa);
+  transform: rotate(-20deg) scaleX(0);
+  animation: trazoEspada .48s ease-out forwards;
+}
+
+.efecto-espada::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffffffc7;
+  opacity: 0;
+  animation: destelloEspada .48s ease-out forwards;
+}
+
+@keyframes trazoEspada {
+  0% {
+    transform: rotate(-20deg) scaleX(0);
+    opacity: 0;
+  }
+
+  28% {
+    opacity: 1;
+  }
+
+  75% {
+    transform: rotate(-20deg) scaleX(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(-20deg) scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes destelloEspada {
+  0%, 45% {
+    opacity: 0;
+  }
+
+  58% {
+    opacity: .55;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 /* CELULARES */
 @media (max-width: 800px) {
   .cabecera {
@@ -797,5 +914,16 @@ input::placeholder {
 
   .panel-sugerencias {
     padding: 19px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .efecto-espada.cortar {
+    display: none;
+  }
+
+  .efecto-espada::before,
+  .efecto-espada::after {
+    animation: none;
   }
 }

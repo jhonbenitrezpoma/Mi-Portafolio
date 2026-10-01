@@ -3,1115 +3,1026 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portafolio Académico | Jhon Benitrez</title>
+  <title>Portafolio Académico | Jhon Benitrez - UPLA</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-
-<header class="cabecera">
-  <button id="btnEntrar" class="btn" onclick="abrirModal('modalAcceso')">🔑 Iniciar sesión</button>
-  <button id="btnSalir" class="btn-linea oculto" onclick="cerrarSesion()">Cerrar sesión</button>
-
-  <div class="marca">
-    <img id="logo" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA">
-    <div>
-      <h1>PORTAFOLIO ACADÉMICO</h1>
-      <small>Universidad Peruana Los Andes • Sistemas y Cómputo</small>
-    </div>
+  <div id="configBanner" class="config-banner contenido-oculto">
+    ⚠️ Falta conectar la base de datos.
   </div>
 
-  <nav class="menu">
-    <button class="activo" onclick="mostrarPantalla('inicio',this)">Presentación</button>
-    <button onclick="mostrarPantalla('cursos',this)">Cursos y tareas</button>
-    <button onclick="mostrarPantalla('sugerencias',this)">Sugerencias</button>
-  </nav>
+  <header class="navbar">
+    <div class="nav-left-zone">
+      <button id="btnAbrirLoginNav" class="btn-login-left" onclick="abrirModalAuth()">🔑 Iniciar Sesión / Ingresar</button>
+      <button id="btnSalirNav" class="btn-vintage-outline contenido-oculto" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
 
-  <span id="usuarioVisible" class="usuario">👁️ Visitante</span>
-</header>
-
-<section id="inicio" class="pantalla inicio">
-  <div class="inicio-contenido">
-    <div class="sello">PORTAFOLIO OFICIAL • UPLA 2026</div>
-
-    <div class="presentacion">
-      <div class="perfil">
-        <img id="fotoPerfil" alt="Foto de Jhon Benitrez">
-
-        <label id="cambiarFoto" class="cambiar-imagen oculto">
-          📷 Cambiar foto
-          <input type="file" accept="image/*" onchange="subirImagen(event,'foto_perfil')">
+    <div class="logo-container">
+      <div class="logo-wrapper">
+        <img id="logoHeaderImg" class="img-upla-header" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA">
+        <label id="btnCambiarLogo" class="btn-change-logo contenido-oculto" title="Cambiar logo">
+          📷
+          <input type="file" accept="image/*" onchange="subirImagenAjuste(event,'logo','imagenes')" hidden>
         </label>
-
-        <label id="cambiarLogo" class="cambiar-imagen oculto">
-          📷 Cambiar logo
-          <input type="file" accept="image/*" onchange="subirImagen(event,'logo')">
-        </label>
-
-        <h3>Jhon Benitrez Poma</h3>
-        <p>💻 Ingeniería de Sistemas y Cómputo</p>
-        <small>🏛️ UPLA - Huancayo, Perú</small>
       </div>
+      <div>
+        <h1 class="font-vintage-title">PORTAFOLIO ACADÉMICO</h1>
+        <p class="sub-logo">Universidad Peruana Los Andes • Sistemas y Cómputo</p>
+      </div>
+    </div>
 
-      <div class="intro">
-        <h2 id="bienvenida">Bienvenido a mi portafolio</h2>
+    <nav class="nav-screens" aria-label="Secciones">
+      <button class="nav-screen-btn active" onclick="navegarAPantalla('pantallaInicio')">🏛️ Presentación</button>
+      <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaCursos')">📚 Cursos y Tareas</button>
+      <button class="nav-screen-btn" onclick="navegarAPantalla('pantallaFeedback')">💬 Sugerencias</button>
+    </nav>
 
-        <p>
-          Bienvenido a mi plataforma académica en la
-          <strong>Universidad Peruana Los Andes</strong>.
-          Aquí organizo y comparto mis tareas, proyectos y guías del ciclo académico.
-        </p>
+    <div class="user-info">
+      <span id="userNameDisplay" class="user-name">Invitado</span>
+      <span id="userRoleBadge" class="badge badge-visitor">👁️ Visitante</span>
+    </div>
+  </header>
 
-        <div class="cajas">
-          <div class="caja">
-            <h4>📘 ¿De qué trata?</h4>
-            <p>Archivo mis tareas semanales, documentos, enlaces y proyectos de desarrollo.</p>
+  <main>
+    <section id="pantallaInicio" class="pantalla-seccion vintage-presentation-bg">
+      <div class="vintage-container">
+        <div class="vintage-badge-top">PORTAFOLIO OFICIAL • UPLA 2026</div>
+
+        <div class="vintage-hero-grid">
+          <div class="vintage-profile-card">
+            <div class="vintage-frame">
+              <img id="fotoPerfilImg" class="avatar-vintage" src="" alt="Foto de Jhon Benitrez">
+              <label id="btnCambiarFoto" class="btn-change-photo contenido-oculto">
+                📷 Cambiar foto
+                <input type="file" accept="image/*" onchange="subirImagenAjuste(event,'foto_perfil','imagenes')" hidden>
+              </label>
+            </div>
+            <div>
+              <h3 class="author-title">Jhon Benitrez Poma</h3>
+              <p class="author-role">💻 Ingeniería de Sistemas y Cómputo</p>
+              <p class="author-location">🏛️ UPLA - Huancayo, Perú</p>
+            </div>
           </div>
 
-          <div class="caja">
-            <h4>🎯 ¿Para qué sirve?</h4>
-            <p>Permite revisar mis entregas y mostrar mi progreso académico.</p>
+          <div class="vintage-info-card">
+            <h2 id="saludoBienvenida" class="font-vintage-title">¡Bienvenido/a a mi Portafolio!</h2>
+            <p class="lead-text">
+              Bienvenido a mi plataforma académica en la <strong>Universidad Peruana Los Andes</strong>.
+              Aquí organizo y comparto mis tareas, proyectos de código y guías prácticas.
+            </p>
+
+            <div class="vintage-boxes-container">
+              <div class="v-box">
+                <h4>📘 ¿De qué trata este portafolio?</h4>
+                <p>Archivo tareas semanales, documentación, enlaces a proyectos y guías de desarrollo de software.</p>
+              </div>
+              <div class="v-box v-box-burgundy">
+                <h4>🎯 ¿Para qué me sirve?</h4>
+                <p>Facilita la revisión de mis trabajos y muestra la aplicación práctica de mis conocimientos.</p>
+              </div>
+            </div>
+
+            <button class="btn-vintage-gold" onclick="navegarAPantalla('pantallaCursos')">
+              📂 Explorar Cursos y Tareas
+            </button>
           </div>
         </div>
-
-        <button class="btn" onclick="mostrarPantalla('cursos',document.querySelectorAll('.menu button')[1])">
-          Explorar cursos y tareas
-        </button>
       </div>
+    </section>
+
+    <section id="pantallaCursos" class="pantalla-seccion cursos-bg contenido-oculto">
+      <div class="cursos-main-container">
+        <div class="courses-selector-bar">
+          <button class="course-tab-btn active" onclick="cambiarCurso('curso1',event)">📱 Desarrollo de Aplicaciones 1</button>
+          <button class="course-tab-btn" onclick="cambiarCurso('curso2',event)">🧮 Algoritmos y Estructuras de Datos</button>
+        </div>
+
+        <div class="course-header-banner">
+          <h2 id="tituloCurso" class="font-vintage-title">📱 Desarrollo de Aplicaciones 1</h2>
+          <p>Elige una unidad y después una semana. Las tareas aparecerán al abrir la semana.</p>
+        </div>
+
+        <div class="unidades-pills">
+          <button class="pill-btn active" onclick="mostrarUnidad(1)">Unidad I</button>
+          <button class="pill-btn" onclick="mostrarUnidad(2)">Unidad II</button>
+          <button class="pill-btn" onclick="mostrarUnidad(3)">Unidad III</button>
+          <button class="pill-btn" onclick="mostrarUnidad(4)">Unidad IV</button>
+        </div>
+
+        <div id="semanasContainer" class="semanas-grid"></div>
+      </div>
+    </section>
+
+    <section id="pantallaFeedback" class="pantalla-seccion feedback-bg contenido-oculto">
+      <div class="feedback-card-vintage">
+        <h3 class="font-vintage-title">💬 Notas y sugerencias</h3>
+        <p>Deja un mensaje sobre las tareas y proyectos presentados.</p>
+
+        <form class="feedback-form" onsubmit="guardarComentario(event)">
+          <div class="form-row-vintage">
+            <input id="feedbackNombre" type="text" maxlength="60" placeholder="Tu nombre" required>
+            <input id="feedbackMsg" type="text" maxlength="500" placeholder="Escribe tu sugerencia" required>
+            <button id="btnEnviarComentario" class="btn-vintage-gold" type="submit">Enviar sugerencia</button>
+          </div>
+        </form>
+
+        <div id="comentariosList" class="comentarios-list-vintage"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modalAuthScreen" class="modal" role="dialog" aria-modal="true" aria-label="Acceso al portafolio">
+    <div class="modal-vintage">
+      <button class="close-modal" type="button" onclick="cerrarModalAuth()" aria-label="Cerrar">✕</button>
+      <div class="vintage-card-header">
+        <img id="logoLoginImg" class="img-upla-auth" src="https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png" alt="Logo UPLA">
+        <h2 class="font-vintage-title">Acceso al Portafolio</h2>
+        <p>Ingeniería de Sistemas y Cómputo - UPLA</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="tabLoginBtn" class="auth-tab-btn active" onclick="mostrarTabAuth('login')">Ingresar</button>
+        <button id="tabRegisterBtn" class="auth-tab-btn" onclick="mostrarTabAuth('register')">Registrarse</button>
+      </div>
+
+      <form id="formLogin" onsubmit="procesarLogin(event)" autocomplete="off">
+        <div class="form-group-vintage">
+          <label for="loginUsuario">Usuario / Estudiante</label>
+          <input id="loginUsuario" type="text" placeholder="Ej: Jhon Benitrez" required>
+        </div>
+        <div class="form-group-vintage">
+          <label for="loginPass">Contraseña</label>
+          <div class="password-input-wrapper">
+            <input id="loginPass" type="password" placeholder="Propietario: contraseña / Visitante: vacío">
+            <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('loginPass',this)" aria-label="Mostrar contraseña">👁️</button>
+          </div>
+        </div>
+        <button id="btnLoginSubmit" class="btn-vintage-gold btn-block" type="submit">Ingresar</button>
+      </form>
+
+      <form id="formRegister" class="contenido-oculto" onsubmit="procesarRegistro(event)" autocomplete="off">
+        <div class="form-group-vintage">
+          <label for="regUsuario">Nombre completo</label>
+          <input id="regUsuario" type="text" required>
+        </div>
+        <div class="form-group-vintage">
+          <label for="regPass">Contraseña</label>
+          <div class="password-input-wrapper">
+            <input id="regPass" type="password" required>
+            <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('regPass',this)" aria-label="Mostrar contraseña">👁️</button>
+          </div>
+        </div>
+        <div class="form-group-vintage">
+          <label for="regCorreo">Correo electrónico (opcional)</label>
+          <input id="regCorreo" type="email">
+        </div>
+        <button class="btn-vintage-gold btn-block" type="submit">Crear cuenta e ingresar</button>
+      </form>
     </div>
   </div>
-</section>
 
-<section id="cursos" class="pantalla cursos oculto">
-  <div class="ancho">
-    <div class="lista-cursos">
-      <button class="activo" onclick="cambiarCurso('curso1',this)">
-        📱 Desarrollo de Aplicaciones 1
-      </button>
-      <button onclick="cambiarCurso('curso2',this)">
-        🧮 Algoritmos y Estructuras de Datos
-      </button>
+  <div id="modalSubirTarea" class="modal" role="dialog" aria-modal="true" aria-label="Agregar o editar tarea">
+    <div class="modal-vintage">
+      <button class="close-modal" type="button" onclick="cerrarModalSubirTarea()" aria-label="Cerrar">✕</button>
+      <h3 id="modalTareaTituloAccion" class="font-vintage-title">📤 Agregar nueva tarea</h3>
+      <p>Adjunta un archivo o escribe un enlace a tu proyecto.</p>
+
+      <form onsubmit="guardarNuevaTareaPropietario(event)">
+        <input id="modalKeyTarea" type="hidden">
+        <input id="modalEditId" type="hidden">
+
+        <div class="form-group-vintage">
+          <label for="taskTitulo">Título de la tarea</label>
+          <input id="taskTitulo" type="text" placeholder="Ej: Diagrama UML" required>
+        </div>
+
+        <div class="form-group-vintage">
+          <label for="taskTipo">Tipo de entrega</label>
+          <select id="taskTipo" onchange="cambiarTipoInputTask()">
+            <option value="archivo">📄 Subir archivo</option>
+            <option value="enlace">🔗 Enlace web</option>
+          </select>
+        </div>
+
+        <div id="boxTaskFile" class="form-group-vintage">
+          <label for="taskFile">Seleccionar archivo</label>
+          <input id="taskFile" type="file">
+        </div>
+
+        <div id="boxTaskUrl" class="form-group-vintage contenido-oculto">
+          <label for="taskUrl">URL del proyecto</label>
+          <input id="taskUrl" type="url" placeholder="https://...">
+        </div>
+
+        <button id="btnGuardarTarea" class="btn-vintage-gold btn-block" type="submit">Guardar tarea</button>
+      </form>
     </div>
+  </div>
 
-    <div class="curso-titulo">
-      <h2 id="tituloCurso">📱 Desarrollo de Aplicaciones 1</h2>
-      <p>Elige una unidad, abre una semana y selecciona una burbuja para previsualizar la tarea.</p>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Pincelada negra irregular que cruza la pantalla al elegir una tarea -->
+  <div id="espadaEfecto" class="espada-efecto" aria-hidden="true">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="none" focusable="false">
+      <path class="pincel-negro" d="M-90 466 L56 432 L120 447 L180 414 L263 427 L342 393 L421 412 L502 374 L565 393 L650 359 L727 380 L810 348 L892 368 L973 335 L1040 355 L1130 323 L1290 337 L1290 420 L1173 405 L1108 428 L1030 411 L947 442 L867 429 L794 461 L712 446 L636 476 L563 462 L481 496 L411 483 L327 518 L251 500 L178 535 L91 518 L-90 552 Z"></path>
+      <path class="pincel-rasgo" d="M-30 491 C320 445 750 388 1240 348"></path>
+      <path class="pincel-gota" d="M256 510 L290 571 L273 541 Z M644 470 L671 536 L659 486 Z M997 428 L1027 503 L1008 451 Z"></path>
+    </svg>
+  </div>
+
+  <div id="modalVistaTarea" class="modal" role="dialog" aria-modal="true" aria-labelledby="vistaTareaTitulo" onclick="if(event.target===this)cerrarVistaTarea()">
+    <div class="modal-vintage vista-tarea">
+      <button class="close-modal" type="button" onclick="cerrarVistaTarea()" aria-label="Cerrar previsualización">✕</button>
+      <h3 id="vistaTareaTitulo" class="font-vintage-title"></h3>
+      <p id="vistaTareaDescripcion" class="vista-descripcion"></p>
+      <figure class="vista-tema">
+        <img id="vistaTareaImagen" alt="Imagen ilustrativa del tema">
+        <figcaption id="vistaTareaImagenPie"></figcaption>
+      </figure>
+      <div id="vistaTareaContenido" class="vista-contenido"></div>
+      <div id="vistaTareaAcciones" class="task-action-buttons-group"></div>
     </div>
-
-    <div class="unidades">
-      <button class="unidad activo" onclick="elegirUnidad(1)">Unidad I</button>
-      <button class="unidad" onclick="elegirUnidad(2)">Unidad II</button>
-      <button class="unidad" onclick="elegirUnidad(3)">Unidad III</button>
-      <button class="unidad" onclick="elegirUnidad(4)">Unidad IV</button>
-    </div>
-
-    <div id="semanas" class="semanas"></div>
   </div>
-</section>
 
-<section id="sugerencias" class="pantalla sugerencias oculto">
-  <div class="panel-sugerencias">
-    <h2>💬 Notas y sugerencias</h2>
-    <p>Deja un comentario sobre las tareas o los proyectos presentados.</p>
+  <script>
+    // Conexión existente: conservar estos valores.
+    const SUPABASE_URL = "https://pxjqwdmccnfxfpuccqgn.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_6rodUeO0xzlqrwXTw1i0cQ_S7BOiRq4";
+    const OWNER_EMAIL = "tuhermana1591q@gmail.com";
 
-    <form onsubmit="guardarComentario(event)">
-      <div class="fila">
-        <input id="nombreComentario" placeholder="Tu nombre" maxlength="60" required>
-        <input id="mensajeComentario" placeholder="Tu sugerencia" maxlength="500" required>
-        <button class="btn" type="submit">Enviar</button>
-      </div>
-    </form>
+    const NOMBRES_PROPIETARIO = ["jhon benitrez", "jhon benitres", "jhon benitrez poma"];
+    const BUCKET = "portafolio";
+    const SESSION_KEY = "sesion_portafolio_upla";
+    const LOGO_POR_DEFECTO = "https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png";
+    const AVATAR_POR_DEFECTO = "data:image/svg+xml;utf8," + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">' +
+      '<rect width="180" height="180" fill="#cbd5e1"/>' +
+      '<circle cx="90" cy="70" r="32" fill="#94a3b8"/>' +
+      '<path d="M30 170c0-33 27-58 60-58s60 25 60 58z" fill="#94a3b8"/></svg>'
+    );
 
-    <div id="listaComentarios"></div>
-  </div>
-</section>
+    const configurado =
+      !SUPABASE_URL.includes("PEGA_AQUI") &&
+      !SUPABASE_ANON_KEY.includes("PEGA_AQUI") &&
+      !OWNER_EMAIL.includes("PEGA_AQUI");
 
-<!-- INICIO DE SESIÓN -->
-<div id="modalAcceso" class="modal" onclick="cerrarSiFondo(event,'modalAcceso')">
-  <div class="ventana">
-    <button class="cerrar" onclick="cerrarModal('modalAcceso')" aria-label="Cerrar">×</button>
-    <h2>Acceso al portafolio</h2>
+    let db = null;
+    let usuarioActual = "Invitado";
+    let esPropietario = false;
+    let cursoActual = "curso1";
+    let unidadActual = 1;
+    let semanaAbierta = null;
+    let tareasPorClave = {};
+    let tareaSeleccionadaPorClave = {};
+    let temasPorClave = {};
+    let comentarios = [];
+    let ajustes = {};
+    let toastTimer;
 
-    <div class="pestanias">
-      <button id="tabEntrar" class="activo" onclick="cambiarTab('entrar')">Ingresar</button>
-      <button id="tabRegistro" onclick="cambiarTab('registro')">Registrarse</button>
-    </div>
+    const nombresCursos = {
+      curso1: "📱 Desarrollo de Aplicaciones 1",
+      curso2: "🧮 Algoritmos y Estructuras de Datos"
+    };
 
-    <form id="formEntrar" onsubmit="iniciarSesion(event)">
-      <div class="campo">
-        <label for="usuarioAcceso">Usuario</label>
-        <input id="usuarioAcceso" required placeholder="Ej: Jhon Benitrez">
-      </div>
+    function esc(valor) {
+      return String(valor ?? "").replace(/[&<>"']/g, caracter => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[caracter]);
+    }
 
-      <div class="campo">
-        <label for="claveAcceso">Contraseña del propietario</label>
-        <input id="claveAcceso" type="password" placeholder="Visitante: dejar vacío">
-      </div>
+    function toast(mensaje) {
+      const elemento = document.getElementById("toast");
+      elemento.textContent = mensaje;
+      elemento.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => elemento.classList.remove("show"), 3200);
+    }
 
-      <button class="btn" type="submit">Ingresar</button>
-    </form>
+    function requiereConfig() {
+      if (configurado) return true;
+      alert("Completa los datos de Supabase en index.html.");
+      return false;
+    }
 
-    <form id="formRegistro" class="oculto" onsubmit="registrarVisitante(event)">
-      <div class="campo">
-        <label for="nombreRegistro">Nombre completo</label>
-        <input id="nombreRegistro" required>
-      </div>
+    function rutaDesdeUrl(url) {
+      const marca = `/${BUCKET}/`;
+      const indice = (url || "").indexOf(marca);
+      return indice === -1 ? null : decodeURIComponent(url.substring(indice + marca.length).split("?")[0]);
+    }
 
-      <div class="campo">
-        <label for="claveRegistro">Contraseña</label>
-        <input id="claveRegistro" type="password" required>
-      </div>
+    async function borrarArchivoStorage(url) {
+      const ruta = rutaDesdeUrl(url);
+      if (!ruta) return;
+      const { error } = await db.storage.from(BUCKET).remove([ruta]);
+      if (error) console.warn("No se pudo borrar el archivo anterior:", error.message);
+    }
 
-      <div class="campo">
-        <label for="correoRegistro">Correo opcional</label>
-        <input id="correoRegistro" type="email">
-      </div>
+    async function subirArchivoStorage(archivo, carpeta) {
+      const extension = ((archivo.name.split(".").pop() || "bin").toLowerCase())
+        .replace(/[^a-z0-9]/g, "") || "bin";
+      const ruta = `${carpeta}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${extension}`;
+      const { error } = await db.storage.from(BUCKET).upload(ruta, archivo, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: archivo.type || undefined
+      });
+      if (error) throw error;
+      return db.storage.from(BUCKET).getPublicUrl(ruta).data.publicUrl;
+    }
 
-      <button class="btn" type="submit">Crear cuenta e ingresar</button>
-    </form>
-  </div>
-</div>
+    function nombreDescarga(tarea) {
+      const extension = (tarea.url || "").split("?")[0].match(/\.([a-z0-9]+)$/i);
+      const nombre = String(tarea.nombre).replace(/[\\/:*?"<>|]/g, "").trim() || "archivo";
+      return nombre + (extension ? "." + extension[1] : "");
+    }
 
-<!-- AGREGAR O EDITAR TAREA -->
-<div id="modalTarea" class="modal" onclick="cerrarSiFondo(event,'modalTarea')">
-  <div class="ventana">
-    <button class="cerrar" onclick="cerrarModal('modalTarea')" aria-label="Cerrar">×</button>
-    <h2 id="tituloModalTarea">Agregar tarea</h2>
+    document.addEventListener("DOMContentLoaded", async () => {
+      limpiarFormulariosAuth();
+      navegarAPantalla("pantallaInicio");
+      aplicarAjustes();
 
-    <form onsubmit="guardarTarea(event)">
-      <input id="claveSemana" type="hidden">
-      <input id="idEdicion" type="hidden">
+      if (!configurado || !window.supabase) {
+        document.getElementById("configBanner").classList.remove("contenido-oculto");
+        actualizarInterfazUsuario();
+        renderizarComentarios();
+        return;
+      }
 
-      <div class="campo">
-        <label for="nombreTarea">Nombre de la tarea</label>
-        <input id="nombreTarea" required>
-      </div>
+      db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      await restaurarSesion();
+      await cargarTodo();
+      suscribirseTiempoReal();
 
-      <div class="campo">
-        <label for="tipoTarea">Tipo de entrega</label>
-        <select id="tipoTarea" onchange="cambiarTipoTarea()">
-          <option value="archivo">📄 Archivo</option>
-          <option value="enlace">🔗 Enlace</option>
-        </select>
-      </div>
-
-      <div id="campoArchivo" class="campo">
-        <label for="archivoTarea">Seleccionar archivo</label>
-        <input id="archivoTarea" type="file">
-      </div>
-
-      <div id="campoEnlace" class="campo oculto">
-        <label for="enlaceTarea">URL</label>
-        <input id="enlaceTarea" type="url" placeholder="https://...">
-      </div>
-
-      <button id="btnGuardarTarea" class="btn" type="submit">Guardar tarea</button>
-    </form>
-  </div>
-</div>
-
-<!-- PREVISUALIZACIÓN DE TAREA -->
-<div id="modalVista" class="modal" role="dialog" aria-modal="true"
-     aria-labelledby="tituloVista" onclick="cerrarSiFondo(event,'modalVista')">
-  <div class="ventana ventana-vista">
-    <button class="cerrar" onclick="cerrarVista()" aria-label="Cerrar previsualización">×</button>
-    <div class="etiqueta-vista">VISTA PREVIA DE LA TAREA</div>
-    <h2 id="tituloVista"></h2>
-    <p id="descripcionVista"></p>
-    <div id="contenidoVista" class="contenido-vista"></div>
-    <div id="accionesVista" class="acciones"></div>
-  </div>
-</div>
-
-<!-- ANIMACIÓN DEL CORTE DE ESPADA -->
-<div id="efectoEspada" class="efecto-espada" aria-hidden="true"></div>
-
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-<script>
-/* CONEXIÓN ORIGINAL A SUPABASE */
-const SUPABASE_URL = "https://pxjqwdmccnfxfpuccqgn.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_6rodUeO0xzlqrwXTw1i0cQ_S7BOiRq4";
-const OWNER_EMAIL = "tuhermana1591q@gmail.com";
-
-const BUCKET = "portafolio";
-const SESSION_KEY = "sesion_portafolio_upla";
-
-const NOMBRES_PROPIETARIO = [
-  "jhon benitrez",
-  "jhon benitres",
-  "jhon benitrez poma"
-];
-
-const LOGO_DEFECTO =
-  "https://upla.edu.pe/wp-content/uploads/2021/07/LOGO-UPLA.png";
-
-const FOTO_DEFECTO = "data:image/svg+xml;utf8," + encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180">' +
-  '<rect width="180" height="180" fill="#cbd5e1"/>' +
-  '<circle cx="90" cy="70" r="32" fill="#94a3b8"/>' +
-  '<path d="M30 170c0-33 27-58 60-58s60 25 60 58z" fill="#94a3b8"/>' +
-  '</svg>'
-);
-
-let db = null;
-let propietario = false;
-let nombreUsuario = "Invitado";
-let curso = "curso1";
-let unidad = 1;
-let semanaAbierta = null;
-
-let tareas = {};
-let temas = {};
-let comentarios = [];
-let ajustes = {};
-let tareaElegida = {};
-
-const nombresCursos = {
-  curso1: "📱 Desarrollo de Aplicaciones 1",
-  curso2: "🧮 Algoritmos y Estructuras de Datos"
-};
-
-function elemento(id) {
-  return document.getElementById(id);
-}
-
-function escapar(valor) {
-  return String(valor ?? "").replace(/[&<>"']/g, c =>
-    ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    }[c])
-  );
-}
-
-function aviso(texto) {
-  const caja = elemento("toast");
-  caja.textContent = texto;
-  caja.classList.add("visible");
-
-  clearTimeout(window.timerAviso);
-  window.timerAviso = setTimeout(
-    () => caja.classList.remove("visible"),
-    3200
-  );
-}
-
-function abrirModal(id) {
-  elemento(id).classList.add("abierto");
-}
-
-function cerrarModal(id) {
-  elemento(id).classList.remove("abierto");
-}
-
-function cerrarSiFondo(evento, id) {
-  if (evento.target === elemento(id)) {
-    if (id === "modalVista") cerrarVista();
-    else cerrarModal(id);
-  }
-}
-
-function mostrarPantalla(id, boton) {
-  document.querySelectorAll(".pantalla").forEach(
-    x => x.classList.add("oculto")
-  );
-
-  elemento(id).classList.remove("oculto");
-
-  document.querySelectorAll(".menu button").forEach(
-    x => x.classList.remove("activo")
-  );
-
-  if (boton) boton.classList.add("activo");
-}
-
-function actualizarUsuario() {
-  elemento("usuarioVisible").textContent = propietario
-    ? "👑 Propietario"
-    : nombreUsuario === "Invitado"
-      ? "👁️ Visitante"
-      : "👁️ " + nombreUsuario;
-
-  elemento("btnEntrar").classList.toggle(
-    "oculto",
-    nombreUsuario !== "Invitado"
-  );
-
-  elemento("btnSalir").classList.toggle(
-    "oculto",
-    nombreUsuario === "Invitado"
-  );
-
-  elemento("cambiarFoto").classList.toggle("oculto", !propietario);
-  elemento("cambiarLogo").classList.toggle("oculto", !propietario);
-
-  elemento("bienvenida").textContent =
-    nombreUsuario === "Invitado"
-      ? "Bienvenido a mi portafolio"
-      : "Hola, " + nombreUsuario;
-
-  mostrarSemanas();
-  mostrarComentarios();
-}
-
-function cambiarTab(tab) {
-  elemento("formEntrar").classList.toggle("oculto", tab !== "entrar");
-  elemento("formRegistro").classList.toggle("oculto", tab !== "registro");
-  elemento("tabEntrar").classList.toggle("activo", tab === "entrar");
-  elemento("tabRegistro").classList.toggle("activo", tab === "registro");
-}
-
-async function iniciarSesion(evento) {
-  evento.preventDefault();
-
-  const nombre = elemento("usuarioAcceso").value.trim();
-  const clave = elemento("claveAcceso").value;
-
-  if (NOMBRES_PROPIETARIO.includes(nombre.toLowerCase())) {
-    if (!db) return alert("No se pudo conectar a Supabase.");
-    if (!clave) return alert("Escribe la contraseña del propietario.");
-
-    const { error } = await db.auth.signInWithPassword({
-      email: OWNER_EMAIL,
-      password: clave
+      setInterval(cargarTodo, 45000);
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) cargarTodo();
+      });
     });
 
-    if (error) return alert("Contraseña incorrecta.");
+    async function restaurarSesion() {
+      const { data } = await db.auth.getSession();
+      const sesion = data?.session;
 
-    propietario = true;
-    nombreUsuario = "Jhon Benitrez";
-    localStorage.removeItem(SESSION_KEY);
-  } else {
-    propietario = false;
-    nombreUsuario = nombre;
-    localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre }));
-  }
-
-  elemento("formEntrar").reset();
-  cerrarModal("modalAcceso");
-  actualizarUsuario();
-}
-
-function registrarVisitante(evento) {
-  evento.preventDefault();
-  const nombre = elemento("nombreRegistro").value.trim();
-
-  if (NOMBRES_PROPIETARIO.includes(nombre.toLowerCase())) {
-    return alert("Ese nombre está reservado.");
-  }
-
-  propietario = false;
-  nombreUsuario = nombre;
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre }));
-
-  elemento("formRegistro").reset();
-  cerrarModal("modalAcceso");
-  actualizarUsuario();
-}
-
-async function cerrarSesion() {
-  if (db) await db.auth.signOut();
-
-  localStorage.removeItem(SESSION_KEY);
-  propietario = false;
-  nombreUsuario = "Invitado";
-  actualizarUsuario();
-
-  mostrarPantalla(
-    "inicio",
-    document.querySelectorAll(".menu button")[0]
-  );
-}
-
-function cambiarCurso(nuevoCurso, boton) {
-  curso = nuevoCurso;
-  semanaAbierta = null;
-  elemento("tituloCurso").textContent = nombresCursos[nuevoCurso];
-
-  document.querySelectorAll(".lista-cursos button").forEach(
-    x => x.classList.remove("activo")
-  );
-
-  boton.classList.add("activo");
-  elegirUnidad(1);
-}
-
-function elegirUnidad(numero) {
-  unidad = numero;
-  semanaAbierta = null;
-
-  document.querySelectorAll(".unidad").forEach((boton, indice) => {
-    boton.classList.toggle("activo", indice + 1 === numero);
-  });
-
-  mostrarSemanas();
-}
-
-function elegirSemana(clave) {
-  semanaAbierta = semanaAbierta === clave ? null : clave;
-  mostrarSemanas();
-  document.querySelector(`[data-semana="${clave}"]`)?.focus();
-}
-
-function elegirTarea(clave, indice) {
-  const tarea = (tareas[clave] || [])[indice];
-  if (!tarea) return;
-
-  tareaElegida[clave] = indice;
-  mostrarSemanas();
-
-  /* Reinicia y reproduce el efecto de la espada. */
-  const efecto = elemento("efectoEspada");
-  efecto.classList.remove("cortar");
-  void efecto.offsetWidth;
-  efecto.classList.add("cortar");
-
-  /* La ventana aparece después del corte. */
-  window.setTimeout(() => {
-    efecto.classList.remove("cortar");
-    abrirVista(clave, indice);
-  }, 480);
-}
-
-/* La descripción usa los datos de la tarea.
-   No lee el contenido interno del archivo. */
-function descripcionAutomatica(tarea, tema) {
-  const tipo = tarea.tipo === "archivo" ? "Archivo" : "Enlace";
-  const contexto = tema
-    ? `, correspondiente al tema «${tema}»`
-    : "";
-
-  return `${tipo} de la actividad «${tarea.nombre}»${contexto}. Ábrelo para revisar el contenido completo.`;
-}
-
-function nombreDescarga(tarea) {
-  const extension = (tarea.url || "")
-    .split("?")[0]
-    .match(/\.([a-z0-9]+)$/i);
-
-  const nombre = String(tarea.nombre)
-    .replace(/[\\/:*?"<>|]/g, "")
-    .trim() || "archivo";
-
-  return nombre + (extension ? "." + extension[1] : "");
-}
-
-function mostrarSemanas() {
-  const contenedor = elemento("semanas");
-  if (!contenedor) return;
-
-  contenedor.innerHTML = "";
-
-  for (let i = 0; i < 4; i++) {
-    const numero = (unidad - 1) * 4 + i + 1;
-    const clave = `${curso}_U${unidad}_S${numero}`;
-    const tema = temas[clave] || "";
-    const lista = tareas[clave] || [];
-    const abierta = semanaAbierta === clave;
-
-    let html = `
-      <button type="button" class="abrir-semana"
-        data-semana="${clave}"
-        onclick="elegirSemana('${clave}')"
-        aria-expanded="${abierta}">
-        <span class="foto-semana"></span>
-        <span class="nombre-semana">Semana ${numero}</span>
-        <span class="ver-semana">
-          ${abierta ? "Cerrar tareas −" : "Ver tareas +"}
-        </span>
-      </button>
-
-      <div class="tema">
-        ${tema ? "📘 " + escapar(tema) : "Sin tema asignado"}
-      </div>
-
-      ${
-        propietario
-          ? `<button class="mini" onclick="editarTema('${clave}')">✏️ Editar tema</button>`
-          : ""
-      }
-    `;
-
-    if (abierta) {
-      html += `<div class="cuerpo-semana">`;
-
-      if (lista.length === 0) {
-        html += `<p class="ayuda">Todavía no hay tareas publicadas.</p>`;
+      if (sesion && (sesion.user.email || "").toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+        esPropietario = true;
+        usuarioActual = "Jhon Benitrez";
       } else {
-        html += `
-          <div class="contador">✔ ${lista.length} tarea(s) disponible(s)</div>
-          <p class="ayuda">Pulsa una burbuja para previsualizar la tarea.</p>
-          <div class="burbujas" role="group" aria-label="Tareas de la semana ${numero}">
-        `;
+        let guardada = null;
+        try { guardada = JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch {}
+        if (guardada && !guardada.esAdmin) usuarioActual = guardada.nombre;
+      }
+      actualizarInterfazUsuario();
+    }
 
-        lista.forEach((tarea, indice) => {
-          const activa = tareaElegida[clave] === indice;
+    async function cargarAjustes() {
+      const { data, error } = await db.from("ajustes").select("clave, valor");
+      if (error) return console.error(error);
+      ajustes = {};
+      (data || []).forEach(fila => { ajustes[fila.clave] = fila.valor; });
+      aplicarAjustes();
+    }
 
-          html += `
-            <button type="button"
-              class="burbuja ${activa ? "activo" : ""}"
-              aria-pressed="${activa}"
-              title="${escapar(tarea.nombre)}"
-              onclick="elegirTarea('${clave}',${indice})">
+    async function cargarTareas() {
+      const { data, error } = await db.from("tareas").select("*").order("creado_en", { ascending: true });
+      if (error) return console.error(error);
+      tareasPorClave = {};
+      (data || []).forEach(tarea => {
+        if (!tareasPorClave[tarea.clave]) tareasPorClave[tarea.clave] = [];
+        tareasPorClave[tarea.clave].push(tarea);
+      });
+      renderizarUnidad();
+    }
 
-              <span class="icono">
-                ${tarea.tipo === "archivo" ? "📄" : "🔗"}
-              </span>
+    async function cargarTemas() {
+      const { data, error } = await db.from("temas").select("clave, titulo");
+      if (error) return console.error(error);
+      temasPorClave = {};
+      (data || []).forEach(tema => { temasPorClave[tema.clave] = tema.titulo; });
+      renderizarUnidad();
+    }
 
-              <span class="texto">
-                ${escapar(tarea.nombre)}
-              </span>
-            </button>
-          `;
+    async function cargarComentarios() {
+      const { data, error } = await db.from("comentarios").select("*").order("creado_en", { ascending: false });
+      if (error) return console.error(error);
+      comentarios = data || [];
+      renderizarComentarios();
+    }
+
+    async function cargarTodo() {
+      await Promise.all([cargarAjustes(), cargarTareas(), cargarTemas(), cargarComentarios()]);
+    }
+
+    function suscribirseTiempoReal() {
+      const aviso = () => {
+        if (!esPropietario) toast("🔄 El propietario actualizó el contenido");
+      };
+
+      db.channel("portafolio-cambios")
+        .on("postgres_changes", { event: "*", schema: "public", table: "ajustes" }, () => {
+          cargarAjustes(); aviso();
+        })
+        .on("postgres_changes", { event: "*", schema: "public", table: "tareas" }, () => {
+          cargarTareas(); aviso();
+        })
+        .on("postgres_changes", { event: "*", schema: "public", table: "temas" }, () => {
+          cargarTemas(); aviso();
+        })
+        .on("postgres_changes", { event: "*", schema: "public", table: "comentarios" }, cargarComentarios)
+        .subscribe();
+    }
+
+    function aplicarAjustes() {
+      document.getElementById("fotoPerfilImg").src = ajustes.foto_perfil || AVATAR_POR_DEFECTO;
+      document.getElementById("logoHeaderImg").src = ajustes.logo || LOGO_POR_DEFECTO;
+      document.getElementById("logoLoginImg").src = ajustes.logo || LOGO_POR_DEFECTO;
+    }
+
+    async function subirImagenAjuste(evento, clave, carpeta) {
+      const archivo = evento.target.files[0];
+      evento.target.value = "";
+      if (!archivo || !esPropietario || !requiereConfig()) return;
+      if (!archivo.type.startsWith("image/")) return alert("Selecciona una imagen.");
+      if (archivo.size > 5 * 1024 * 1024) return alert("La imagen supera los 5 MB.");
+
+      toast("⏳ Subiendo imagen...");
+      try {
+        const anterior = ajustes[clave];
+        const url = await subirArchivoStorage(archivo, carpeta);
+        const { error } = await db.from("ajustes").upsert({
+          clave,
+          valor: url,
+          updated_at: new Date().toISOString()
         });
+        if (error) throw error;
+        ajustes[clave] = url;
+        aplicarAjustes();
+        if (anterior) borrarArchivoStorage(anterior);
+        toast("✅ Imagen guardada");
+      } catch (error) {
+        console.error(error);
+        alert("No se pudo guardar la imagen: " + (error.message || error));
+      }
+    }
 
-        html += `</div>`;
+    function abrirModalAuth() {
+      limpiarFormulariosAuth();
+      document.getElementById("modalAuthScreen").style.display = "flex";
+    }
 
-        if (propietario && Number.isInteger(tareaElegida[clave])) {
-          const indice = tareaElegida[clave];
-          const seleccionada = lista[indice];
+    function cerrarModalAuth() {
+      document.getElementById("modalAuthScreen").style.display = "none";
+    }
 
-          if (seleccionada) {
-            html += `
-              <div class="acciones acciones-propietario">
-                <button class="naranja"
-                  onclick="editarTarea('${clave}',${indice})">
-                  ✏️ Editar selección
-                </button>
+    function togglePasswordVisibility(id, boton) {
+      const entrada = document.getElementById(id);
+      entrada.type = entrada.type === "password" ? "text" : "password";
+      boton.textContent = entrada.type === "password" ? "👁️" : "🙈";
+    }
 
-                <button class="rojo"
-                  onclick="eliminarTarea('${clave}',${indice})">
-                  🗑️ Eliminar selección
-                </button>
-              </div>
-            `;
-          }
+    function limpiarFormulariosAuth() {
+      document.getElementById("formLogin").reset();
+      document.getElementById("formRegister").reset();
+    }
+
+    function navegarAPantalla(id) {
+      document.querySelectorAll(".pantalla-seccion").forEach(seccion => {
+        seccion.classList.toggle("contenido-oculto", seccion.id !== id);
+      });
+      const ids = ["pantallaInicio", "pantallaCursos", "pantallaFeedback"];
+      document.querySelectorAll(".nav-screen-btn").forEach((boton, indice) => {
+        boton.classList.toggle("active", ids[indice] === id);
+      });
+    }
+
+    function mostrarTabAuth(tab) {
+      limpiarFormulariosAuth();
+      document.getElementById("formLogin").classList.toggle("contenido-oculto", tab !== "login");
+      document.getElementById("formRegister").classList.toggle("contenido-oculto", tab !== "register");
+      document.getElementById("tabLoginBtn").classList.toggle("active", tab === "login");
+      document.getElementById("tabRegisterBtn").classList.toggle("active", tab === "register");
+    }
+
+    async function procesarLogin(evento) {
+      evento.preventDefault();
+      const nombre = document.getElementById("loginUsuario").value.trim();
+      const clave = document.getElementById("loginPass").value;
+
+      if (NOMBRES_PROPIETARIO.includes(nombre.toLowerCase())) {
+        if (!requiereConfig()) return;
+        if (!clave) return alert("Escribe la contraseña del propietario.");
+
+        const boton = document.getElementById("btnLoginSubmit");
+        boton.disabled = true;
+        const { error } = await db.auth.signInWithPassword({ email: OWNER_EMAIL, password: clave });
+        boton.disabled = false;
+        if (error) return alert("Contraseña incorrecta.");
+
+        esPropietario = true;
+        usuarioActual = "Jhon Benitrez";
+        localStorage.removeItem(SESSION_KEY);
+      } else {
+        esPropietario = false;
+        usuarioActual = nombre;
+        localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre, esAdmin: false }));
+      }
+
+      limpiarFormulariosAuth();
+      cerrarModalAuth();
+      actualizarInterfazUsuario();
+    }
+
+    function procesarRegistro(evento) {
+      evento.preventDefault();
+      const nombre = document.getElementById("regUsuario").value.trim();
+      if (NOMBRES_PROPIETARIO.includes(nombre.toLowerCase())) {
+        return alert("Ese nombre está reservado. Usa otro.");
+      }
+      esPropietario = false;
+      usuarioActual = nombre;
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ nombre, esAdmin: false }));
+      limpiarFormulariosAuth();
+      cerrarModalAuth();
+      actualizarInterfazUsuario();
+    }
+
+    async function cerrarSesion() {
+      if (db) await db.auth.signOut();
+      localStorage.removeItem(SESSION_KEY);
+      usuarioActual = "Invitado";
+      esPropietario = false;
+      limpiarFormulariosAuth();
+      actualizarInterfazUsuario();
+      navegarAPantalla("pantallaInicio");
+    }
+
+    function actualizarInterfazUsuario() {
+      document.getElementById("userNameDisplay").textContent = usuarioActual;
+      document.getElementById("saludoBienvenida").textContent =
+        usuarioActual === "Invitado"
+          ? "¡Bienvenido/a a mi Portafolio!"
+          : `¡Hola, ${usuarioActual}!`;
+
+      const badge = document.getElementById("userRoleBadge");
+      badge.textContent = esPropietario
+        ? "👑 Propietario"
+        : usuarioActual === "Invitado" ? "👁️ Visitante" : `👁️ Visitante (${usuarioActual})`;
+      badge.className = `badge ${esPropietario ? "badge-admin" : "badge-visitor"}`;
+
+      document.getElementById("btnAbrirLoginNav").classList.toggle("contenido-oculto", usuarioActual !== "Invitado");
+      document.getElementById("btnSalirNav").classList.toggle("contenido-oculto", usuarioActual === "Invitado");
+      document.getElementById("btnCambiarLogo").classList.toggle("contenido-oculto", !esPropietario);
+      document.getElementById("btnCambiarFoto").classList.toggle("contenido-oculto", !esPropietario);
+
+      renderizarUnidad();
+      renderizarComentarios();
+    }
+
+    function cambiarCurso(id, evento) {
+      cursoActual = id;
+      semanaAbierta = null;
+      document.getElementById("tituloCurso").textContent = nombresCursos[id];
+      document.querySelectorAll(".course-tab-btn").forEach(boton => boton.classList.remove("active"));
+      if (evento) evento.currentTarget.classList.add("active");
+      mostrarUnidad(1);
+    }
+
+    function mostrarUnidad(numero) {
+      unidadActual = numero;
+      semanaAbierta = null;
+      document.querySelectorAll(".pill-btn").forEach((boton, indice) => {
+        boton.classList.toggle("active", indice + 1 === numero);
+      });
+      renderizarUnidad();
+    }
+
+    function seleccionarSemana(clave) {
+      semanaAbierta = semanaAbierta === clave ? null : clave;
+      renderizarUnidad();
+      document.querySelector(`[data-semana-clave="${clave}"]`)?.focus();
+    }
+
+    function descripcionAutomatica(tarea, tema) {
+      const titulo = String(tarea.nombre || "").trim();
+      const contexto = tema ? `, correspondiente al tema «${tema}»` : "";
+      const tipo = tarea.tipo === "archivo" ? "Archivo" : "Enlace";
+      return `${tipo} de la actividad «${titulo}»${contexto}. Ábrelo para revisar el contenido completo.`;
+    }
+
+    function imagenTematica(tarea, tema) {
+      const texto = `${tarea.nombre} ${tema}`.toLowerCase();
+      const imagenes = [
+        {
+          patron: /base de datos|sql|mysql|postgres|supabase/,
+          nombre: "Bases de datos",
+          url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1000&q=80"
+        },
+        {
+          patron: /móvil|movil|android|aplicaci[oó]n|app|celular/,
+          nombre: "Aplicaciones",
+          url: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9?w=1000&q=80"
+        },
+        {
+          patron: /algoritmo|estructura|arreglo|vector|matriz|pseint/,
+          nombre: "Algoritmos",
+          url: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1000&q=80"
+        },
+        {
+          patron: /java|programaci[oó]n|c[oó]digo|poo|clase|maven/,
+          nombre: "Programación",
+          url: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1000&q=80"
+        },
+        {
+          patron: /diseño|diseno|figma|uml|diagrama|interfaz/,
+          nombre: "Diseño y diagramas",
+          url: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1000&q=80"
+        }
+      ];
+      return imagenes.find(imagen => imagen.patron.test(texto)) || {
+        nombre: "Trabajo académico",
+        url: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1000&q=80"
+      };
+    }
+
+    function seleccionarTarea(clave, indice) {
+      const tarea = (tareasPorClave[clave] || [])[indice];
+      if (!tarea) return;
+
+      tareaSeleccionadaPorClave[clave] = indice;
+      renderizarUnidad();
+
+      const efecto = document.getElementById("espadaEfecto");
+      efecto.classList.remove("cortar");
+      void efecto.offsetWidth;
+      efecto.classList.add("cortar");
+
+      const espera = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 620;
+      setTimeout(() => {
+        efecto.classList.remove("cortar");
+        abrirVistaTarea(clave, indice);
+      }, espera);
+    }
+
+    function abrirVistaTarea(clave, indice) {
+      const tarea = (tareasPorClave[clave] || [])[indice];
+      if (!tarea) return;
+
+      const tema = temasPorClave[clave] || "";
+      const modal = document.getElementById("modalVistaTarea");
+      const contenido = document.getElementById("vistaTareaContenido");
+      const acciones = document.getElementById("vistaTareaAcciones");
+
+      document.getElementById("vistaTareaTitulo").textContent = tarea.nombre;
+      document.getElementById("vistaTareaDescripcion").textContent =
+        descripcionAutomatica(tarea, tema);
+
+      const ilustracion = imagenTematica(tarea, tema);
+      const imagen = document.getElementById("vistaTareaImagen");
+      imagen.onerror = () => {
+        imagen.onerror = null;
+        imagen.src = "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1000&q=80";
+      };
+      imagen.src = ilustracion.url;
+      imagen.alt = `Imagen ilustrativa de ${ilustracion.nombre}`;
+      document.getElementById("vistaTareaImagenPie").textContent =
+        `Imagen ilustrativa: ${ilustracion.nombre}`;
+
+      contenido.replaceChildren();
+      acciones.replaceChildren();
+
+      let url;
+      try { url = new URL(tarea.url); } catch { url = null; }
+
+      if (!url || !["http:", "https:"].includes(url.protocol)) {
+        contenido.textContent = "No se puede previsualizar este enlace.";
+      } else {
+        const extension = url.pathname.split(".").pop().toLowerCase();
+
+        if (["png", "jpg", "jpeg", "gif", "webp", "svg"].includes(extension)) {
+          const vista = document.createElement("img");
+          vista.src = url.href;
+          vista.alt = `Vista previa de ${tarea.nombre}`;
+          contenido.appendChild(vista);
+        } else if (extension === "pdf") {
+          const vista = document.createElement("iframe");
+          vista.src = url.href;
+          vista.title = `Vista previa de ${tarea.nombre}`;
+          vista.loading = "lazy";
+          contenido.appendChild(vista);
+        } else {
+          contenido.textContent =
+            "Este formato no tiene vista previa dentro de la página. Usa «Abrir tarea» para verlo.";
+        }
+
+        const abrir = document.createElement("a");
+        abrir.href = url.href;
+        abrir.target = "_blank";
+        abrir.rel = "noopener noreferrer";
+        abrir.className = "btn-task-open";
+        abrir.textContent = "👁️ Abrir tarea";
+        acciones.appendChild(abrir);
+
+        if (tarea.tipo === "archivo") {
+          const descargar = document.createElement("a");
+          const descargaUrl = new URL(url.href);
+          descargaUrl.searchParams.set("download", nombreDescarga(tarea));
+          descargar.href = descargaUrl.href;
+          descargar.className = "btn-task-download";
+          descargar.textContent = "📥 Descargar";
+          acciones.appendChild(descargar);
         }
       }
 
-      if (propietario) {
-        html += `
-          <button class="agregar"
-            onclick="nuevaTarea('${clave}')">
-            ➕ Agregar nueva tarea
-          </button>
+      modal.style.display = "flex";
+      modal.querySelector(".close-modal").focus();
+    }
+
+    function cerrarVistaTarea() {
+      document.getElementById("modalVistaTarea").style.display = "none";
+      document.getElementById("vistaTareaContenido").replaceChildren();
+    }
+
+    document.addEventListener("keydown", evento => {
+      if (evento.key === "Escape" &&
+          document.getElementById("modalVistaTarea").style.display === "flex") {
+        cerrarVistaTarea();
+      }
+    });
+
+    function renderizarUnidad() {
+      const contenedor = document.getElementById("semanasContainer");
+      if (!contenedor) return;
+      contenedor.replaceChildren();
+
+      const inicio = (unidadActual - 1) * 4 + 1;
+
+      for (let indiceSemana = 0; indiceSemana < 4; indiceSemana++) {
+        const numero = inicio + indiceSemana;
+        const clave = `${cursoActual}_U${unidadActual}_S${numero}`;
+        const tema = temasPorClave[clave] || "";
+        const tareas = tareasPorClave[clave] || [];
+        const abierta = semanaAbierta === clave;
+
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "semana-card-vintage";
+
+        let html = `
+          <div class="semana-card-header">
+            <button type="button" class="week-select-btn"
+              data-semana-clave="${clave}"
+              aria-expanded="${abierta}"
+              onclick="seleccionarSemana('${clave}')">
+              <span class="semana-image" aria-hidden="true"><span>0${indiceSemana + 1}</span></span>
+              <span class="semana-title">Semana ${numero}</span>
+              <span class="week-hint">${abierta ? "Cerrar tareas −" : "Ver tareas +"}</span>
+            </button>
+            ${tema
+              ? `<div class="clase-tema">📘 ${esc(tema)}</div>`
+              : `<div class="clase-tema-vacio">Sin tema asignado</div>`}
+            ${esPropietario
+              ? `<button class="btn-xs-edit" onclick="editarTituloClase('${clave}')">✏️ Tema</button>`
+              : ""}
+          </div>
+          <div class="semana-card-body ${abierta ? "" : "contenido-oculto"}">
         `;
-      }
 
-      html += `</div>`;
-    }
+        if (tareas.length) {
+          html += `
+            <div class="task-count-tag">✔ ${tareas.length} tarea(s) disponible(s)</div>
+            <p class="task-select-hint">Elige una burbuja para ver la tarea</p>
+            <div class="task-bubbles">
+          `;
 
-    const tarjeta = document.createElement("article");
-    tarjeta.className = "semana";
-    tarjeta.innerHTML = html;
-    contenedor.appendChild(tarjeta);
-  }
-}
+          tareas.forEach((tarea, indice) => {
+            const activa = tareaSeleccionadaPorClave[clave] === indice;
+            html += `
+              <button type="button"
+                class="task-bubble ${activa ? "active" : ""}"
+                data-tarea-clave="${clave}"
+                data-tarea-indice="${indice}"
+                aria-pressed="${activa}"
+                title="${esc(tarea.nombre)}"
+                onclick="seleccionarTarea('${clave}',${indice})">
+                <span class="task-bubble-icon">${tarea.tipo === "archivo" ? "📄" : "🔗"}</span>
+                <span class="task-bubble-label">${esc(tarea.nombre)}</span>
+              </button>
+            `;
+          });
 
-/* VENTANA PEQUEÑA DE PREVISUALIZACIÓN */
-function abrirVista(clave, indice) {
-  const tarea = (tareas[clave] || [])[indice];
-  if (!tarea) return;
+          html += "</div>";
 
-  elemento("tituloVista").textContent = tarea.nombre;
-  elemento("descripcionVista").textContent =
-    descripcionAutomatica(tarea, temas[clave] || "");
+          if (esPropietario && Number.isInteger(tareaSeleccionadaPorClave[clave])) {
+            const elegida = tareas[tareaSeleccionadaPorClave[clave]];
+            if (elegida) {
+              html += `
+                <div class="task-action-buttons-group">
+                  <button class="btn-action-edit"
+                    onclick="abrirModalEditarTarea('${clave}','${esc(elegida.id)}')">
+                    ✏️ Editar selección
+                  </button>
+                  <button class="btn-action-del"
+                    onclick="eliminarTareaPropietario('${clave}','${esc(elegida.id)}')">
+                    🗑️ Eliminar selección
+                  </button>
+                </div>
+              `;
+            }
+          }
+        } else {
+          html += `<p class="empty-task-text">Sin tareas publicadas en esta semana.</p>`;
+        }
 
-  const contenido = elemento("contenidoVista");
-  const acciones = elemento("accionesVista");
+        if (esPropietario) {
+          html += `
+            <button class="btn-add-task-propietario"
+              onclick="abrirModalSubirTarea('${clave}')">➕ Agregar tarea nueva</button>
+          `;
+        }
 
-  contenido.replaceChildren();
-  acciones.replaceChildren();
-
-  let url;
-
-  try {
-    url = new URL(tarea.url);
-  } catch {
-    url = null;
-  }
-
-  if (!url || !["http:", "https:"].includes(url.protocol)) {
-    contenido.textContent = "No se puede previsualizar este enlace.";
-    abrirModal("modalVista");
-    return;
-  }
-
-  const extension = url.pathname.split(".").pop().toLowerCase();
-
-  if (["png", "jpg", "jpeg", "gif", "webp", "svg"].includes(extension)) {
-    const imagen = document.createElement("img");
-    imagen.src = url.href;
-    imagen.alt = "Vista previa de " + tarea.nombre;
-    contenido.appendChild(imagen);
-
-  } else if (extension === "pdf") {
-    const marco = document.createElement("iframe");
-    marco.src = url.href;
-    marco.title = "Vista previa de " + tarea.nombre;
-    marco.setAttribute("loading", "lazy");
-    contenido.appendChild(marco);
-
-  } else {
-    contenido.textContent =
-      "Este formato no tiene una vista previa dentro de la página. Usa «Abrir tarea» para verlo.";
-  }
-
-  const abrir = document.createElement("a");
-  abrir.href = url.href;
-  abrir.target = "_blank";
-  abrir.rel = "noopener noreferrer";
-  abrir.className = "azul";
-  abrir.textContent = "👁️ Abrir tarea";
-  acciones.appendChild(abrir);
-
-  if (tarea.tipo === "archivo") {
-    const descargar = document.createElement("a");
-    const urlDescarga = new URL(url.href);
-
-    urlDescarga.searchParams.set(
-      "download",
-      nombreDescarga(tarea)
-    );
-
-    descargar.href = urlDescarga.href;
-    descargar.className = "verde";
-    descargar.textContent = "📥 Descargar";
-    acciones.appendChild(descargar);
-  }
-
-  abrirModal("modalVista");
-  elemento("modalVista").querySelector(".cerrar").focus();
-}
-
-function cerrarVista() {
-  cerrarModal("modalVista");
-
-  /* Detiene el PDF o la imagen al cerrar la ventana. */
-  elemento("contenidoVista").replaceChildren();
-}
-
-document.addEventListener("keydown", evento => {
-  if (
-    evento.key === "Escape" &&
-    elemento("modalVista").classList.contains("abierto")
-  ) {
-    cerrarVista();
-  }
-});
-
-function cambiarTipoTarea() {
-  const enlace = elemento("tipoTarea").value === "enlace";
-  elemento("campoArchivo").classList.toggle("oculto", enlace);
-  elemento("campoEnlace").classList.toggle("oculto", !enlace);
-}
-
-function nuevaTarea(clave) {
-  if (!propietario) return;
-
-  elemento("claveSemana").value = clave;
-  elemento("idEdicion").value = "";
-  elemento("tituloModalTarea").textContent = "Agregar tarea";
-  elemento("nombreTarea").value = "";
-  elemento("archivoTarea").value = "";
-  elemento("enlaceTarea").value = "";
-  elemento("tipoTarea").value = "archivo";
-
-  cambiarTipoTarea();
-  abrirModal("modalTarea");
-}
-
-function editarTarea(clave, indice) {
-  if (!propietario) return;
-
-  const tarea = (tareas[clave] || [])[indice];
-  if (!tarea) return;
-
-  elemento("claveSemana").value = clave;
-  elemento("idEdicion").value = tarea.id;
-  elemento("tituloModalTarea").textContent = "Editar tarea";
-  elemento("nombreTarea").value = tarea.nombre;
-  elemento("tipoTarea").value = tarea.tipo;
-  elemento("enlaceTarea").value =
-    tarea.tipo === "enlace" ? tarea.url : "";
-  elemento("archivoTarea").value = "";
-
-  cambiarTipoTarea();
-  abrirModal("modalTarea");
-}
-
-function rutaStorage(url) {
-  const marca = `/${BUCKET}/`;
-  const indice = (url || "").indexOf(marca);
-  if (indice === -1) return null;
-
-  return decodeURIComponent(
-    url.substring(indice + marca.length).split("?")[0]
-  );
-}
-
-async function quitarArchivo(url) {
-  const ruta = rutaStorage(url);
-  if (ruta) await db.storage.from(BUCKET).remove([ruta]);
-}
-
-async function subirArchivo(archivo, carpeta) {
-  const extension =
-    (archivo.name.split(".").pop() || "bin")
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "") || "bin";
-
-  const ruta =
-    `${carpeta}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${extension}`;
-
-  const { error } = await db.storage.from(BUCKET).upload(
-    ruta,
-    archivo,
-    {
-      cacheControl: "3600",
-      upsert: false,
-      contentType: archivo.type || undefined
-    }
-  );
-
-  if (error) throw error;
-
-  return db.storage.from(BUCKET).getPublicUrl(ruta).data.publicUrl;
-}
-
-async function guardarTarea(evento) {
-  evento.preventDefault();
-  if (!propietario || !db) return;
-
-  const clave = elemento("claveSemana").value;
-  const id = elemento("idEdicion").value;
-
-  const anterior = id
-    ? (tareas[clave] || []).find(x => String(x.id) === id)
-    : null;
-
-  const tipo = elemento("tipoTarea").value;
-
-  const payload = {
-    clave,
-    nombre: elemento("nombreTarea").value.trim(),
-    tipo
-  };
-
-  const boton = elemento("btnGuardarTarea");
-
-  try {
-    boton.disabled = true;
-    boton.textContent = "Guardando...";
-
-    if (tipo === "enlace") {
-      payload.url = elemento("enlaceTarea").value.trim();
-      if (!payload.url) throw new Error("Ingresa el enlace.");
-    } else {
-      const archivo = elemento("archivoTarea").files[0];
-
-      if (archivo) {
-        payload.url = await subirArchivo(archivo, "tareas");
-      } else if (anterior && anterior.tipo === "archivo") {
-        payload.url = anterior.url;
-      } else {
-        throw new Error("Selecciona un archivo.");
+        html += "</div>";
+        tarjeta.innerHTML = html;
+        contenedor.appendChild(tarjeta);
       }
     }
 
-    const consulta = anterior
-      ? db.from("tareas").update(payload).eq("id", anterior.id)
-      : db.from("tareas").insert(payload);
-
-    const { error } = await consulta;
-    if (error) throw error;
-
-    if (
-      anterior &&
-      anterior.tipo === "archivo" &&
-      anterior.url !== payload.url
-    ) {
-      quitarArchivo(anterior.url);
+    function abrirModalSubirTarea(clave) {
+      document.getElementById("modalKeyTarea").value = clave;
+      document.getElementById("modalEditId").value = "";
+      document.getElementById("modalTareaTituloAccion").textContent = "📤 Agregar nueva tarea";
+      document.getElementById("taskTitulo").value = "";
+      document.getElementById("taskUrl").value = "";
+      document.getElementById("taskFile").value = "";
+      document.getElementById("taskTipo").value = "archivo";
+      cambiarTipoInputTask();
+      document.getElementById("modalSubirTarea").style.display = "flex";
     }
 
-    cerrarModal("modalTarea");
-    await cargarTareas();
-    aviso("✅ Tarea publicada");
+    function abrirModalEditarTarea(clave, id) {
+      const tarea = (tareasPorClave[clave] || []).find(item => String(item.id) === String(id));
+      if (!tarea) return;
 
-  } catch (error) {
-    alert("No se pudo guardar: " + error.message);
+      document.getElementById("modalKeyTarea").value = clave;
+      document.getElementById("modalEditId").value = id;
+      document.getElementById("modalTareaTituloAccion").textContent = "✏️ Editar tarea";
+      document.getElementById("taskTitulo").value = tarea.nombre;
+      document.getElementById("taskFile").value = "";
+      document.getElementById("taskTipo").value = tarea.tipo;
+      document.getElementById("taskUrl").value = tarea.tipo === "enlace" ? tarea.url : "";
+      cambiarTipoInputTask();
+      document.getElementById("modalSubirTarea").style.display = "flex";
+    }
 
-  } finally {
-    boton.disabled = false;
-    boton.textContent = "Guardar tarea";
-  }
-}
+    function cerrarModalSubirTarea() {
+      document.getElementById("modalSubirTarea").style.display = "none";
+    }
 
-async function eliminarTarea(clave, indice) {
-  if (!propietario || !confirm("¿Eliminar esta tarea?")) return;
+    function cambiarTipoInputTask() {
+      const tipo = document.getElementById("taskTipo").value;
+      document.getElementById("boxTaskFile").classList.toggle("contenido-oculto", tipo !== "archivo");
+      document.getElementById("boxTaskUrl").classList.toggle("contenido-oculto", tipo !== "enlace");
+    }
 
-  const tarea = (tareas[clave] || [])[indice];
-  if (!tarea) return;
+    async function guardarNuevaTareaPropietario(evento) {
+      evento.preventDefault();
+      if (!esPropietario || !requiereConfig()) return;
 
-  const { error } = await db.from("tareas")
-    .delete()
-    .eq("id", tarea.id);
+      const clave = document.getElementById("modalKeyTarea").value;
+      const id = document.getElementById("modalEditId").value;
+      const titulo = document.getElementById("taskTitulo").value.trim();
+      const tipo = document.getElementById("taskTipo").value;
+      const existente = id
+        ? (tareasPorClave[clave] || []).find(item => String(item.id) === String(id))
+        : null;
+      const datos = { clave, nombre: titulo, tipo };
+      const boton = document.getElementById("btnGuardarTarea");
 
-  if (error) return alert(error.message);
+      try {
+        boton.disabled = true;
+        boton.textContent = "⏳ Guardando...";
 
-  if (tarea.tipo === "archivo") quitarArchivo(tarea.url);
+        if (tipo === "enlace") {
+          const enlace = document.getElementById("taskUrl").value.trim();
+          if (!enlace) throw new Error("Ingresa el enlace.");
+          datos.url = enlace;
+        } else {
+          const archivo = document.getElementById("taskFile").files[0];
+          if (archivo) {
+            datos.url = await subirArchivoStorage(archivo, "tareas");
+          } else if (existente && existente.tipo === "archivo") {
+            datos.url = existente.url;
+          } else {
+            throw new Error("Selecciona un archivo.");
+          }
+        }
 
-  delete tareaElegida[clave];
-  await cargarTareas();
-  aviso("🗑️ Tarea eliminada");
-}
+        if (existente) {
+          const { error } = await db.from("tareas").update(datos).eq("id", existente.id);
+          if (error) throw error;
+          if (existente.tipo === "archivo" && existente.url !== datos.url) {
+            borrarArchivoStorage(existente.url);
+          }
+        } else {
+          const { error } = await db.from("tareas").insert(datos);
+          if (error) throw error;
+        }
 
-async function editarTema(clave) {
-  if (!propietario) return;
-
-  const nuevo = prompt("Tema de la semana:", temas[clave] || "");
-  if (nuevo === null) return;
-
-  const { error } = await db.from("temas")
-    .upsert({ clave, titulo: nuevo.trim() });
-
-  if (error) return alert(error.message);
-
-  temas[clave] = nuevo.trim();
-  mostrarSemanas();
-}
-
-async function guardarComentario(evento) {
-  evento.preventDefault();
-  if (!db) return alert("No hay conexión con Supabase.");
-
-  const nombre = elemento("nombreComentario").value.trim();
-  const mensaje = elemento("mensajeComentario").value.trim();
-
-  const { error } = await db.from("comentarios")
-    .insert({ nombre, mensaje });
-
-  if (error) return alert(error.message);
-
-  elemento("mensajeComentario").value = "";
-  await cargarComentarios();
-  aviso("✅ Gracias por tu sugerencia");
-}
-
-function mostrarComentarios() {
-  const zona = elemento("listaComentarios");
-
-  if (comentarios.length === 0) {
-    zona.innerHTML = '<p class="ayuda">Aún no hay sugerencias.</p>';
-    return;
-  }
-
-  zona.innerHTML = comentarios.map(c => `
-    <div class="comentario">
-      <strong>👤 ${escapar(c.nombre)}</strong>
-      <small>${new Date(c.creado_en).toLocaleDateString("es-PE")}</small>
-      <p>${escapar(c.mensaje)}</p>
-
-      ${
-        propietario
-          ? `<button class="mini rojo" onclick="eliminarComentario('${c.id}')">Eliminar</button>`
-          : ""
-      }
-    </div>
-  `).join("");
-}
-
-async function eliminarComentario(id) {
-  if (!propietario || !confirm("¿Eliminar sugerencia?")) return;
-
-  const { error } = await db.from("comentarios")
-    .delete()
-    .eq("id", id);
-
-  if (error) return alert(error.message);
-
-  await cargarComentarios();
-}
-
-function actualizarImagenes() {
-  elemento("logo").src = ajustes.logo || LOGO_DEFECTO;
-  elemento("fotoPerfil").src = ajustes.foto_perfil || FOTO_DEFECTO;
-}
-
-async function subirImagen(evento, clave) {
-  const archivo = evento.target.files[0];
-  evento.target.value = "";
-
-  if (!archivo || !propietario || !db) return;
-
-  if (!archivo.type.startsWith("image/")) {
-    return alert("Selecciona una imagen.");
-  }
-
-  if (archivo.size > 5 * 1024 * 1024) {
-    return alert("La imagen no debe superar 5 MB.");
-  }
-
-  try {
-    const anterior = ajustes[clave];
-    const url = await subirArchivo(archivo, "imagenes");
-
-    const { error } = await db.from("ajustes").upsert({
-      clave,
-      valor: url,
-      updated_at: new Date().toISOString()
-    });
-
-    if (error) throw error;
-
-    ajustes[clave] = url;
-    actualizarImagenes();
-
-    if (anterior) quitarArchivo(anterior);
-
-    aviso("✅ Imagen guardada");
-
-  } catch (error) {
-    alert(error.message);
-  }
-}
-
-async function cargarTareas() {
-  const { data, error } = await db.from("tareas")
-    .select("*")
-    .order("creado_en", { ascending: true });
-
-  if (error) return console.error(error);
-
-  tareas = {};
-
-  (data || []).forEach(t => {
-    if (!tareas[t.clave]) tareas[t.clave] = [];
-    tareas[t.clave].push(t);
-  });
-
-  mostrarSemanas();
-}
-
-async function cargarTemas() {
-  const { data, error } = await db.from("temas")
-    .select("clave,titulo");
-
-  if (error) return console.error(error);
-
-  temas = {};
-
-  (data || []).forEach(t => {
-    temas[t.clave] = t.titulo;
-  });
-
-  mostrarSemanas();
-}
-
-async function cargarComentarios() {
-  const { data, error } = await db.from("comentarios")
-    .select("*")
-    .order("creado_en", { ascending: false });
-
-  if (error) return console.error(error);
-
-  comentarios = data || [];
-  mostrarComentarios();
-}
-
-async function cargarAjustes() {
-  const { data, error } = await db.from("ajustes")
-    .select("clave,valor");
-
-  if (error) return console.error(error);
-
-  ajustes = {};
-
-  (data || []).forEach(a => {
-    ajustes[a.clave] = a.valor;
-  });
-
-  actualizarImagenes();
-}
-
-async function cargarTodo() {
-  await Promise.all([
-    cargarAjustes(),
-    cargarTemas(),
-    cargarTareas(),
-    cargarComentarios()
-  ]);
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  actualizarImagenes();
-  actualizarUsuario();
-
-  if (!window.supabase) {
-    alert("No se pudo cargar Supabase. Revisa tu conexión.");
-    return;
-  }
-
-  db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-
-  try {
-    const { data } = await db.auth.getSession();
-    const sesion = data && data.session;
-
-    if (
-      sesion &&
-      (sesion.user.email || "").toLowerCase() ===
-      OWNER_EMAIL.toLowerCase()
-    ) {
-      propietario = true;
-      nombreUsuario = "Jhon Benitrez";
-    } else {
-      const guardado = JSON.parse(
-        localStorage.getItem(SESSION_KEY) || "null"
-      );
-
-      if (guardado && guardado.nombre) {
-        nombreUsuario = guardado.nombre;
+        cerrarModalSubirTarea();
+        await cargarTareas();
+        toast("✅ Tarea guardada y publicada");
+      } catch (error) {
+        console.error(error);
+        alert(error.message || "No se pudo guardar la tarea.");
+      } finally {
+        boton.disabled = false;
+        boton.textContent = "Guardar tarea";
       }
     }
 
-    actualizarUsuario();
-    await cargarTodo();
+    async function eliminarTareaPropietario(clave, id) {
+      if (!esPropietario || !requiereConfig()) return;
+      if (!confirm("¿Eliminar esta tarea?")) return;
 
-    db.channel("portafolio-cambios")
-      .on("postgres_changes",
-        { event: "*", schema: "public", table: "tareas" },
-        cargarTareas)
-      .on("postgres_changes",
-        { event: "*", schema: "public", table: "temas" },
-        cargarTemas)
-      .on("postgres_changes",
-        { event: "*", schema: "public", table: "ajustes" },
-        cargarAjustes)
-      .on("postgres_changes",
-        { event: "*", schema: "public", table: "comentarios" },
-        cargarComentarios)
-      .subscribe();
+      const tarea = (tareasPorClave[clave] || []).find(item => String(item.id) === String(id));
+      const { error } = await db.from("tareas").delete().eq("id", id);
+      if (error) return alert("No se pudo eliminar: " + error.message);
 
-    setInterval(cargarTodo, 45000);
+      if (tarea?.tipo === "archivo") borrarArchivoStorage(tarea.url);
+      delete tareaSeleccionadaPorClave[clave];
+      await cargarTareas();
+      toast("🗑️ Tarea eliminada");
+    }
 
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) cargarTodo();
-    });
+    async function editarTituloClase(clave) {
+      if (!esPropietario || !requiereConfig()) return;
+      const nuevo = prompt("Tema o título de la clase:", temasPorClave[clave] || "");
+      if (nuevo === null) return;
 
-  } catch (error) {
-    console.error(error);
-    aviso("No se pudieron cargar los datos.");
-  }
-});
-</script>
+      const { error } = await db.from("temas").upsert({
+        clave,
+        titulo: nuevo.trim()
+      });
+      if (error) return alert("No se pudo guardar el tema: " + error.message);
+
+      temasPorClave[clave] = nuevo.trim();
+      renderizarUnidad();
+      toast("✅ Tema guardado");
+    }
+
+    async function guardarComentario(evento) {
+      evento.preventDefault();
+      if (!requiereConfig()) return;
+
+      const nombre = document.getElementById("feedbackNombre").value.trim();
+      const mensaje = document.getElementById("feedbackMsg").value.trim();
+      if (!nombre || !mensaje) return;
+
+      const boton = document.getElementById("btnEnviarComentario");
+      boton.disabled = true;
+      const { error } = await db.from("comentarios").insert({ nombre, mensaje });
+      boton.disabled = false;
+
+      if (error) return alert("No se pudo enviar: " + error.message);
+      document.getElementById("feedbackMsg").value = "";
+      await cargarComentarios();
+      toast("✅ ¡Gracias por tu sugerencia!");
+    }
+
+    function renderizarComentarios() {
+      const lista = document.getElementById("comentariosList");
+      if (!lista) return;
+
+      if (!comentarios.length) {
+        lista.innerHTML = `<p class="empty-task-text">Aún no hay sugerencias.</p>`;
+        return;
+      }
+
+      lista.innerHTML = comentarios.map(comentario => `
+        <div class="comment-item-vintage">
+          <div class="comment-head">
+            <p class="c-author">👤 <strong>${esc(comentario.nombre)}</strong>
+              <span class="c-date">(${new Date(comentario.creado_en).toLocaleDateString("es-PE")})</span>
+            </p>
+            ${esPropietario
+              ? `<button class="btn-comment-del"
+                   onclick="eliminarComentario('${esc(comentario.id)}')"
+                   title="Eliminar sugerencia">🗑️</button>`
+              : ""}
+          </div>
+          <p class="c-text">"${esc(comentario.mensaje)}"</p>
+        </div>
+      `).join("");
+    }
+
+    async function eliminarComentario(id) {
+      if (!esPropietario || !requiereConfig()) return;
+      if (!confirm("¿Eliminar esta sugerencia?")) return;
+      const { error } = await db.from("comentarios").delete().eq("id", id);
+      if (error) return alert("No se pudo eliminar: " + error.message);
+      await cargarComentarios();
+    }
+  </script>
 </body>
 </html>
